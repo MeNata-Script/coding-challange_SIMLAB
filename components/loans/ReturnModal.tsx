@@ -140,6 +140,12 @@ export default function ReturnModal({
                 )}
               </span>
             </div>
+            <div className="flex justify-between items-start">
+              <span className="text-[#69777A]">Alamat Domisili:</span>
+              <span className="font-semibold text-[#344047] text-right max-w-[220px]">
+                {loan.alamat_peminjam || 'Alamat sesuai kartu identitas'}
+              </span>
+            </div>
             <div className="flex justify-between">
               <span className="text-[#69777A]">Barang:</span>
               <span className="font-semibold text-[#344047]">

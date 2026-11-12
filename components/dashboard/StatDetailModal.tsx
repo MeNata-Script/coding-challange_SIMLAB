@@ -298,6 +298,12 @@ export default function StatDetailModal({
                         <td className="py-3 px-4">
                           <p className="font-bold text-[#2E3B40]">{loan.nama_peminjam}</p>
                           <p className="font-mono text-[11px] text-[#69777A]">NIM: {loan.nim_identitas}</p>
+                          <div className="flex items-start gap-1 text-[10px] text-[#69777A] mt-0.5 max-w-[200px]">
+                            <MapPin className="w-2.5 h-2.5 text-[#87918F] shrink-0 mt-0.5" />
+                            <span className="truncate" title={loan.alamat_peminjam}>
+                              {loan.alamat_peminjam || 'Alamat sesuai kartu identitas'}
+                            </span>
+                          </div>
                           {loan.kontak_peminjam && (
                             <a
                               href={`https://wa.me/${loan.kontak_peminjam.replace(/[^0-9]/g, '').replace(/^0/, '62')}?text=${encodeURIComponent(`Halo ${loan.nama_peminjam}, kami dari SIMLAB mengenai peminjaman alat ${loan.item?.nama_barang} (${loan.kode_peminjaman})...`)}`}
@@ -357,6 +363,10 @@ export default function StatDetailModal({
                         <span className="font-mono font-bold text-xs text-[#344047]">{loan.kode_peminjaman}</span>
                         <h4 className="font-bold text-sm text-[#2E3B40] mt-0.5">{loan.nama_peminjam}</h4>
                         <p className="text-xs text-[#69777A]">{loan.item?.nama_barang} ({loan.jumlah} unit)</p>
+                        <div className="flex items-start gap-1 text-[11px] text-[#69777A] mt-0.5">
+                          <MapPin className="w-3 h-3 text-[#87918F] shrink-0 mt-0.5" />
+                          <span className="line-clamp-1">{loan.alamat_peminjam || 'Alamat sesuai identitas'}</span>
+                        </div>
                       </div>
                       <span
                         className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${

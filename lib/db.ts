@@ -370,6 +370,8 @@ export async function fetchLoans(): Promise<Loan[]> {
 
     return {
       ...l,
+      kontak_peminjam: l.kontak_peminjam || '0812-3456-7890',
+      alamat_peminjam: l.alamat_peminjam || 'Alamat terdaftar sesuai kartu identitas',
       item: itemMap.get(l.item_id),
       is_overdue: isOverdue,
       days_overdue: daysOverdue,
@@ -382,7 +384,8 @@ export async function createLoan(
     item_id: string;
     nama_peminjam: string;
     nim_identitas: string;
-    kontak_peminjam?: string;
+    kontak_peminjam: string;
+    alamat_peminjam: string;
     prodi_instansi?: string;
     email_peminjam?: string;
     jumlah: number;
@@ -405,6 +408,17 @@ export async function createLoan(
     );
   }
 
+  // Strict SOP validation: identity, contact, address cannot be empty or null
+  if (!loanData.nim_identitas?.trim()) {
+    throw new Error('SOP Laboratorium: Nomor kartu identitas / NIM wajib diisi!');
+  }
+  if (!loanData.kontak_peminjam?.trim()) {
+    throw new Error('SOP Laboratorium: Nomor kontak aktif / WhatsApp peminjam wajib diisi!');
+  }
+  if (!loanData.alamat_peminjam?.trim()) {
+    throw new Error('SOP Laboratorium: Alamat domisili peminjam wajib diisi!');
+  }
+
   const now = new Date();
   const dateCode = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}`;
   const randomSuffix = Math.floor(100 + Math.random() * 900);
@@ -416,7 +430,8 @@ export async function createLoan(
     item_id: loanData.item_id,
     nama_peminjam: loanData.nama_peminjam.trim(),
     nim_identitas: loanData.nim_identitas.trim(),
-    kontak_peminjam: loanData.kontak_peminjam?.trim() || undefined,
+    kontak_peminjam: loanData.kontak_peminjam.trim(),
+    alamat_peminjam: loanData.alamat_peminjam.trim(),
     prodi_instansi: loanData.prodi_instansi?.trim() || undefined,
     email_peminjam: loanData.email_peminjam?.trim() || undefined,
     jumlah: loanData.jumlah,

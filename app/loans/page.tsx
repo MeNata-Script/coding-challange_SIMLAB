@@ -16,6 +16,7 @@ import {
   FileSpreadsheet,
   MessageCircle,
   Phone,
+  MapPin,
 } from 'lucide-react';
 import NewLoanModal from '@/components/loans/NewLoanModal';
 import ReturnModal from '@/components/loans/ReturnModal';
@@ -86,6 +87,7 @@ export default function LoansPage() {
         l.nama_peminjam.toLowerCase().includes(q) ||
         l.nim_identitas.toLowerCase().includes(q) ||
         (l.kontak_peminjam && l.kontak_peminjam.toLowerCase().includes(q)) ||
+        (l.alamat_peminjam && l.alamat_peminjam.toLowerCase().includes(q)) ||
         (l.prodi_instansi && l.prodi_instansi.toLowerCase().includes(q)) ||
         (l.item?.nama_barang && l.item.nama_barang.toLowerCase().includes(q)) ||
         (l.item?.kode_barang && l.item.kode_barang.toLowerCase().includes(q))
@@ -103,6 +105,7 @@ export default function LoansPage() {
       'Nama Peminjam': l.nama_peminjam,
       'NIM / Identitas': l.nim_identitas,
       'No. WhatsApp / Kontak': l.kontak_peminjam || '-',
+      'Alamat Domisili': l.alamat_peminjam || '-',
       'Program Studi': l.prodi_instansi || '-',
       'Kode Barang': l.item?.kode_barang || '-',
       'Nama Barang': l.item?.nama_barang || '-',
@@ -226,7 +229,7 @@ export default function LoansPage() {
               <thead>
                 <tr className="bg-[#E2E9E3] border-b border-[#D9DFDA] text-[12px] font-semibold text-[#2E3B40]">
                   <th className="py-3.5 px-5">Kode Peminjaman</th>
-                  <th className="py-3.5 px-5">Peminjam & Kontak</th>
+                  <th className="py-3.5 px-5">Peminjam, Kontak & Alamat</th>
                   <th className="py-3.5 px-5">Barang & Jumlah</th>
                   <th className="py-3.5 px-5">Tgl Pinjam / Tenggat</th>
                   <th className="py-3.5 px-5 text-center">Status</th>
@@ -285,6 +288,13 @@ export default function LoansPage() {
                                 <span>{loan.prodi_instansi}</span>
                               </>
                             )}
+                          </div>
+                          {/* Alamat Domisili Sesuai SOP */}
+                          <div className="flex items-start gap-1 text-[11px] text-[#69777A] mt-1 max-w-[280px]">
+                            <MapPin className="w-3 h-3 text-[#87918F] shrink-0 mt-0.5" />
+                            <span className="truncate" title={loan.alamat_peminjam}>
+                              {loan.alamat_peminjam || 'Alamat sesuai kartu identitas'}
+                            </span>
                           </div>
                           {loan.kontak_peminjam && (
                             <a
@@ -409,6 +419,11 @@ export default function LoansPage() {
                       {loan.prodi_instansi && (
                         <p className="text-[11px] text-[#69777A]">{loan.prodi_instansi}</p>
                       )}
+                      {/* Alamat Domisili */}
+                      <div className="flex items-start gap-1 text-[11px] text-[#69777A] mt-1 max-w-[240px]">
+                        <MapPin className="w-3 h-3 text-[#87918F] shrink-0 mt-0.5" />
+                        <span className="line-clamp-2">{loan.alamat_peminjam || 'Alamat sesuai kartu identitas'}</span>
+                      </div>
                     </div>
 
                     <div>

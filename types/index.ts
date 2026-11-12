@@ -46,7 +46,8 @@ export interface Loan {
   item?: Item; // Joined item info
   nama_peminjam: string;
   nim_identitas: string;
-  kontak_peminjam?: string;
+  kontak_peminjam: string; // SOP: Wajib kontak aktif (tidak boleh null)
+  alamat_peminjam: string; // SOP: Wajib alamat domisili (tidak boleh null)
   prodi_instansi?: string;
   email_peminjam?: string;
   jumlah: number;

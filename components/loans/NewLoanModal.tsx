@@ -15,6 +15,8 @@ import {
   CheckCircle2,
   Phone,
   GraduationCap,
+  MapPin,
+  ShieldAlert,
 } from 'lucide-react';
 
 interface NewLoanModalProps {
@@ -38,6 +40,7 @@ export default function NewLoanModal({
   const [namaPeminjam, setNamaPeminjam] = useState('');
   const [nimIdentitas, setNimIdentitas] = useState('');
   const [kontakPeminjam, setKontakPeminjam] = useState('');
+  const [alamatPeminjam, setAlamatPeminjam] = useState('');
   const [prodiInstansi, setProdiInstansi] = useState('');
   const [jumlah, setJumlah] = useState<number>(1);
   const [tanggalPinjam, setTanggalPinjam] = useState('');
@@ -76,6 +79,7 @@ export default function NewLoanModal({
       setNamaPeminjam('');
       setNimIdentitas('');
       setKontakPeminjam('');
+      setAlamatPeminjam('');
       setProdiInstansi('');
       setJumlah(1);
       setCatatan('');
@@ -119,7 +123,11 @@ export default function NewLoanModal({
       return;
     }
     if (!kontakPeminjam.trim()) {
-      setFormError('Nomor WhatsApp / telepon peminjam wajib diisi untuk keperluan darurat atau konfirmasi!');
+      setFormError('SOP Laboratorium: Nomor WhatsApp / kontak aktif peminjam wajib diisi!');
+      return;
+    }
+    if (!alamatPeminjam.trim()) {
+      setFormError('SOP Laboratorium: Alamat lengkap domisili peminjam wajib dicatat!');
       return;
     }
     if (jumlah <= 0) {
@@ -143,6 +151,7 @@ export default function NewLoanModal({
           nama_peminjam: namaPeminjam.trim(),
           nim_identitas: nimIdentitas.trim(),
           kontak_peminjam: kontakPeminjam.trim(),
+          alamat_peminjam: alamatPeminjam.trim(),
           prodi_instansi: prodiInstansi.trim(),
           jumlah: Number(jumlah),
           tanggal_pinjam: tanggalPinjam,
@@ -210,6 +219,14 @@ export default function NewLoanModal({
               <span>{formError}</span>
             </div>
           )}
+
+          {/* SOP Laboratorium Banner */}
+          <div className="p-3.5 bg-[#E1EDE4] border border-[#548C75]/30 rounded-[10px] flex items-start gap-2.5 text-xs text-[#2E3B40]">
+            <ShieldAlert className="w-4 h-4 text-[#548C75] shrink-0 mt-0.5" />
+            <div className="leading-relaxed">
+              <span className="font-bold text-[#548C75]">SOP Peminjaman Laboratorium:</span> Peminjam <strong>wajib membawa kartu identitas resmi (KTM/KTP)</strong> serta mencatat <strong>alamat domisili</strong> dan <strong>kontak WhatsApp aktif</strong> demi keperluan pertanggungjawaban & tindak lanjut inventaris.
+            </div>
+          </div>
 
           {/* Select Item */}
           <div>
@@ -325,6 +342,25 @@ export default function NewLoanModal({
                 />
                 <GraduationCap className="w-3.5 h-3.5 text-[#87918F] absolute left-2.5 top-3" />
               </div>
+            </div>
+          </div>
+
+          {/* Alamat Domisili Peminjam (SOP Wajib) */}
+          <div>
+            <label className="block text-[13px] font-medium text-[#2E3B40] mb-1 flex items-center justify-between">
+              <span>Alamat Domisili / Tempat Tinggal <span className="text-[#A95353]">*</span></span>
+              <span className="text-[11px] text-[#A95353] font-semibold">Wajib Sesuai SOP</span>
+            </label>
+            <div className="relative">
+              <textarea
+                rows={2}
+                placeholder="Contoh: Jl. Ketintang Madya No. 45, Wonokromo / Asrama Kampus Barat Blok C No. 12"
+                value={alamatPeminjam}
+                onChange={(e) => setAlamatPeminjam(e.target.value)}
+                className="w-full pl-8 pr-3 py-2 text-[14px] bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] focus:bg-[#F4F5F1] outline-none text-[#344047] resize-none"
+                required
+              />
+              <MapPin className="w-3.5 h-3.5 text-[#87918F] absolute left-2.5 top-3" />
             </div>
           </div>
 
