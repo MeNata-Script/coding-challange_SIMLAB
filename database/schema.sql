@@ -244,22 +244,22 @@ BEGIN
     -- Note: When inserting loans manually in seed, triggers adjust item stock.
     -- Overdue loan example (Estimasi kemarin)
     IF laptop_id IS NOT NULL THEN
-        INSERT INTO loans (kode_peminjaman, item_id, nama_peminjam, nim_identitas, jumlah, tanggal_pinjam, estimasi_kembali, status, catatan, staff_username)
-        VALUES ('LOAN-202611-001', laptop_id, 'Ahmad Fauzi', '21051204012', 1, CURRENT_DATE - INTERVAL '5 days', CURRENT_DATE - INTERVAL '1 day', 'DIPINJAM', 'Peminjaman untuk praktikum komputasi', 'staff')
+        INSERT INTO loans (kode_peminjaman, item_id, nama_peminjam, nim_identitas, kontak_peminjam, alamat_peminjam, prodi_instansi, jumlah, tanggal_pinjam, estimasi_kembali, status, catatan, staff_username)
+        VALUES ('LOAN-202611-001', laptop_id, 'Ahmad Fauzi', '21051204012', '081234567890', 'Jl. Ketintang Madya No. 45, Wonokromo, Surabaya', 'Teknik Informatika (S1)', 1, CURRENT_DATE - INTERVAL '5 days', CURRENT_DATE - INTERVAL '1 day', 'DIPINJAM', 'Peminjaman untuk praktikum komputasi', 'staff')
         ON CONFLICT (kode_peminjaman) DO NOTHING;
     END IF;
 
     -- Active on-time loan example (Estimasi 2 hari ke depan)
     IF proyektor_id IS NOT NULL THEN
-        INSERT INTO loans (kode_peminjaman, item_id, nama_peminjam, nim_identitas, jumlah, tanggal_pinjam, estimasi_kembali, status, catatan, staff_username)
-        VALUES ('LOAN-202611-002', proyektor_id, 'Siti Rahmawati', '21051204045', 1, CURRENT_DATE - INTERVAL '1 day', CURRENT_DATE + INTERVAL '2 days', 'DIPINJAM', 'Seminar proposal tugas akhir di ruang B201', 'staff')
+        INSERT INTO loans (kode_peminjaman, item_id, nama_peminjam, nim_identitas, kontak_peminjam, alamat_peminjam, prodi_instansi, jumlah, tanggal_pinjam, estimasi_kembali, status, catatan, staff_username)
+        VALUES ('LOAN-202611-002', proyektor_id, 'Siti Rahmawati', '21051204045', '085712345678', 'Asrama Mahasiswa Kampus Barat Blok C No. 12, Surabaya', 'Sistem Informasi (S1)', 1, CURRENT_DATE - INTERVAL '1 day', CURRENT_DATE + INTERVAL '2 days', 'DIPINJAM', 'Seminar proposal tugas akhir di ruang B201', 'staff')
         ON CONFLICT (kode_peminjaman) DO NOTHING;
     END IF;
 
     -- Completed loan example
     IF router_id IS NOT NULL THEN
-        INSERT INTO loans (kode_peminjaman, item_id, nama_peminjam, nim_identitas, jumlah, tanggal_pinjam, estimasi_kembali, tanggal_kembali_aktual, status, kondisi_kembali, catatan, catatan_kembali, staff_username)
-        VALUES ('LOAN-202611-003', router_id, 'Dwi Cahyo', '21051204089', 1, CURRENT_DATE - INTERVAL '7 days', CURRENT_DATE - INTERVAL '4 days', CURRENT_DATE - INTERVAL '4 days', 'SELESAI', 'Baik', 'Uji coba konfigurasi routing dinamis', 'Dikembalikan tepat waktu, kondisi normal lengkap adaptor', 'staff')
+        INSERT INTO loans (kode_peminjaman, item_id, nama_peminjam, nim_identitas, kontak_peminjam, alamat_peminjam, prodi_instansi, jumlah, tanggal_pinjam, estimasi_kembali, tanggal_kembali_aktual, status, kondisi_kembali, catatan, catatan_kembali, staff_username)
+        VALUES ('LOAN-202611-003', router_id, 'Dwi Cahyo', '21051204089', '081398765432', 'Jl. Gayungan Asri No. 8, Gayungan, Surabaya', 'Teknik Komputer (D3)', 1, CURRENT_DATE - INTERVAL '7 days', CURRENT_DATE - INTERVAL '4 days', CURRENT_DATE - INTERVAL '4 days', 'SELESAI', 'Baik', 'Uji coba konfigurasi routing dinamis', 'Dikembalikan tepat waktu, kondisi normal lengkap adaptor', 'staff')
         ON CONFLICT (kode_peminjaman) DO NOTHING;
     END IF;
 END $$;
