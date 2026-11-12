@@ -11,7 +11,7 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        canvas: "#F8FAFC",
+        canvas: "#EEF2F6",
         surface: "#FFFFFF",
         primary: {
           50: "#EEF2FF",
