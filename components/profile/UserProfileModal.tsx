@@ -5,7 +5,6 @@ import { User } from '@/types';
 import { formatDate } from '@/lib/utils';
 import {
   X,
-  User as UserIcon,
   ShieldCheck,
   UserCheck,
   Mail,
@@ -58,70 +57,92 @@ export default function UserProfileModal({
       ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#2E3B40]/40 backdrop-blur-xs animate-in fade-in">
-      <div className="bg-[#F4F5F1] rounded-[14px] shadow-xl border border-[#D9DFDA] w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
-        {/* Header Cover Banner */}
-        <div className="h-24 bg-gradient-to-r from-[#34495E] to-[#648F87] relative px-6 flex items-start justify-end pt-3 shrink-0">
-          <button
-            onClick={onClose}
-            className="p-1.5 rounded-[8px] bg-black/20 hover:bg-black/40 text-white transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-
-        {/* Profile Card Body */}
-        <div className="px-6 pb-6 pt-0 relative flex-1 overflow-y-auto space-y-5">
-          {/* Avatar & Main Info (Overlapping Cover) */}
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 -mt-12">
-            <div className="flex items-end gap-3.5">
-              <img
-                src={
-                  user.avatar_url ||
-                  `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.username}`
-                }
-                alt={user.full_name}
-                className="w-20 h-20 rounded-full bg-[#E2E9E3] border-4 border-[#F4F5F1] shadow-md object-cover"
-              />
-              <div className="mb-1">
-                <h3 className="font-bold text-lg text-[#2E3B40] flex items-center gap-2">
-                  <span>{user.full_name}</span>
-                  {isSelf && (
-                    <span className="text-[10px] font-semibold bg-[#DCE8E2] text-[#34495E] px-2 py-0.5 rounded-full border border-[#D9DFDA]">
-                      Akun Anda
-                    </span>
-                  )}
-                </h3>
-                <p className="font-mono text-xs text-[#69777A]">@{user.username}</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-1.5 mb-1 self-start sm:self-end">
-              {isAdmin ? (
-                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-[#DCE8E2] text-[#34495E] border border-[#D9DFDA]">
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                  ADMINISTRATOR
-                </span>
-              ) : (
-                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-[#ECEFEA] text-[#69777A] border border-[#D9DFDA]">
-                  <UserCheck className="w-3.5 h-3.5" />
-                  STAFF OPERASIONAL
-                </span>
-              )}
-              <span
-                className={`px-2.5 py-1 rounded-full text-xs font-bold border ${
-                  user.status === 'AKTIF'
-                    ? 'bg-[#E1EDE4] text-[#548C75] border-[#548C75]/20'
-                    : 'bg-[#F2E3E1] text-[#A95353] border-[#A95353]/20'
-                }`}
-              >
-                {user.status}
-              </span>
-            </div>
+    <div
+      className="fixed inset-0 z-50 overflow-y-auto bg-[#2E3B40]/60 backdrop-blur-xs p-3 sm:p-4 flex items-center justify-center animate-in fade-in"
+      onClick={onClose}
+    >
+      <div
+        className="bg-[#F4F5F1] rounded-[16px] shadow-2xl border border-[#D9DFDA] w-full max-w-lg my-auto flex flex-col max-h-[calc(100dvh-2rem)] sm:max-h-[90vh] overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header Block: Cover Banner + Avatar & Identity (Non-scrolling, never clipped) */}
+        <div className="relative shrink-0 bg-[#F4F5F1]">
+          {/* Cover Banner */}
+          <div className="h-20 sm:h-24 bg-gradient-to-r from-[#34495E] via-[#3d566e] to-[#648F87] relative px-4 sm:px-6 flex items-start justify-end pt-3">
+            <button
+              onClick={onClose}
+              className="w-8 h-8 rounded-full bg-black/30 hover:bg-black/50 text-white flex items-center justify-center transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-white/50"
+              aria-label="Tutup modal profil"
+            >
+              <X className="w-5 h-5" />
+            </button>
           </div>
 
+          {/* Avatar & Main Info Row */}
+          <div className="px-5 sm:px-6 pb-4 pt-0">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 -mt-10 sm:-mt-12">
+              <div className="flex items-end gap-3.5">
+                <div className="relative shrink-0">
+                  <img
+                    src={
+                      user.avatar_url ||
+                      `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.username}`
+                    }
+                    alt={user.full_name}
+                    className="w-20 h-20 rounded-full bg-[#E2E9E3] border-4 border-[#F4F5F1] shadow-md object-cover"
+                  />
+                  <span
+                    className={`absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full border-2 border-[#F4F5F1] ${
+                      user.status === 'AKTIF' ? 'bg-[#548C75]' : 'bg-[#A95353]'
+                    }`}
+                    title={`Status Akun: ${user.status}`}
+                  />
+                </div>
+                <div className="min-w-0 pb-0.5">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <h3 className="font-bold text-base sm:text-lg text-[#2E3B40] truncate max-w-[200px] sm:max-w-[260px]">
+                      {user.full_name}
+                    </h3>
+                    {isSelf && (
+                      <span className="text-[10px] font-semibold bg-[#DCE8E2] text-[#34495E] px-2 py-0.5 rounded-full border border-[#D9DFDA] shrink-0">
+                        Akun Anda
+                      </span>
+                    )}
+                  </div>
+                  <p className="font-mono text-xs text-[#69777A]">@{user.username}</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1.5 shrink-0 self-start sm:self-end">
+                {isAdmin ? (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#DCE8E2] text-[#34495E] border border-[#D9DFDA]">
+                    <ShieldCheck className="w-3.5 h-3.5" />
+                    ADMINISTRATOR
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold bg-[#ECEFEA] text-[#69777A] border border-[#D9DFDA]">
+                    <UserCheck className="w-3.5 h-3.5" />
+                    STAFF OPERASIONAL
+                  </span>
+                )}
+                <span
+                  className={`px-2.5 py-1 rounded-full text-[11px] font-bold border ${
+                    user.status === 'AKTIF'
+                      ? 'bg-[#E1EDE4] text-[#548C75] border-[#548C75]/20'
+                      : 'bg-[#F2E3E1] text-[#A95353] border-[#A95353]/20'
+                  }`}
+                >
+                  {user.status}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Scrollable Details Body */}
+        <div className="px-5 sm:px-6 py-4 overflow-y-auto flex-1 space-y-4 border-t border-[#D9DFDA]">
           {/* Contact Details Grid */}
-          <div className="bg-[#ECEFEA] p-4 rounded-[10px] border border-[#D9DFDA] grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <div className="bg-[#ECEFEA] p-4 rounded-[12px] border border-[#D9DFDA] grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
             <div className="flex items-start gap-2.5">
               <Briefcase className="w-4 h-4 text-[#69777A] shrink-0 mt-0.5" />
               <div>
@@ -136,7 +157,7 @@ export default function UserProfileModal({
               <Mail className="w-4 h-4 text-[#69777A] shrink-0 mt-0.5" />
               <div>
                 <p className="text-[#87918F] text-[11px]">Email Resmi</p>
-                <p className="font-semibold text-[#2E3B40] font-mono">
+                <p className="font-semibold text-[#2E3B40] font-mono break-all">
                   {user.email || `${user.username}@simlab.ac.id`}
                 </p>
               </div>
@@ -169,7 +190,7 @@ export default function UserProfileModal({
               <Key className="w-3.5 h-3.5 text-[#34495E]" />
               <span>Hak Akses & Otorisasi Sistem (RBAC)</span>
             </h4>
-            <div className="bg-[#ECEFEA] rounded-[10px] border border-[#D9DFDA] p-3 space-y-2">
+            <div className="bg-[#ECEFEA] rounded-[12px] border border-[#D9DFDA] p-3 space-y-2">
               {permissions.map((p, idx) => (
                 <div key={idx} className="flex items-center gap-2 text-xs">
                   {p.active ? (
@@ -193,7 +214,7 @@ export default function UserProfileModal({
         </div>
 
         {/* Footer Actions */}
-        <div className="px-6 py-3.5 bg-[#E2E9E3] border-t border-[#D9DFDA] flex items-center justify-between gap-3 shrink-0">
+        <div className="px-5 sm:px-6 py-3.5 bg-[#E2E9E3] border-t border-[#D9DFDA] flex items-center justify-between gap-3 shrink-0">
           {isSelf ? (
             <button
               onClick={() => {

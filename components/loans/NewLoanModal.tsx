@@ -175,8 +175,14 @@ export default function NewLoanModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#2E3B40]/40 backdrop-blur-xs animate-in fade-in">
-      <div className="bg-[#F4F5F1] rounded-[14px] shadow-modal border border-[#D9DFDA] w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
+    <div
+      className="fixed inset-0 z-50 overflow-y-auto bg-[#2E3B40]/60 backdrop-blur-xs p-3 sm:p-4 flex items-center justify-center animate-in fade-in"
+      onClick={onClose}
+    >
+      <div
+        className="bg-[#F4F5F1] rounded-[14px] shadow-2xl border border-[#D9DFDA] w-full max-w-lg my-auto overflow-hidden flex flex-col max-h-[calc(100dvh-2rem)] sm:max-h-[90vh]"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Header */}
         <div className="px-6 py-4 bg-[#E2E9E3] border-b border-[#D9DFDA] flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">

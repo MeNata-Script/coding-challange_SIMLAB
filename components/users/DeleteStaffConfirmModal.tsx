@@ -44,8 +44,14 @@ export default function DeleteStaffConfirmModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#2E3B40]/40 backdrop-blur-xs animate-in fade-in">
-      <div className="bg-[#F4F5F1] rounded-[14px] shadow-lg border border-[#D9DFDA] w-full max-w-md overflow-hidden">
+    <div
+      className="fixed inset-0 z-50 overflow-y-auto bg-[#2E3B40]/60 backdrop-blur-xs p-3 sm:p-4 flex items-center justify-center animate-in fade-in"
+      onClick={onClose}
+    >
+      <div
+        className="bg-[#F4F5F1] rounded-[14px] shadow-2xl border border-[#D9DFDA] w-full max-w-md my-auto overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Content */}
         <div className="p-6 text-center">
           <div className="w-12 h-12 rounded-[10px] bg-[#F2E3E1] text-[#A95353] flex items-center justify-center mx-auto mb-4 border border-[#D9DFDA]">

@@ -120,8 +120,14 @@ export default function StatDetailModal({
   const IconComponent = config.icon;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-[#2E3B40]/40 backdrop-blur-xs animate-in fade-in">
-      <div className="bg-[#F4F5F1] rounded-[14px] shadow-xl border border-[#D9DFDA] w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden">
+    <div
+      className="fixed inset-0 z-50 overflow-y-auto bg-[#2E3B40]/60 backdrop-blur-xs p-3 sm:p-4 flex items-center justify-center animate-in fade-in"
+      onClick={onClose}
+    >
+      <div
+        className="bg-[#F4F5F1] rounded-[14px] shadow-2xl border border-[#D9DFDA] w-full max-w-4xl max-h-[calc(100dvh-2rem)] sm:max-h-[90vh] my-auto flex flex-col overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Header */}
         <div className="px-5 py-4 bg-[#E2E9E3] border-b border-[#D9DFDA] flex items-center justify-between gap-3 shrink-0">
           <div className="flex items-center gap-3">
