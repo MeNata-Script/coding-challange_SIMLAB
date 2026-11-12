@@ -17,6 +17,7 @@ import {
   Calendar,
   User,
   MapPin,
+  MessageCircle,
 } from 'lucide-react';
 
 export type StatModalType =
@@ -290,7 +291,18 @@ export default function StatDetailModal({
                         </td>
                         <td className="py-3 px-4">
                           <p className="font-bold text-[#2E3B40]">{loan.nama_peminjam}</p>
-                          <p className="font-mono text-[11px] text-[#69777A]">{loan.nim_identitas}</p>
+                          <p className="font-mono text-[11px] text-[#69777A]">NIM: {loan.nim_identitas}</p>
+                          {loan.kontak_peminjam && (
+                            <a
+                              href={`https://wa.me/${loan.kontak_peminjam.replace(/[^0-9]/g, '').replace(/^0/, '62')}?text=${encodeURIComponent(`Halo ${loan.nama_peminjam}, kami dari SIMLAB mengenai peminjaman alat ${loan.item?.nama_barang} (${loan.kode_peminjaman})...`)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-[10px] text-[#548C75] bg-[#E1EDE4] hover:bg-[#D5E6D9] px-1.5 py-0.5 rounded border border-[#548C75]/20 font-semibold mt-1"
+                            >
+                              <MessageCircle className="w-2.5 h-2.5" />
+                              <span>{loan.kontak_peminjam}</span>
+                            </a>
+                          )}
                         </td>
                         <td className="py-3 px-4">
                           <p className="font-semibold text-[#2E3B40]">{loan.item?.nama_barang || 'Barang Lab'}</p>
@@ -359,6 +371,21 @@ export default function StatDetailModal({
                         Kembali: {formatDate(loan.estimasi_kembali)}
                       </span>
                     </div>
+
+                    {loan.kontak_peminjam && (
+                      <div className="pt-1 flex items-center justify-between text-[11px]">
+                        <span className="text-[#87918F]">Kontak Peminjam:</span>
+                        <a
+                          href={`https://wa.me/${loan.kontak_peminjam.replace(/[^0-9]/g, '').replace(/^0/, '62')}?text=${encodeURIComponent(`Halo ${loan.nama_peminjam}, kami dari SIMLAB mengenai peminjaman alat ${loan.item?.nama_barang}...`)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 font-semibold text-[#548C75] bg-[#E1EDE4] px-2 py-0.5 rounded-[4px] border border-[#548C75]/20"
+                        >
+                          <MessageCircle className="w-3 h-3" />
+                          <span>WA: {loan.kontak_peminjam}</span>
+                        </a>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>

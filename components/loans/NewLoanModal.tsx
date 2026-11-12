@@ -8,9 +8,13 @@ import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/context/ToastContext';
 import {
   X,
-  PlusCircle,
+  Package,
+  Calendar,
   AlertCircle,
+  PlusCircle,
   CheckCircle2,
+  Phone,
+  GraduationCap,
 } from 'lucide-react';
 
 interface NewLoanModalProps {
@@ -33,6 +37,8 @@ export default function NewLoanModal({
   const [selectedItemId, setSelectedItemId] = useState<string>('');
   const [namaPeminjam, setNamaPeminjam] = useState('');
   const [nimIdentitas, setNimIdentitas] = useState('');
+  const [kontakPeminjam, setKontakPeminjam] = useState('');
+  const [prodiInstansi, setProdiInstansi] = useState('');
   const [jumlah, setJumlah] = useState<number>(1);
   const [tanggalPinjam, setTanggalPinjam] = useState('');
   const [estimasiKembali, setEstimasiKembali] = useState('');
@@ -69,6 +75,8 @@ export default function NewLoanModal({
       setFormError('');
       setNamaPeminjam('');
       setNimIdentitas('');
+      setKontakPeminjam('');
+      setProdiInstansi('');
       setJumlah(1);
       setCatatan('');
     }
@@ -79,15 +87,19 @@ export default function NewLoanModal({
   const currentItem = items.find((i) => i.id === selectedItemId);
   const maxStock = currentItem ? currentItem.stok : 0;
 
-  const handleQuickAdd = (amount: number) => {
-    if (!currentItem) return;
-    const nextVal = Math.min(jumlah + amount, maxStock);
-    setJumlah(Math.max(1, nextVal));
+  const handleQuickAdd = (qty: number) => {
+    const nextVal = jumlah + qty;
+    if (nextVal <= maxStock) {
+      setJumlah(nextVal);
+    } else {
+      setJumlah(maxStock);
+    }
   };
 
   const handleSetMax = () => {
-    if (!currentItem) return;
-    setJumlah(Math.max(1, maxStock));
+    if (maxStock > 0) {
+      setJumlah(maxStock);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -95,7 +107,7 @@ export default function NewLoanModal({
     setFormError('');
 
     if (!selectedItemId) {
-      setFormError('Silakan pilih barang yang akan dipinjam!');
+      setFormError('Silakan pilih barang yang ingin dipinjam!');
       return;
     }
     if (!namaPeminjam.trim()) {
@@ -104,6 +116,10 @@ export default function NewLoanModal({
     }
     if (!nimIdentitas.trim()) {
       setFormError('NIM atau nomor identitas peminjam wajib diisi!');
+      return;
+    }
+    if (!kontakPeminjam.trim()) {
+      setFormError('Nomor WhatsApp / telepon peminjam wajib diisi untuk keperluan darurat atau konfirmasi!');
       return;
     }
     if (jumlah <= 0) {
@@ -126,6 +142,8 @@ export default function NewLoanModal({
           item_id: selectedItemId,
           nama_peminjam: namaPeminjam.trim(),
           nim_identitas: nimIdentitas.trim(),
+          kontak_peminjam: kontakPeminjam.trim(),
+          prodi_instansi: prodiInstansi.trim(),
           jumlah: Number(jumlah),
           tanggal_pinjam: tanggalPinjam,
           estimasi_kembali: estimasiKembali,
@@ -160,19 +178,19 @@ export default function NewLoanModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#2E3B40]/40 backdrop-blur-xs animate-in fade-in">
       <div className="bg-[#F4F5F1] rounded-[14px] shadow-modal border border-[#D9DFDA] w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-[#D9DFDA] flex items-center justify-between bg-[#E2E9E3]">
-          <div className="flex items-center gap-2.5">
-            <div className="p-2 bg-[#DCE8E2] text-[#34495E] rounded-[8px]">
+        <div className="px-6 py-4 bg-[#E2E9E3] border-b border-[#D9DFDA] flex items-center justify-between shrink-0">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-[10px] bg-[#DCE8E2] text-[#34495E] flex items-center justify-center">
               <PlusCircle className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-semibold text-[#2E3B40] text-[16px]">Catat Peminjaman Barang</h3>
-              <p className="text-[12px] text-[#69777A]">Formulir transaksi sirkulasi laboratorium</p>
+              <h3 className="font-semibold text-[#2E3B40] text-[16px]">Catat Peminjaman Baru</h3>
+              <p className="text-[12px] text-[#69777A]">Pastikan identitas & nomor kontak mahasiswa terverifikasi</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-[6px] text-[#87918F] hover:text-[#2E3B40] hover:bg-[#ECEFEA] transition-colors"
+            className="p-1 rounded-[8px] text-[#69777A] hover:text-[#2E3B40] hover:bg-[#DCE8E2] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -187,7 +205,7 @@ export default function NewLoanModal({
             </div>
           )}
 
-          {/* Item Selector */}
+          {/* Select Item */}
           <div>
             <label className="block text-[13px] font-medium text-[#2E3B40] mb-1">
               Pilih Barang Laboratorium <span className="text-[#A95353]">*</span>
@@ -264,6 +282,43 @@ export default function NewLoanModal({
                 className="w-full px-3 py-2 text-[14px] bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] focus:bg-[#F4F5F1] outline-none font-mono text-[#344047]"
                 required
               />
+            </div>
+          </div>
+
+          {/* Contact Details: No. WA & Prodi */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-[13px] font-medium text-[#2E3B40] mb-1 flex items-center justify-between">
+                <span>No. WhatsApp / HP <span className="text-[#A95353]">*</span></span>
+                <span className="text-[11px] text-[#548C75] font-semibold">Bisa Dihubungi</span>
+              </label>
+              <div className="relative">
+                <input
+                  type="tel"
+                  placeholder="Contoh: 081234567890"
+                  value={kontakPeminjam}
+                  onChange={(e) => setKontakPeminjam(e.target.value)}
+                  className="w-full pl-8 pr-3 py-2 text-[14px] bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] focus:bg-[#F4F5F1] outline-none font-mono text-[#344047]"
+                  required
+                />
+                <Phone className="w-3.5 h-3.5 text-[#87918F] absolute left-2.5 top-3" />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-[13px] font-medium text-[#2E3B40] mb-1">
+                Program Studi / Jurusan
+              </label>
+              <div className="relative">
+                <input
+                  type="text"
+                  placeholder="Contoh: S1 Teknik Informatika"
+                  value={prodiInstansi}
+                  onChange={(e) => setProdiInstansi(e.target.value)}
+                  className="w-full pl-8 pr-3 py-2 text-[14px] bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] focus:bg-[#F4F5F1] outline-none text-[#344047]"
+                />
+                <GraduationCap className="w-3.5 h-3.5 text-[#87918F] absolute left-2.5 top-3" />
+              </div>
             </div>
           </div>
 

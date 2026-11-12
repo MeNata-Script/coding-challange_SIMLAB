@@ -15,9 +15,13 @@ import {
   Edit2,
   Trash2,
   Search,
+  User as UserIcon,
+  Phone,
+  Mail,
 } from 'lucide-react';
 import StaffFormModal from '@/components/users/StaffFormModal';
 import DeleteStaffConfirmModal from '@/components/users/DeleteStaffConfirmModal';
+import UserProfileModal from '@/components/profile/UserProfileModal';
 
 export default function UsersManagementPage() {
   const { user: currentUser } = useAuth();
@@ -33,6 +37,9 @@ export default function UsersManagementPage() {
 
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [deletingUser, setDeletingUser] = useState<User | null>(null);
+
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [inspectingUser, setInspectingUser] = useState<User | null>(null);
 
   const loadData = useCallback(async () => {
     try {
@@ -55,7 +62,10 @@ export default function UsersManagementPage() {
     return (
       u.full_name.toLowerCase().includes(q) ||
       u.username.toLowerCase().includes(q) ||
-      u.role.toLowerCase().includes(q)
+      u.role.toLowerCase().includes(q) ||
+      (u.email && u.email.toLowerCase().includes(q)) ||
+      (u.phone && u.phone.toLowerCase().includes(q)) ||
+      (u.jabatan && u.jabatan.toLowerCase().includes(q))
     );
   });
 
@@ -82,6 +92,11 @@ export default function UsersManagementPage() {
     setIsDeleteOpen(true);
   };
 
+  const handleOpenProfile = (user: User) => {
+    setInspectingUser(user);
+    setIsProfileOpen(true);
+  };
+
   const handleToggleStatus = async (user: User) => {
     if (user.id === currentUser?.id) {
       error('Tindakan Ditolak', 'Anda tidak dapat menonaktifkan akun Anda sendiri!');
@@ -103,7 +118,7 @@ export default function UsersManagementPage() {
   return (
     <AppLayout
       title="Kelola Staff & Akses"
-      subtitle="Manajemen akun operator dan hak akses laboratorium (Khusus Admin)"
+      subtitle="Manajemen akun operator, hak akses, dan profil laboratorium (Khusus Admin)"
       adminOnly={true}
     >
       <div className="space-y-5">
@@ -115,7 +130,7 @@ export default function UsersManagementPage() {
             </div>
             <input
               type="text"
-              placeholder="Cari nama staff, username, atau role..."
+              placeholder="Cari nama staff, username, kontak, atau jabatan..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full pl-10 pr-4 py-2.5 text-xs bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] text-[#344047] placeholder:text-[#87918F] focus:border-[#34495E] focus:outline-none focus:ring-1 focus:ring-[#34495E] transition-all"
@@ -145,8 +160,8 @@ export default function UsersManagementPage() {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-[#E2E9E3] border-b border-[#D9DFDA] text-[11px] font-bold uppercase tracking-wider text-[#69777A]">
-                  <th className="py-3.5 px-5">Pengguna</th>
-                  <th className="py-3.5 px-5">Username</th>
+                  <th className="py-3.5 px-5">Pengguna & Jabatan</th>
+                  <th className="py-3.5 px-5">Username & Kontak</th>
                   <th className="py-3.5 px-5">Hak Akses (Role)</th>
                   <th className="py-3.5 px-5">Terdaftar Sejak</th>
                   <th className="py-3.5 px-5 text-center">Status Akun</th>
@@ -177,7 +192,11 @@ export default function UsersManagementPage() {
                     return (
                       <tr key={u.id} className="hover:bg-[#ECEFEA] transition-colors">
                         <td className="py-3.5 px-5">
-                          <div className="flex items-center gap-3">
+                          <button
+                            onClick={() => handleOpenProfile(u)}
+                            className="flex items-center gap-3 text-left hover:opacity-80 transition-opacity"
+                            title="Klik untuk melihat profil lengkap"
+                          >
                             <img
                               src={
                                 u.avatar_url ||
@@ -187,7 +206,7 @@ export default function UsersManagementPage() {
                               className="w-9 h-9 rounded-full bg-[#E2E9E3] border border-[#D9DFDA]"
                             />
                             <div>
-                              <p className="font-semibold text-[#2E3B40] flex items-center gap-1.5">
+                              <p className="font-semibold text-[#2E3B40] flex items-center gap-1.5 hover:underline">
                                 <span>{u.full_name}</span>
                                 {isSelf && (
                                   <span className="text-[10px] bg-[#DCE8E2] text-[#34495E] px-1.5 py-0.2 rounded font-normal">
@@ -195,13 +214,18 @@ export default function UsersManagementPage() {
                                   </span>
                                 )}
                               </p>
-                              <p className="text-[11px] text-[#87918F]">ID: {u.id}</p>
+                              <p className="text-[11px] text-[#69777A]">
+                                {u.jabatan || (u.role === 'ADMIN' ? 'Kepala Lab Komputasi' : 'Teknisi Lab')}
+                              </p>
                             </div>
-                          </div>
+                          </button>
                         </td>
 
-                        <td className="py-3.5 px-5 font-mono text-[#344047] font-semibold">
-                          @{u.username}
+                        <td className="py-3.5 px-5">
+                          <p className="font-mono text-[#344047] font-semibold">@{u.username}</p>
+                          <p className="text-[11px] text-[#87918F] font-mono">
+                            {u.phone || u.email || 'Kontak belum disetel'}
+                          </p>
                         </td>
 
                         <td className="py-3.5 px-5">
@@ -244,6 +268,13 @@ export default function UsersManagementPage() {
 
                         <td className="py-3.5 px-5 text-right whitespace-nowrap">
                           <div className="flex items-center justify-end gap-1">
+                            <button
+                              onClick={() => handleOpenProfile(u)}
+                              className="p-1.5 text-[#69777A] hover:text-[#527493] hover:bg-[#E3EAF0] rounded-[8px] transition-colors"
+                              title="Lihat Profil Lengkap"
+                            >
+                              <UserIcon className="w-4 h-4" />
+                            </button>
                             <button
                               onClick={() => handleOpenEdit(u)}
                               className="p-1.5 text-[#69777A] hover:text-[#34495E] hover:bg-[#DCE8E2] rounded-[8px] transition-colors"
@@ -290,7 +321,10 @@ export default function UsersManagementPage() {
                   className="bg-[#F4F5F1] p-4 rounded-[14px] border border-[#D9DFDA] shadow-xs space-y-3"
                 >
                   <div className="flex items-start justify-between">
-                    <div className="flex items-center gap-2.5">
+                    <button
+                      onClick={() => handleOpenProfile(u)}
+                      className="flex items-center gap-2.5 text-left"
+                    >
                       <img
                         src={
                           u.avatar_url ||
@@ -300,12 +334,20 @@ export default function UsersManagementPage() {
                         className="w-10 h-10 rounded-full bg-[#E2E9E3] border border-[#D9DFDA]"
                       />
                       <div>
-                        <h4 className="font-bold text-[#2E3B40] text-sm">{u.full_name}</h4>
+                        <h4 className="font-bold text-[#2E3B40] text-sm hover:underline">{u.full_name}</h4>
                         <p className="text-xs font-mono text-[#69777A]">@{u.username}</p>
+                        {u.jabatan && <p className="text-[11px] text-[#87918F]">{u.jabatan}</p>}
                       </div>
-                    </div>
+                    </button>
 
                     <div className="flex items-center gap-1">
+                      <button
+                        onClick={() => handleOpenProfile(u)}
+                        className="p-2 text-[#69777A] hover:text-[#527493] hover:bg-[#E3EAF0] rounded-[8px]"
+                        title="Lihat Profil"
+                      >
+                        <UserIcon className="w-4 h-4" />
+                      </button>
                       <button
                         onClick={() => handleOpenEdit(u)}
                         className="p-2 text-[#69777A] hover:text-[#34495E] hover:bg-[#DCE8E2] rounded-[8px]"
@@ -365,6 +407,14 @@ export default function UsersManagementPage() {
         onSuccess={() => {
           loadData();
         }}
+      />
+
+      {/* User Profile Modal */}
+      <UserProfileModal
+        isOpen={isProfileOpen}
+        user={inspectingUser}
+        onClose={() => setIsProfileOpen(false)}
+        isSelf={inspectingUser?.id === currentUser?.id}
       />
     </AppLayout>
   );

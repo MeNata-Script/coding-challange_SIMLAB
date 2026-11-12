@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { User, UserRole, UserStatus } from '@/types';
 import { createUser, updateUser } from '@/lib/db';
 import { useToast } from '@/context/ToastContext';
-import { X, UserPlus, Save, AlertCircle } from 'lucide-react';
+import { X, UserPlus, Save, AlertCircle, Mail, Phone, Briefcase } from 'lucide-react';
 
 interface StaffFormModalProps {
   isOpen: boolean;
@@ -27,6 +27,9 @@ export default function StaffFormModal({
     full_name: '',
     role: 'STAFF' as UserRole,
     status: 'AKTIF' as UserStatus,
+    email: '',
+    phone: '',
+    jabatan: '',
   });
 
   const [loading, setLoading] = useState(false);
@@ -39,6 +42,9 @@ export default function StaffFormModal({
         full_name: initialUser.full_name,
         role: initialUser.role,
         status: initialUser.status,
+        email: initialUser.email || '',
+        phone: initialUser.phone || '',
+        jabatan: initialUser.jabatan || '',
       });
     } else {
       setFormData({
@@ -46,6 +52,9 @@ export default function StaffFormModal({
         full_name: '',
         role: 'STAFF',
         status: 'AKTIF',
+        email: '',
+        phone: '',
+        jabatan: '',
       });
     }
     setFormError('');
@@ -74,6 +83,9 @@ export default function StaffFormModal({
           username: formData.username.trim().toLowerCase(),
           role: formData.role,
           status: formData.status,
+          email: formData.email.trim() || undefined,
+          phone: formData.phone.trim() || undefined,
+          jabatan: formData.jabatan.trim() || undefined,
         });
         success('Staff Diperbarui', `Data akun ${formData.username} berhasil diubah.`);
       } else {
@@ -82,6 +94,9 @@ export default function StaffFormModal({
           username: formData.username.trim().toLowerCase(),
           role: formData.role,
           status: formData.status,
+          email: formData.email.trim() || undefined,
+          phone: formData.phone.trim() || undefined,
+          jabatan: formData.jabatan.trim() || undefined,
         });
         success('Staff Ditambahkan', `Akun baru ${formData.username} berhasil dibuat.`);
       }
@@ -98,9 +113,9 @@ export default function StaffFormModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-in fade-in">
-      <div className="bg-[#F4F5F1] rounded-[14px] shadow-lg border border-[#D9DFDA] w-full max-w-md overflow-hidden">
+      <div className="bg-[#F4F5F1] rounded-[14px] shadow-lg border border-[#D9DFDA] w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-[#D9DFDA] flex items-center justify-between bg-[#E2E9E3]">
+        <div className="px-6 py-4 border-b border-[#D9DFDA] flex items-center justify-between bg-[#E2E9E3] shrink-0">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-[10px] bg-[#DCE8E2] text-[#34495E] flex items-center justify-center">
               <UserPlus className="w-5 h-5" />
@@ -110,7 +125,7 @@ export default function StaffFormModal({
                 {isEditing ? 'Ubah Akun Staff' : 'Tambah Staff Baru'}
               </h3>
               <p className="text-xs text-[#69777A]">
-                {isEditing ? 'Perbarui akses dan informasi akun' : 'Buat akun staf operasional baru'}
+                {isEditing ? 'Perbarui akses dan informasi profil akun' : 'Buat akun staf operasional baru'}
               </p>
             </div>
           </div>
@@ -123,7 +138,7 @@ export default function StaffFormModal({
         </div>
 
         {/* Form Body */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+        <form onSubmit={handleSubmit} className="p-6 space-y-4 overflow-y-auto flex-1">
           {formError && (
             <div className="p-3 bg-[#F2E3E1] border border-[#A95353]/30 rounded-[10px] flex items-center gap-2 text-[#A95353] text-xs">
               <AlertCircle className="w-4 h-4 shrink-0" />
@@ -131,35 +146,75 @@ export default function StaffFormModal({
             </div>
           )}
 
-          <div>
-            <label className="block text-[13px] font-medium text-[#344047] mb-1">
-              Nama Lengkap <span className="text-[#A95353]">*</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Contoh: Rian Hidayat, S.Kom."
-              value={formData.full_name}
-              onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-              className="w-full px-3 py-2 text-xs bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] text-[#344047] placeholder:text-[#87918F] focus:border-[#34495E] focus:outline-none focus:ring-1 focus:ring-[#34495E]"
-              required
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-[13px] font-medium text-[#344047] mb-1">
+                Nama Lengkap <span className="text-[#A95353]">*</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Contoh: Rian Hidayat, S.Kom."
+                value={formData.full_name}
+                onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
+                className="w-full px-3 py-2 text-xs bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] text-[#344047] placeholder:text-[#87918F] focus:border-[#34495E] focus:outline-none focus:ring-1 focus:ring-[#34495E]"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-[13px] font-medium text-[#344047] mb-1">
+                Username <span className="text-[#A95353]">*</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Contoh: rian_lab"
+                value={formData.username}
+                onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                className="w-full px-3 py-2 text-xs bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] text-[#344047] placeholder:text-[#87918F] focus:border-[#34495E] focus:outline-none focus:ring-1 focus:ring-[#34495E] font-mono"
+                required
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-[13px] font-medium text-[#344047] mb-1">
+                Email Resmi Staff
+              </label>
+              <input
+                type="email"
+                placeholder="Contoh: rian@simlab.ac.id"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                className="w-full px-3 py-2 text-xs bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] text-[#344047] placeholder:text-[#87918F] focus:border-[#34495E] focus:outline-none focus:ring-1 focus:ring-[#34495E] font-mono"
+              />
+            </div>
+
+            <div>
+              <label className="block text-[13px] font-medium text-[#344047] mb-1">
+                No. Telepon / WhatsApp
+              </label>
+              <input
+                type="tel"
+                placeholder="Contoh: 081234567890"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                className="w-full px-3 py-2 text-xs bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] text-[#344047] placeholder:text-[#87918F] focus:border-[#34495E] focus:outline-none focus:ring-1 focus:ring-[#34495E] font-mono"
+              />
+            </div>
           </div>
 
           <div>
             <label className="block text-[13px] font-medium text-[#344047] mb-1">
-              Username <span className="text-[#A95353]">*</span>
+              Jabatan / Posisi di Lab
             </label>
             <input
               type="text"
-              placeholder="Contoh: rian_lab"
-              value={formData.username}
-              onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-              className="w-full px-3 py-2 text-xs bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] text-[#344047] placeholder:text-[#87918F] focus:border-[#34495E] focus:outline-none focus:ring-1 focus:ring-[#34495E] font-mono"
-              required
+              placeholder="Contoh: Teknisi Laboratorium Komputer & Jaringan"
+              value={formData.jabatan}
+              onChange={(e) => setFormData({ ...formData, jabatan: e.target.value })}
+              className="w-full px-3 py-2 text-xs bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] text-[#344047] placeholder:text-[#87918F] focus:border-[#34495E] focus:outline-none focus:ring-1 focus:ring-[#34495E]"
             />
-            <p className="text-[11px] text-[#87918F] mt-1">
-              Password default untuk akun baru adalah <code className="bg-[#E2E9E3] px-1 py-0.5 rounded text-[#344047]">staff123</code>
-            </p>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -195,6 +250,10 @@ export default function StaffFormModal({
               </select>
             </div>
           </div>
+
+          <p className="text-[11px] text-[#87918F]">
+            Password default untuk akun baru adalah <code className="bg-[#E2E9E3] px-1 py-0.5 rounded text-[#344047]">staff123</code>
+          </p>
 
           {/* Footer Actions */}
           <div className="pt-3 border-t border-[#D9DFDA] flex items-center justify-end gap-2">

@@ -14,6 +14,8 @@ import {
   CheckCircle2,
   RotateCcw,
   FileSpreadsheet,
+  MessageCircle,
+  Phone,
 } from 'lucide-react';
 import NewLoanModal from '@/components/loans/NewLoanModal';
 import ReturnModal from '@/components/loans/ReturnModal';
@@ -50,33 +52,41 @@ export default function LoansPage() {
     return () => window.removeEventListener('simlab_data_changed', handleUpdate);
   }, [loadData]);
 
-  // Separate Active and Completed Loans
+  // Separate active loans and history
   const activeLoans = useMemo(() => {
-    const list = loans.filter((l) => l.status === 'DIPINJAM');
-    // Sort overdue to the very top, then by estimasi_kembali ascending
-    return list.sort((a, b) => {
-      if (a.is_overdue && !b.is_overdue) return -1;
-      if (!a.is_overdue && b.is_overdue) return 1;
-      return new Date(a.estimasi_kembali).getTime() - new Date(b.estimasi_kembali).getTime();
-    });
+    return loans
+      .filter((l) => l.status === 'DIPINJAM')
+      .sort((a, b) => {
+        // Prioritize overdue items at the top
+        if (a.is_overdue && !b.is_overdue) return -1;
+        if (!a.is_overdue && b.is_overdue) return 1;
+        return new Date(a.estimasi_kembali).getTime() - new Date(b.estimasi_kembali).getTime();
+      });
   }, [loans]);
 
   const historyLoans = useMemo(() => {
-    const list = loans.filter((l) => l.status === 'SELESAI');
-    return list.sort((a, b) => new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime());
+    return loans
+      .filter((l) => l.status === 'SELESAI')
+      .sort(
+        (a, b) =>
+          new Date(b.tanggal_kembali_aktual || b.updated_at).getTime() -
+          new Date(a.tanggal_kembali_aktual || a.updated_at).getTime()
+      );
   }, [loans]);
 
-  // Filtered by search
+  // Search filter
   const currentList = useMemo(() => {
-    const base = activeTab === 'ACTIVE' ? activeLoans : historyLoans;
-    if (!searchQuery.trim()) return base;
+    const list = activeTab === 'ACTIVE' ? activeLoans : historyLoans;
+    if (!searchQuery.trim()) return list;
 
-    const q = searchQuery.toLowerCase();
-    return base.filter(
+    const q = searchQuery.toLowerCase().trim();
+    return list.filter(
       (l) =>
+        l.kode_peminjaman.toLowerCase().includes(q) ||
         l.nama_peminjam.toLowerCase().includes(q) ||
         l.nim_identitas.toLowerCase().includes(q) ||
-        l.kode_peminjaman.toLowerCase().includes(q) ||
+        (l.kontak_peminjam && l.kontak_peminjam.toLowerCase().includes(q)) ||
+        (l.prodi_instansi && l.prodi_instansi.toLowerCase().includes(q)) ||
         (l.item?.nama_barang && l.item.nama_barang.toLowerCase().includes(q)) ||
         (l.item?.kode_barang && l.item.kode_barang.toLowerCase().includes(q))
     );
@@ -92,6 +102,8 @@ export default function LoansPage() {
       'Kode Peminjaman': l.kode_peminjaman,
       'Nama Peminjam': l.nama_peminjam,
       'NIM / Identitas': l.nim_identitas,
+      'No. WhatsApp / Kontak': l.kontak_peminjam || '-',
+      'Program Studi': l.prodi_instansi || '-',
       'Kode Barang': l.item?.kode_barang || '-',
       'Nama Barang': l.item?.nama_barang || '-',
       'Jumlah': l.jumlah,
@@ -125,7 +137,7 @@ export default function LoansPage() {
               </div>
               <input
                 type="text"
-                placeholder="Cari peminjam, NIM, kode loan, nama barang..."
+                placeholder="Cari peminjam, NIM, no. kontak, barang..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 text-[14px] bg-[#E9ECE7] hover:bg-[#ECEFEA] focus:bg-[#F4F5F1] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] transition-colors outline-none text-[#344047]"
@@ -214,7 +226,7 @@ export default function LoansPage() {
               <thead>
                 <tr className="bg-[#E2E9E3] border-b border-[#D9DFDA] text-[12px] font-semibold text-[#2E3B40]">
                   <th className="py-3.5 px-5">Kode Peminjaman</th>
-                  <th className="py-3.5 px-5">Peminjam (NIM)</th>
+                  <th className="py-3.5 px-5">Peminjam & Kontak</th>
                   <th className="py-3.5 px-5">Barang & Jumlah</th>
                   <th className="py-3.5 px-5">Tgl Pinjam / Tenggat</th>
                   <th className="py-3.5 px-5 text-center">Status</th>
@@ -264,10 +276,28 @@ export default function LoansPage() {
                         </td>
 
                         <td className="py-3.5 px-5">
-                          <p className="font-medium text-[#2E3B40]">{loan.nama_peminjam}</p>
-                          <p className="font-mono text-[12px] text-[#69777A] mt-0.5">
-                            NIM: {loan.nim_identitas}
-                          </p>
+                          <p className="font-semibold text-[#2E3B40]">{loan.nama_peminjam}</p>
+                          <div className="flex items-center gap-1.5 text-[11px] text-[#69777A] mt-0.5">
+                            <span className="font-mono">NIM: {loan.nim_identitas}</span>
+                            {loan.prodi_instansi && (
+                              <>
+                                <span>•</span>
+                                <span>{loan.prodi_instansi}</span>
+                              </>
+                            )}
+                          </div>
+                          {loan.kontak_peminjam && (
+                            <a
+                              href={`https://wa.me/${loan.kontak_peminjam.replace(/[^0-9]/g, '').replace(/^0/, '62')}?text=${encodeURIComponent(`Halo ${loan.nama_peminjam}, kami dari SIMLAB Laboratorium mengenai peminjaman alat ${loan.item?.nama_barang || 'lab'} (${loan.kode_peminjaman})...`)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-[#548C75] bg-[#E1EDE4] hover:bg-[#D5E6D9] px-2 py-0.5 rounded-[5px] border border-[#548C75]/20 transition-colors mt-1"
+                              title="Hubungi peminjam via WhatsApp"
+                            >
+                              <MessageCircle className="w-3 h-3" />
+                              <span>{loan.kontak_peminjam}</span>
+                            </a>
+                          )}
                         </td>
 
                         <td className="py-3.5 px-5">
@@ -376,6 +406,9 @@ export default function LoansPage() {
                         {loan.nama_peminjam}
                       </h4>
                       <p className="text-[12px] font-mono text-[#69777A]">NIM: {loan.nim_identitas}</p>
+                      {loan.prodi_instansi && (
+                        <p className="text-[11px] text-[#69777A]">{loan.prodi_instansi}</p>
+                      )}
                     </div>
 
                     <div>
@@ -403,8 +436,25 @@ export default function LoansPage() {
                     </p>
                     <div className="flex items-center justify-between mt-1 text-[#69777A] text-[12px]">
                       <span>Jumlah: {loan.jumlah} unit</span>
-                      <span>Tenggat: {formatDate(loan.estimasi_kembali)}</span>
+                      <span className={isOverdue ? 'text-[#A95353] font-bold' : ''}>
+                        Tenggat: {formatDate(loan.estimasi_kembali)}
+                      </span>
                     </div>
+
+                    {loan.kontak_peminjam && (
+                      <div className="mt-2 pt-2 border-t border-[#DDE2DC] flex items-center justify-between">
+                        <span className="text-[11px] text-[#69777A]">Kontak:</span>
+                        <a
+                          href={`https://wa.me/${loan.kontak_peminjam.replace(/[^0-9]/g, '').replace(/^0/, '62')}?text=${encodeURIComponent(`Halo ${loan.nama_peminjam}, kami dari SIMLAB mengenai peminjaman ${loan.item?.nama_barang}...`)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#548C75] bg-[#E1EDE4] px-2 py-0.5 rounded-[4px] border border-[#548C75]/20"
+                        >
+                          <MessageCircle className="w-3 h-3" />
+                          <span>Chat WA: {loan.kontak_peminjam}</span>
+                        </a>
+                      </div>
+                    )}
                   </div>
 
                   {loan.status === 'DIPINJAM' && (
@@ -423,7 +473,7 @@ export default function LoansPage() {
         </div>
       </div>
 
-      {/* New Loan Modal */}
+      {/* Modals */}
       <NewLoanModal
         isOpen={isNewLoanOpen}
         onClose={() => setIsNewLoanOpen(false)}
@@ -432,7 +482,6 @@ export default function LoansPage() {
         }}
       />
 
-      {/* Return Loan Modal */}
       <ReturnModal
         isOpen={isReturnOpen}
         loan={returnLoan}

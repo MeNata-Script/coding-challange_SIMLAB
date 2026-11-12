@@ -8,6 +8,9 @@ export interface User {
   role: UserRole;
   status: UserStatus;
   avatar_url?: string;
+  email?: string;
+  phone?: string;
+  jabatan?: string;
   created_at: string;
   updated_at?: string;
 }
@@ -43,6 +46,9 @@ export interface Loan {
   item?: Item; // Joined item info
   nama_peminjam: string;
   nim_identitas: string;
+  kontak_peminjam?: string;
+  prodi_instansi?: string;
+  email_peminjam?: string;
   jumlah: number;
   tanggal_pinjam: string;
   estimasi_kembali: string;

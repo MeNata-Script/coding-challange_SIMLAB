@@ -14,6 +14,8 @@ import {
   AlertTriangle,
   XCircle,
   AlertCircle,
+  Phone,
+  MessageCircle,
 } from 'lucide-react';
 
 interface ReturnModalProps {
@@ -110,10 +112,26 @@ export default function ReturnModal({
 
           {/* Loan Summary Summary */}
           <div className="p-3.5 bg-[#ECEFEA] rounded-[10px] border border-[#D9DFDA] text-xs space-y-1.5">
-            <div className="flex justify-between">
+            <div className="flex justify-between items-center">
               <span className="text-[#69777A]">Peminjam:</span>
               <span className="font-semibold text-[#344047]">
                 {loan.nama_peminjam} ({loan.nim_identitas})
+              </span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-[#69777A]">Kontak / WA:</span>
+              <span className="font-semibold text-[#344047] flex items-center gap-1.5">
+                <span className="font-mono">{loan.kontak_peminjam || '-'}</span>
+                {loan.kontak_peminjam && (
+                  <a
+                    href={`https://wa.me/${loan.kontak_peminjam.replace(/[^0-9]/g, '').replace(/^0/, '62')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] text-[#548C75] bg-[#E1EDE4] px-1.5 py-0.5 rounded border border-[#548C75]/20 hover:underline"
+                  >
+                    Chat WA
+                  </a>
+                )}
               </span>
             </div>
             <div className="flex justify-between">
@@ -192,18 +210,44 @@ export default function ReturnModal({
               </button>
             </div>
 
-            {/* Condition Impact Helper Notice */}
+            {/* Condition Impact Notice */}
             <p className="mt-2 text-[11px]">
               {condition === 'Baik' ? (
                 <span className="text-[#548C75] font-medium">
-                  ✓ Stok {loan.jumlah} unit akan otomatis dikembalikan ke inventaris aktif.
+                  ✓ Stok {loan.jumlah} unit akan otomatis dikembalikan ke inventaris siap pakai.
                 </span>
               ) : (
                 <span className="text-[#9A7137] font-medium">
-                  ⚠ Stok tidak akan dikembalikan ke stok aktif dan dicatat untuk pemeliharaan.
+                  ⚠ Stok tidak akan dikembalikan ke stok aktif dan dicatat untuk pemeliharaan/ganti rugi.
                 </span>
               )}
             </p>
+
+            {/* Damage Contact Outreach Card */}
+            {condition !== 'Baik' && (
+              <div className="mt-3 p-3 bg-[#F2E3E1] border border-[#A95353]/30 rounded-[10px] text-xs space-y-1.5 text-[#A95353]">
+                <p className="font-semibold flex items-center gap-1.5">
+                  <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                  <span>Klarifikasi Kerusakan / Ganti Rugi</span>
+                </p>
+                <p className="text-[11px] text-[#69777A]">
+                  Peminjam dapat segera dihubungi untuk tindak lanjut servis atau pertanggungjawaban:
+                </p>
+                {loan.kontak_peminjam ? (
+                  <a
+                    href={`https://wa.me/${loan.kontak_peminjam.replace(/[^0-9]/g, '').replace(/^0/, '62')}?text=${encodeURIComponent(`Halo ${loan.nama_peminjam}, kami dari SIMLAB mengonfirmasi pengembalian ${loan.item?.nama_barang} (${loan.kode_peminjaman}) tercatat berstatus ${condition}. Mohon segera konfirmasi ke pihak laboratorium.`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#A95353] text-[#F4F5F1] rounded-[6px] text-[11px] font-semibold hover:bg-[#8E4444] transition-colors mt-0.5"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5" />
+                    <span>Hubungi {loan.nama_peminjam} ({loan.kontak_peminjam}) via WA</span>
+                  </a>
+                ) : (
+                  <p className="text-[11px] italic">Kontak peminjam belum terdaftar pada transaksi ini.</p>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Return Note */}

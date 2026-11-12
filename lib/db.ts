@@ -382,6 +382,9 @@ export async function createLoan(
     item_id: string;
     nama_peminjam: string;
     nim_identitas: string;
+    kontak_peminjam?: string;
+    prodi_instansi?: string;
+    email_peminjam?: string;
     jumlah: number;
     tanggal_pinjam: string;
     estimasi_kembali: string;
@@ -413,6 +416,9 @@ export async function createLoan(
     item_id: loanData.item_id,
     nama_peminjam: loanData.nama_peminjam.trim(),
     nim_identitas: loanData.nim_identitas.trim(),
+    kontak_peminjam: loanData.kontak_peminjam?.trim() || undefined,
+    prodi_instansi: loanData.prodi_instansi?.trim() || undefined,
+    email_peminjam: loanData.email_peminjam?.trim() || undefined,
     jumlah: loanData.jumlah,
     tanggal_pinjam: loanData.tanggal_pinjam || now.toISOString().split('T')[0],
     estimasi_kembali: loanData.estimasi_kembali,
