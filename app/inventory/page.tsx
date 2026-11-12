@@ -119,7 +119,7 @@ export default function InventoryPage() {
     >
       <div className="space-y-5">
         {/* Top Control Bar: Search, Category Tabs, Add Button */}
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-card space-y-4">
+        <div className="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             {/* Search Input */}
             <div className="relative flex-1 max-w-md">
@@ -131,7 +131,7 @@ export default function InventoryPage() {
                 placeholder="Cari kode (BR001), nama barang, atau lokasi..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                className="w-full pl-10 pr-4 py-2.5 text-xs bg-slate-50/70 hover:bg-white focus:bg-white border border-slate-200/90 rounded-2xl focus:ring-2 focus:ring-indigo-400/50 focus:border-indigo-400 transition-all outline-none"
               />
               {searchQuery && (
                 <button
@@ -147,7 +147,7 @@ export default function InventoryPage() {
             {isAdmin && (
               <button
                 onClick={handleOpenAdd}
-                className="inline-flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm hover:shadow transition-all shrink-0"
+                className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-semibold text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 rounded-2xl shadow-md shadow-indigo-200/60 transition-all shrink-0 active:scale-95"
               >
                 <Plus className="w-4 h-4" />
                 <span>Tambah Barang</span>
@@ -156,7 +156,7 @@ export default function InventoryPage() {
           </div>
 
           {/* Category Tabs */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 border-t border-slate-100 pt-3 scrollbar-none">
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 border-t border-slate-100 pt-3 scrollbar-none">
             {CATEGORY_TABS.map((tab) => {
               const isSelected = selectedCategory === tab;
               const count =
@@ -168,17 +168,17 @@ export default function InventoryPage() {
                 <button
                   key={tab}
                   onClick={() => setSelectedCategory(tab)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 ${
+                  className={`px-3.5 py-1.5 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 ${
                     isSelected
-                      ? 'bg-indigo-600 text-white shadow-xs'
-                      : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200/80'
+                      ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-xs'
+                      : 'bg-slate-50 hover:bg-slate-100/80 text-slate-600 border border-slate-200/60'
                   }`}
                 >
                   <span>{tab}</span>
                   <span
                     className={`text-[10px] px-1.5 py-0.2 rounded-full ${
                       isSelected
-                        ? 'bg-indigo-700 text-indigo-100'
+                        ? 'bg-white/20 text-white'
                         : 'bg-slate-200/70 text-slate-600'
                     }`}
                   >
@@ -191,17 +191,17 @@ export default function InventoryPage() {
         </div>
 
         {/* Data Table for Desktop (>= 1024px) */}
-        <div className="hidden lg:block bg-white rounded-2xl border border-slate-200 shadow-card overflow-hidden">
+        <div className="hidden lg:block bg-white rounded-3xl border border-slate-200/80 shadow-xs overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-50/80 border-b border-slate-200 text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                  <th className="py-3.5 px-5">Kode</th>
-                  <th className="py-3.5 px-5">Nama Barang</th>
-                  <th className="py-3.5 px-5">Kategori</th>
-                  <th className="py-3.5 px-5 text-center">Status Stok</th>
-                  <th className="py-3.5 px-5">Lokasi Rak</th>
-                  <th className="py-3.5 px-5 text-right">Aksi</th>
+                <tr className="bg-slate-50/70 border-b border-slate-200/80 text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                  <th className="py-4 px-6">Kode</th>
+                  <th className="py-4 px-6">Nama Barang</th>
+                  <th className="py-4 px-6">Kategori</th>
+                  <th className="py-4 px-6 text-center">Status Stok</th>
+                  <th className="py-4 px-6">Lokasi Rak</th>
+                  <th className="py-4 px-6 text-right">Aksi</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-xs">
@@ -228,16 +228,16 @@ export default function InventoryPage() {
                       item.stok === 0
                         ? {
                             label: 'Habis (0)',
-                            color: 'bg-rose-100 text-rose-800 border-rose-200',
+                            color: 'bg-rose-50 text-rose-700 border-rose-200/70',
                           }
                         : item.stok <= 2
                         ? {
                             label: `Menipis (${item.stok})`,
-                            color: 'bg-amber-100 text-amber-800 border-amber-200',
+                            color: 'bg-amber-50 text-amber-700 border-amber-200/70',
                           }
                         : {
                             label: `Tersedia (${item.stok})`,
-                            color: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+                            color: 'bg-emerald-50 text-emerald-700 border-emerald-200/70',
                           };
 
                     return (

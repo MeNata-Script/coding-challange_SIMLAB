@@ -69,24 +69,29 @@ export default function DashboardPage() {
     >
       <div className="space-y-6">
         {/* Top Quick Actions Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-3 bg-white p-4 rounded-2xl border border-slate-200/80 shadow-xs">
+        <div className="flex flex-wrap items-center justify-between gap-3 bg-gradient-to-r from-indigo-50/80 via-purple-50/40 to-pink-50/40 p-5 rounded-3xl border border-indigo-100/70 shadow-xs">
           <div>
-            <h2 className="text-base font-bold text-slate-900">Selamat Bekerja!</h2>
-            <p className="text-xs text-slate-500">
-              Kelola stok inventaris dan peminjaman alat laboratorium dengan mudah.
+            <h2 className="text-lg font-bold text-slate-900 tracking-tight flex items-center gap-2">
+              <span>Selamat Bekerja!</span>
+              <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 border border-indigo-200/60">
+                SIMLAB Lab Komputasi
+              </span>
+            </h2>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Kelola ketersediaan alat, sirkulasi peminjaman, dan status kondisi laboratorium secara real-time.
             </p>
           </div>
           <div className="flex items-center gap-2">
             <Link
               href="/inventory"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl transition-all"
+              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-slate-700 bg-white/90 hover:bg-white border border-slate-200/80 rounded-2xl transition-all shadow-xs"
             >
               <Package className="w-4 h-4 text-slate-500" />
               <span>Daftar Barang</span>
             </Link>
             <button
               onClick={() => setIsLoanModalOpen(true)}
-              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm hover:shadow transition-all"
+              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 rounded-2xl shadow-md shadow-indigo-200/60 hover:shadow transition-all"
             >
               <PlusCircle className="w-4 h-4" />
               <span>Catat Pinjam Baru</span>
@@ -96,15 +101,15 @@ export default function DashboardPage() {
 
         {/* Value-Add "Perlu Perhatian" Alert Banner */}
         {((stats && stats.overdueLoansCount > 0) || (lowStockItems && lowStockItems.length > 0)) && (
-          <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-50 to-rose-50 border border-amber-200/80 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3 animate-in fade-in">
+          <div className="p-4 rounded-3xl bg-gradient-to-r from-amber-50/90 via-rose-50/70 to-pink-50/50 border border-amber-200/60 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3 animate-in fade-in">
             <div className="flex items-start gap-3">
-              <div className="p-2 bg-amber-100 text-amber-800 rounded-xl shrink-0 mt-0.5">
+              <div className="p-2.5 bg-amber-100/80 text-amber-800 rounded-2xl shrink-0 mt-0.5 shadow-xs">
                 <AlertTriangle className="w-5 h-5" />
               </div>
               <div>
                 <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
                   <span>Perlu Perhatian Laboratorium</span>
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-100 text-rose-800 border border-rose-200">
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-100/90 text-rose-700 border border-rose-200/60">
                     Penting
                   </span>
                 </h3>
@@ -126,13 +131,13 @@ export default function DashboardPage() {
             <div className="flex items-center gap-2 shrink-0">
               <Link
                 href="/loans"
-                className="px-3 py-1.5 text-xs font-bold text-rose-700 bg-white border border-rose-200 rounded-xl hover:bg-rose-50 transition-colors shadow-xs"
+                className="px-3.5 py-1.5 text-xs font-bold text-rose-700 bg-white/90 border border-rose-200/80 rounded-xl hover:bg-rose-50 transition-colors shadow-xs"
               >
                 Cek Peminjaman
               </Link>
               <Link
                 href="/inventory"
-                className="px-3 py-1.5 text-xs font-bold text-amber-800 bg-white border border-amber-200 rounded-xl hover:bg-amber-50 transition-colors shadow-xs"
+                className="px-3.5 py-1.5 text-xs font-bold text-amber-800 bg-white/90 border border-amber-200/80 rounded-xl hover:bg-amber-50 transition-colors shadow-xs"
               >
                 Cek Stok Kritis
               </Link>
@@ -140,15 +145,15 @@ export default function DashboardPage() {
           </div>
         )}
 
-        {/* 4 Key Metric Cards */}
+        {/* 4 Key Metric Cards (Soft Pastel Design) */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {/* Card 1: Total Jenis Barang */}
-          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-card hover:shadow-md transition-shadow">
+          <div className="bg-gradient-to-br from-white to-indigo-50/40 p-5 rounded-3xl border border-indigo-100/70 shadow-sm hover:shadow-md transition-all">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
                 Jenis Barang
               </span>
-              <div className="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-2xl bg-indigo-100/70 text-indigo-700 flex items-center justify-center shadow-xs">
                 <Package className="w-5 h-5" />
               </div>
             </div>
@@ -156,18 +161,18 @@ export default function DashboardPage() {
               <span className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
                 {loading ? '...' : stats?.totalJenisBarang || 0}
               </span>
-              <span className="text-xs font-medium text-slate-500">Katalog</span>
+              <span className="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-md">Katalog</span>
             </div>
             <p className="mt-1 text-[11px] text-slate-400">Total item terdaftar di lab</p>
           </div>
 
           {/* Card 2: Total Stok Tersedia */}
-          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-card hover:shadow-md transition-shadow">
+          <div className="bg-gradient-to-br from-white to-emerald-50/40 p-5 rounded-3xl border border-emerald-100/70 shadow-sm hover:shadow-md transition-all">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
                 Stok Siap Pakai
               </span>
-              <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-100/70 text-emerald-700 flex items-center justify-center shadow-xs">
                 <Layers className="w-5 h-5" />
               </div>
             </div>
@@ -175,18 +180,18 @@ export default function DashboardPage() {
               <span className="text-2xl sm:text-3xl font-extrabold text-emerald-600 tracking-tight">
                 {loading ? '...' : stats?.totalStokTersedia || 0}
               </span>
-              <span className="text-xs font-medium text-slate-500">Unit</span>
+              <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md">Unit Siap</span>
             </div>
             <p className="mt-1 text-[11px] text-slate-400">Tersedia untuk dipinjam</p>
           </div>
 
           {/* Card 3: Sedang Dipinjam */}
-          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-card hover:shadow-md transition-shadow">
+          <div className="bg-gradient-to-br from-white to-amber-50/40 p-5 rounded-3xl border border-amber-100/70 shadow-sm hover:shadow-md transition-all">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
                 Sedang Dipinjam
               </span>
-              <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-2xl bg-amber-100/70 text-amber-700 flex items-center justify-center shadow-xs">
                 <ArrowLeftRight className="w-5 h-5" />
               </div>
             </div>
@@ -194,18 +199,18 @@ export default function DashboardPage() {
               <span className="text-2xl sm:text-3xl font-extrabold text-amber-600 tracking-tight">
                 {loading ? '...' : stats?.sedangDipinjam || 0}
               </span>
-              <span className="text-xs font-medium text-slate-500">Unit</span>
+              <span className="text-xs font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-md">Aktif</span>
             </div>
             <p className="mt-1 text-[11px] text-slate-400">Sedang aktif di luar lab</p>
           </div>
 
           {/* Card 4: Total Transaksi Peminjaman */}
-          <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-card hover:shadow-md transition-shadow">
+          <div className="bg-gradient-to-br from-white to-purple-50/40 p-5 rounded-3xl border border-purple-100/70 shadow-sm hover:shadow-md transition-all">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
                 Total Transaksi
               </span>
-              <div className="w-9 h-9 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-2xl bg-purple-100/70 text-purple-700 flex items-center justify-center shadow-xs">
                 <ClipboardList className="w-5 h-5" />
               </div>
             </div>
@@ -213,37 +218,37 @@ export default function DashboardPage() {
               <span className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
                 {loading ? '...' : stats?.totalTransaksiPeminjaman || 0}
               </span>
-              <span className="text-xs font-medium text-slate-500">Log</span>
+              <span className="text-xs font-semibold text-purple-600 bg-purple-50 px-2 py-0.5 rounded-md">Sirkulasi</span>
             </div>
             <p className="mt-1 text-[11px] text-slate-400">Akumulasi sirkulasi peminjaman</p>
           </div>
         </div>
 
         {/* Visual Category / Status Breakdown Bar */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-card">
+        <div className="bg-white p-6 sm:p-7 rounded-3xl border border-slate-200/80 shadow-sm">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
             <div>
               <h3 className="text-sm font-bold text-slate-900">Distribusi Kategori Inventaris</h3>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-500 mt-0.5">
                 Porsi ketersediaan stok fisik per divisi perangkat laboratorium
               </p>
             </div>
-            <span className="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-lg border border-indigo-100">
-              {stats?.categoryBreakdown.length || 0} Kategori
+            <span className="text-xs font-bold text-indigo-700 bg-indigo-50/80 px-3 py-1 rounded-full border border-indigo-200/50">
+              {stats?.categoryBreakdown.length || 0} Kategori Lab
             </span>
           </div>
 
-          {/* Progress Multi-Bar */}
+          {/* Progress Multi-Bar (Pastel Palette) */}
           <div className="space-y-4">
-            <div className="h-4 w-full bg-slate-100 rounded-full overflow-hidden flex shadow-inner">
+            <div className="h-4 w-full bg-slate-100/80 rounded-full overflow-hidden flex shadow-inner p-0.5">
               {stats?.categoryBreakdown.map((cat, idx) => {
-                const colors = [
-                  'bg-indigo-600',
-                  'bg-blue-500',
-                  'bg-emerald-500',
-                  'bg-amber-500',
-                  'bg-purple-500',
-                  'bg-rose-500',
+                const pastelColors = [
+                  'bg-indigo-400',
+                  'bg-sky-400',
+                  'bg-emerald-400',
+                  'bg-amber-400',
+                  'bg-purple-400',
+                  'bg-rose-400',
                 ];
                 const totalStock = stats.totalStokTersedia || 1;
                 const percentage = Math.round((cat.totalStok / totalStock) * 100);
@@ -253,7 +258,7 @@ export default function DashboardPage() {
                   <div
                     key={cat.kategori}
                     style={{ width: `${percentage}%` }}
-                    className={`${colors[idx % colors.length]} transition-all duration-500 hover:opacity-90`}
+                    className={`${pastelColors[idx % pastelColors.length]} rounded-full transition-all duration-500 hover:opacity-90`}
                     title={`${cat.kategori}: ${cat.totalStok} unit (${percentage}%)`}
                   />
                 );
@@ -263,21 +268,21 @@ export default function DashboardPage() {
             {/* Legend Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 pt-2">
               {stats?.categoryBreakdown.map((cat, idx) => {
-                const dotColors = [
-                  'bg-indigo-600',
-                  'bg-blue-500',
-                  'bg-emerald-500',
-                  'bg-amber-500',
-                  'bg-purple-500',
-                  'bg-rose-500',
+                const pastelDots = [
+                  'bg-indigo-400',
+                  'bg-sky-400',
+                  'bg-emerald-400',
+                  'bg-amber-400',
+                  'bg-purple-400',
+                  'bg-rose-400',
                 ];
                 return (
                   <div
                     key={cat.kategori}
-                    className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between"
+                    className="p-3 rounded-2xl bg-slate-50/70 border border-slate-200/60 flex items-center justify-between"
                   >
                     <div className="flex items-center gap-2">
-                      <span className={`w-2.5 h-2.5 rounded-full ${dotColors[idx % dotColors.length]}`} />
+                      <span className={`w-2.5 h-2.5 rounded-full ${pastelDots[idx % pastelDots.length]}`} />
                       <span className="text-xs font-semibold text-slate-700">{cat.kategori}</span>
                     </div>
                     <span className="text-xs font-mono font-bold text-slate-900">

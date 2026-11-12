@@ -13,8 +13,10 @@ import {
   UserCheck,
   Sparkles,
   AlertCircle,
-  Database,
+  Eye,
+  EyeOff,
   CheckCircle2,
+  Boxes,
 } from 'lucide-react';
 import { isSupabaseConfigured } from '@/lib/supabase';
 
@@ -25,6 +27,7 @@ export default function LoginPage() {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -73,81 +76,93 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-canvas flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Background soft decoration */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-b from-indigo-100/50 to-transparent pointer-events-none rounded-b-[40px] -z-10" />
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/40 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden select-none">
+      {/* Decorative Pastel Ambient Orbs */}
+      <div className="absolute top-12 left-1/4 -translate-x-1/2 w-96 h-96 bg-purple-200/40 rounded-full blur-3xl pointer-events-none -z-10 animate-pulse duration-1000" />
+      <div className="absolute bottom-10 right-1/4 translate-x-1/3 w-96 h-96 bg-pink-100/50 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/2 right-10 w-72 h-72 bg-indigo-100/50 rounded-full blur-2xl pointer-events-none -z-10" />
 
+      {/* Header Branding */}
       <div className="sm:mx-auto sm:w-full sm:max-w-md text-center px-4">
-        {/* Brand Logo & Name */}
-        <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-indigo-600 text-white shadow-lg shadow-indigo-200 mb-4">
-          <FlaskConical className="w-7 h-7" />
+        {/* Modern Icon with Pastel Glow */}
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-3xl bg-gradient-to-tr from-indigo-500 via-indigo-600 to-violet-500 text-white shadow-xl shadow-indigo-200/60 mb-3.5 transform transition-transform hover:scale-105 duration-300">
+          <FlaskConical className="w-8 h-8" />
         </div>
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-          SIMLAB
+
+        <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight flex items-center justify-center gap-2">
+          <span>SIMLAB</span>
+          <span className="text-xs font-bold font-mono px-2 py-0.5 rounded-full bg-indigo-100/80 text-indigo-700 border border-indigo-200/50">
+            v1.0
+          </span>
         </h2>
-        <p className="mt-1 text-sm text-slate-600 font-medium">
+        <p className="mt-1.5 text-xs sm:text-sm text-slate-500 font-medium">
           Sistem Manajemen Inventaris & Peminjaman Laboratorium
         </p>
 
-        {/* Backend Status pill */}
-        <div className="inline-flex items-center gap-1.5 mt-3 px-3 py-1 rounded-full text-xs font-semibold bg-white border border-slate-200 shadow-xs text-slate-700">
+        {/* Backend Status indicator */}
+        <div className="inline-flex items-center gap-2 mt-3 px-3 py-1 rounded-full text-[11px] font-semibold bg-white/80 backdrop-blur-md border border-slate-200/70 shadow-xs text-slate-600">
           <span
             className={`w-2 h-2 rounded-full ${
-              isSupabaseConfigured ? 'bg-emerald-500 animate-pulse' : 'bg-indigo-500'
+              isSupabaseConfigured ? 'bg-emerald-500 animate-pulse' : 'bg-indigo-400'
             }`}
           />
-          <span>{isSupabaseConfigured ? 'Supabase Database Aktif' : 'Engine Siap Pakai (Standby)'}</span>
+          <span>{isSupabaseConfigured ? 'Supabase PostgreSQL Aktif' : 'Engine Siap Pakai (Standby)'}</span>
         </div>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4">
-        <div className="bg-white py-8 px-6 sm:px-10 shadow-elevated rounded-3xl border border-slate-200/90 relative">
-          {/* Quick Fill Demo Pills */}
-          <div className="mb-6 p-3.5 bg-slate-50 border border-slate-200/80 rounded-2xl">
+      {/* Main Glassmorphism Login Card */}
+      <div className="mt-7 sm:mx-auto sm:w-full sm:max-w-[420px] px-4">
+        <div className="bg-white/90 backdrop-blur-xl py-8 px-6 sm:px-9 shadow-[0_20px_50px_-15px_rgba(99,102,241,0.12)] rounded-[28px] border border-white/80 relative transition-all">
+          
+          {/* Quick Fill Demo Pills (Pastel Aesthetic) */}
+          <div className="mb-6 p-3.5 bg-slate-50/70 border border-slate-200/60 rounded-2xl">
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-indigo-600" />
-                1-Click Quick Fill Akun Demo
+                <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
+                1-Click Akun Demo Cepat
               </span>
-              <span className="text-[10px] text-slate-400 font-mono">2 Akun</span>
+              <span className="text-[10px] text-slate-400 font-medium">Pengujian</span>
             </div>
 
             <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
                 onClick={() => handleQuickFill('admin')}
-                className="flex items-center justify-center gap-1.5 py-2 px-3 text-xs font-semibold rounded-xl bg-white hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-300 border border-slate-200 text-slate-700 transition-all shadow-xs"
+                className="flex items-center justify-center gap-1.5 py-2 px-3 text-xs font-semibold rounded-xl bg-violet-50/80 hover:bg-violet-100 text-violet-700 border border-violet-200/70 transition-all shadow-xs active:scale-95"
               >
-                <ShieldCheck className="w-3.5 h-3.5 text-indigo-600" />
+                <ShieldCheck className="w-3.5 h-3.5 text-violet-600" />
                 <span>Demo Admin</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleQuickFill('staff')}
-                className="flex items-center justify-center gap-1.5 py-2 px-3 text-xs font-semibold rounded-xl bg-white hover:bg-indigo-50 hover:text-indigo-700 hover:border-indigo-300 border border-slate-200 text-slate-700 transition-all shadow-xs"
+                className="flex items-center justify-center gap-1.5 py-2 px-3 text-xs font-semibold rounded-xl bg-emerald-50/80 hover:bg-emerald-100 text-emerald-700 border border-emerald-200/70 transition-all shadow-xs active:scale-95"
               >
-                <UserCheck className="w-3.5 h-3.5 text-slate-600" />
+                <UserCheck className="w-3.5 h-3.5 text-emerald-600" />
                 <span>Demo Staff</span>
               </button>
             </div>
-            <p className="text-[10px] text-slate-500 mt-2 text-center">
-              Admin: <code className="font-mono text-indigo-600">admin/admin123</code> | Staff:{' '}
-              <code className="font-mono text-slate-700">staff/staff123</code>
+            <p className="text-[10px] text-slate-400 mt-2 text-center">
+              Admin: <code className="font-mono text-violet-600 font-semibold">admin/admin123</code> • Staff:{' '}
+              <code className="font-mono text-emerald-600 font-semibold">staff/staff123</code>
             </p>
           </div>
 
+          {/* Error Notice */}
           {errorMessage && (
-            <div className="mb-5 p-3.5 bg-rose-50 border border-rose-200 rounded-xl flex items-start gap-2.5 text-rose-700 text-xs animate-in fade-in">
+            <div className="mb-5 p-3.5 bg-rose-50/90 border border-rose-200/80 rounded-2xl flex items-start gap-2.5 text-rose-700 text-xs animate-in fade-in">
               <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
               <div className="flex-1 font-medium">{errorMessage}</div>
             </div>
           )}
 
+          {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Username Input */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
-                Username Akun
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                Username Pengguna
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
@@ -158,14 +173,15 @@ export default function LoginPage() {
                   placeholder="admin atau staff"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                  className="w-full pl-10 pr-3.5 py-2.5 text-xs sm:text-sm bg-slate-50/60 hover:bg-white focus:bg-white border border-slate-200/90 rounded-2xl focus:ring-2 focus:ring-indigo-400/50 focus:border-indigo-400 transition-all outline-none"
                   required
                 />
               </div>
             </div>
 
+            {/* Password Input with Eye (Show/Hide) Toggle */}
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1.5">
+              <label className="block text-xs font-bold text-slate-700 mb-1.5">
                 Kata Sandi
               </label>
               <div className="relative">
@@ -173,21 +189,35 @@ export default function LoginPage() {
                   <Lock className="w-4 h-4" />
                 </div>
                 <input
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-2.5 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                  className="w-full pl-10 pr-11 py-2.5 text-xs sm:text-sm bg-slate-50/60 hover:bg-white focus:bg-white border border-slate-200/90 rounded-2xl focus:ring-2 focus:ring-indigo-400/50 focus:border-indigo-400 transition-all outline-none font-sans"
                   required
                 />
+                {/* Eye Toggle Button */}
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 transition-colors focus:outline-none"
+                  title={showPassword ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi'}
+                >
+                  {showPassword ? (
+                    <EyeOff className="w-4 h-4 text-indigo-600 transition-transform hover:scale-110" />
+                  ) : (
+                    <Eye className="w-4 h-4 text-slate-400 transition-transform hover:scale-110" />
+                  )}
+                </button>
               </div>
             </div>
 
+            {/* Submit Button */}
             <div className="pt-2">
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 shadow-md shadow-indigo-100 transition-all disabled:opacity-50"
+                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-2xl text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 via-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 active:scale-[0.99] shadow-md shadow-indigo-200/70 transition-all disabled:opacity-50"
               >
                 <span>{loading ? 'Memverifikasi...' : 'Masuk ke Sistem'}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -195,9 +225,10 @@ export default function LoginPage() {
             </div>
           </form>
 
+          {/* Footer Card */}
           <div className="mt-6 pt-5 border-t border-slate-100 text-center">
-            <p className="text-[11px] text-slate-400">
-              Sistem Terproteksi Role-Based Access Control (RBAC) • SIMLAB 2026
+            <p className="text-[11px] text-slate-400 font-medium">
+              Dilindungi Role-Based Access Control (RBAC) • SIMLAB 2026
             </p>
           </div>
         </div>

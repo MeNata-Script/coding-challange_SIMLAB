@@ -122,7 +122,7 @@ export default function LoansPage() {
     >
       <div className="space-y-5">
         {/* Controls: Search, Tabs, Export, New Loan */}
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-card space-y-4">
+        <div className="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-xs space-y-4">
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             {/* Search Bar */}
             <div className="relative flex-1 max-w-md">
@@ -134,7 +134,7 @@ export default function LoansPage() {
                 placeholder="Cari peminjam, NIM, kode loan, nama barang..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+                className="w-full pl-10 pr-4 py-2.5 text-xs bg-slate-50/70 hover:bg-white focus:bg-white border border-slate-200/90 rounded-2xl focus:ring-2 focus:ring-indigo-400/50 focus:border-indigo-400 transition-all outline-none"
               />
               {searchQuery && (
                 <button
@@ -151,7 +151,7 @@ export default function LoansPage() {
               <button
                 onClick={handleExportCSV}
                 disabled={currentList.length === 0}
-                className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 text-xs font-semibold text-slate-700 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl transition-all shadow-xs disabled:opacity-40"
+                className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 text-xs font-semibold text-slate-700 bg-slate-50 hover:bg-slate-100 border border-slate-200/80 rounded-2xl transition-all shadow-xs disabled:opacity-40"
               >
                 <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
                 <span>Export CSV</span>
@@ -159,7 +159,7 @@ export default function LoansPage() {
 
               <button
                 onClick={() => setIsNewLoanOpen(true)}
-                className="inline-flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm hover:shadow transition-all shrink-0"
+                className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-semibold text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 rounded-2xl shadow-md shadow-indigo-200/60 transition-all shrink-0 active:scale-95"
               >
                 <PlusCircle className="w-4 h-4" />
                 <span>Catat Pinjam Baru</span>
@@ -171,10 +171,10 @@ export default function LoansPage() {
           <div className="flex items-center gap-2 border-t border-slate-100 pt-3">
             <button
               onClick={() => setActiveTab('ACTIVE')}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 ${
+              className={`px-4 py-2 rounded-2xl text-xs font-semibold transition-all flex items-center gap-2 ${
                 activeTab === 'ACTIVE'
-                  ? 'bg-indigo-600 text-white shadow-xs'
-                  : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200/80'
+                  ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-xs'
+                  : 'bg-slate-50 hover:bg-slate-100/80 text-slate-600 border border-slate-200/70'
               }`}
             >
               <Clock className="w-3.5 h-3.5" />
@@ -182,8 +182,8 @@ export default function LoansPage() {
               <span
                 className={`text-[10px] px-2 py-0.5 rounded-full ${
                   activeTab === 'ACTIVE'
-                    ? 'bg-indigo-700 text-indigo-100'
-                    : 'bg-slate-200 text-slate-700'
+                    ? 'bg-white/20 text-white'
+                    : 'bg-slate-200/70 text-slate-700'
                 }`}
               >
                 {activeLoans.length}
@@ -192,10 +192,10 @@ export default function LoansPage() {
 
             <button
               onClick={() => setActiveTab('HISTORY')}
-              className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 ${
+              className={`px-4 py-2 rounded-2xl text-xs font-semibold transition-all flex items-center gap-2 ${
                 activeTab === 'HISTORY'
-                  ? 'bg-indigo-600 text-white shadow-xs'
-                  : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200/80'
+                  ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-xs'
+                  : 'bg-slate-50 hover:bg-slate-100/80 text-slate-600 border border-slate-200/70'
               }`}
             >
               <CheckCircle2 className="w-3.5 h-3.5" />
@@ -203,8 +203,8 @@ export default function LoansPage() {
               <span
                 className={`text-[10px] px-2 py-0.5 rounded-full ${
                   activeTab === 'HISTORY'
-                    ? 'bg-indigo-700 text-indigo-100'
-                    : 'bg-slate-200 text-slate-700'
+                    ? 'bg-white/20 text-white'
+                    : 'bg-slate-200/70 text-slate-700'
                 }`}
               >
                 {historyLoans.length}
@@ -214,7 +214,7 @@ export default function LoansPage() {
         </div>
 
         {/* Desktop Data Table */}
-        <div className="hidden lg:block bg-white rounded-2xl border border-slate-200 shadow-card overflow-hidden">
+        <div className="hidden lg:block bg-white rounded-3xl border border-slate-200/80 shadow-xs overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
@@ -303,20 +303,20 @@ export default function LoansPage() {
                           )}
                         </td>
 
-                        <td className="py-3.5 px-5 text-center">
+                        <td className="py-4 px-5 text-center">
                           {loan.status === 'DIPINJAM' ? (
                             isOverdue ? (
-                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-100 text-rose-800 border border-rose-200 animate-pulse">
+                              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200/70 animate-pulse">
                                 Terlambat
                               </span>
                             ) : (
-                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-200">
+                              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200/70">
                                 Sedang Dipinjam
                               </span>
                             )
                           ) : (
                             <div className="inline-flex flex-col items-center">
-                              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                              <span className="px-3 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200/70">
                                 Selesai
                               </span>
                               <span className="text-[10px] text-slate-500 font-medium mt-0.5">
@@ -326,11 +326,11 @@ export default function LoansPage() {
                           )}
                         </td>
 
-                        <td className="py-3.5 px-5 text-right whitespace-nowrap">
+                        <td className="py-4 px-5 text-right whitespace-nowrap">
                           {loan.status === 'DIPINJAM' ? (
                             <button
                               onClick={() => handleOpenReturn(loan)}
-                              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-xs transition-all"
+                              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-white bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 rounded-xl shadow-xs transition-all active:scale-95"
                             >
                               <RotateCcw className="w-3.5 h-3.5" />
                               <span>Proses Kembali</span>
