@@ -1,69 +1,99 @@
 # 🔬 SIMLAB — Laboratory Inventory & Borrowing Management System
 ### *Sistem Manajemen Inventaris & Peminjaman Laboratorium Terintegrasi*
-**Proyek Praktikum / Tugas Pemrograman Semester 5**
+**Modern Professional, Soft Neutral & Fully Responsive**
 
 [![Next.js 14](https://img.shields.io/badge/Next.js-14.2-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.4-38bdf8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
+[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.4-34495e?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ecf8e?style=for-the-badge&logo=supabase)](https://supabase.com/)
-[![Vercel Ready](https://img.shields.io/badge/Vercel-Deployment%20Ready-white?style=for-the-badge&logo=vercel)](https://vercel.com/)
+[![Netlify Status](https://img.shields.io/badge/Netlify-Deployed-00C7B7?style=for-the-badge&logo=netlify)](https://netlify.com/)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-coding--challange__SIMLAB-181717?style=for-the-badge&logo=github)](https://github.com/MeNata-Script/coding-challange_SIMLAB.git)
 
-Aplikasi web modern, responsif, dan siap produksi yang dirancang khusus untuk manajemen perangkat keras laboratorium institusi, pencatatan transaksi peminjaman mahasiswa, pelacakan keterlambatan (*overdue*), inspeksi kondisi kembali (*maintenance workflow*), serta manajemen akun staf dengan kontrol akses ketat (**Role-Based Access Control / RBAC**).
+SIMLAB adalah aplikasi web pengelolaan laboratorium berskala Enterprise/SaaS modern yang dirancang untuk mempermudah inventarisasi perangkat laboratorium, alur peminjaman dan pengembalian barang, pelacakan keterlambatan (*overdue*), pencetakan tag QR-Code dinamis, inspeksi kondisi fisik barang, serta manajemen akun staf laboratorium berbasis **Role-Based Access Control (RBAC)**.
+
+Dibangun dengan estetika **Soft Neutral + Muted Navy**, dirancang khusus agar sangat nyaman dipandang berlama-lama (*eye-friendly* dan anti-silau) tanpa menggunakan background putih polos dominan.
 
 ---
 
 ## 📋 Daftar Isi
-1. [Ringkasan Fitur & Nilai Tambah](#-ringkasan-fitur--nilai-tambah)
-2. [Arsitektur & Tech Stack](#-arsitektur--tech-stack)
-3. [Matriks Peran Pengguna (RBAC)](#-matriks-peran-pengguna-rbac)
-4. [Data Awal (Seed Data)](#-data-awal-seed-data)
-5. [Skema Database & Triggers](#-skema-database--triggers)
-6. [Panduan Instalasi & Menjalankan Lokal](#-panduan-instalasi--menjalankan-lokal)
-7. [Panduan Konfigurasi Supabase](#-panduan-konfigurasi-supabase)
-8. [Panduan Deployment ke Vercel](#-panduan-deployment-ke-vercel)
-9. [Struktur Folder Proyek](#-struktur-folder-proyek)
-10. [Troubleshooting](#-troubleshooting)
+1. [Identitas Visual & Design System](#-identitas-visual--design-system)
+2. [Ringkasan Fitur & Modul Utama](#-ringkasan-fitur--modul-utama)
+3. [Arsitektur & Tech Stack](#-arsitektur--tech-stack)
+4. [Matriks Kontrol Akses Peran (RBAC)](#-matriks-kontrol-akses-peran-rbac)
+5. [Kredensial Demo & Data Bawaan](#-kredensial-demo--data-bawaan)
+6. [Skema Database & Triggers](#-skema-database--triggers)
+7. [Panduan Menjalankan di Lokal](#-panduan-menjalankan-di-lokal)
+8. [Panduan Konfigurasi Supabase Cloud](#-panduan-konfigurasi-supabase-cloud)
+9. [Panduan Deployment ke Netlify & Vercel](#-panduan-deployment-ke-netlify--vercel)
+10. [Struktur Direktori Proyek](#-struktur-direktori-proyek)
+11. [Troubleshooting & Solusi](#-troubleshooting--solusi)
 
 ---
 
-## 🚀 Ringkasan Fitur & Nilai Tambah
+## 🎨 Identitas Visual & Design System
 
-### 1. Hybrid Storage Engine (Zero Setup Friction)
-Aplikasi dilengkapi sistem **Dual Data Engine**:
-- **Supabase Cloud Mode**: Jika environment variable `NEXT_PUBLIC_SUPABASE_URL` dan `NEXT_PUBLIC_SUPABASE_ANON_KEY` telah disetel, aplikasi otomatis melakukan query ke PostgreSQL Supabase.
-- **Standalone LocalStorage Engine**: Jika kredensial Supabase belum diisi atau sedang offline, aplikasi otomatis beralih ke penyimpanan lokal browser dengan seed data bawaan. Penguji atau dosen dapat langsung menguji seluruh fitur tanpa hambatan konfigurasi awal.
+Sistem antarmuka SIMLAB menerapkan standar desain **SaaS Grade - Modern Professional**:
+
+| Komponen Desain | Nama Warna | Kode Hex | Penggunaan Utama |
+|---|---|---|---|
+| **Main Background** | Warm Gray | `#EAECE9` | Background kanvas seluruh halaman (nyaman di mata, anti-silau) |
+| **Secondary Background** | Soft Sage | `#E2E9E3` | Sidebar navigasi, header tabel data, dan section header |
+| **Content Surface** | Muted Ivory | `#F4F5F1` | Background utama seluruh card, modal, dan sheet |
+| **Elevated Surface** | Soft Neutral | `#ECEFEA` | Topbar navbar, box preview QR, dan banner info |
+| **Input Fields** | Light Sage Gray | `#E9ECE7` | Seluruh form input, text area, dan select dropdown |
+| **Primary Brand** | Navy Slate | `#34495E` | Tombol utama, menu aktif, dan identitas brand (Hover: `#293B4D`) |
+| **Secondary Accent** | Muted Teal | `#648F87` | Aksen sekunder, chart, dan tombol alternatif (Hover: `#527B73`) |
+| **Soft Accent** | Pale Teal | `#DCE8E2` | Tombol sekunder, demo fill pills, dan highlight halus |
+
+### Status Semantic System
+* **Success**: Text `#548C75` | Background `#E1EDE4` (Stok aman, peminjaman selesai, status aktif)
+* **Warning**: Text `#9A7137` | Background `#F2EBDD` (Stok menipis, barang perlu perbaikan)
+* **Danger**: Text `#A95353` | Background `#F2E3E1` (Stok habis, terlambat / overdue, barang rusak, hapus data)
+* **Info**: Text `#527493` | Background `#E3EAF0` (Informasi sistem, panduan operasional)
+
+### Sistem Tipografi & Radius
+* **Font Utama**: **Inter** (Google Fonts) dengan fallback **Plus Jakarta Sans**.
+* **Border Radiuses**: Card `14px`, Modal `14px`, Tombol `10px`, Form Input `10px`.
+
+---
+
+## 🚀 Ringkasan Fitur & Modul Utama
+
+### 1. Dual Data Engine (Hybrid Storage)
+* **Supabase Cloud Mode**: Terhubung langsung ke PostgreSQL Supabase lengkap dengan row level security & triggers otomatis.
+* **Smart LocalStorage Engine**: Jika kredensial Supabase kosong atau sedang offline, sistem otomatis beralih ke penyimpanan lokal browser. Penguji/dosen dapat langsung mencoba seluruh fitur tanpa kendala konfigurasi.
 
 ### 2. Modul Lengkap (A s/d F)
-- **Modul A — Otentikasi (`/login`)**:
-  - Tampilan kartu login modern dengan branding laboratorium.
-  - Validasi username dan kata sandi.
-  - **1-Click Quick Fill**: Tombol pintas sekali klik untuk akun Demo Admin dan Demo Staff.
-- **Modul B — Overview Dashboard (`/dashboard`)**:
-  - 4 Kartu Metrik: *Total Jenis Barang, Stok Siap Pakai, Sedang Dipinjam, Total Transaksi*.
-  - Visualisasi Distribusi Kategori Barang berbasis progress bar multi-warna.
-  - **Banner Peringatan "Perlu Perhatian"**: Otomatis mendeteksi peminjaman yang terlambat (*overdue*) dan barang dengan stok kritis (< 3 unit).
-  - Feed aktivitas terbaru & log audit keamanan.
-- **Modul C — Inventaris Barang (`/inventory`)**:
-  - Pencarian instan (kode, nama, lokasi) dan filter kategori (*Semua, Komputer, Periferal, Multimedia, Display, Jaringan*).
-  - Indikator status stok: Hijau (*Tersedia*), Kuning (*Menipis: 1-2 unit*), Merah (*Habis: 0 unit*).
-  - Kontrol Admin: Modal Tambah Barang, Modal Edit Barang, dan Modal Konfirmasi Hapus.
-  - **Proteksi Hapus**: Sistem otomatis memblokir penghapusan barang jika masih ada peminjaman aktif.
-  - **Printable QR Tag**: Klik baris barang untuk membuka *Slide-Over Drawer*, menampilkan spesifikasi teknis dan QR Code dinamis (`BR001 - Laptop Lenovo`) dengan tombol **Cetak Label**.
-- **Modul D — Peminjaman Barang (`/loans` & Modal Global)**:
-  - Form pencatatan: Nama Peminjam, NIM/Identitas, Pilih Barang (dengan status live stok), Tanggal Pinjam, Estimasi Kembali, dan Catatan.
-  - Tombol kuantitas cepat `+1`, `+2`, dan `Max`, serta validasi ketat `jumlah <= stok`.
-  - Animasi Confetti micro-interaction saat transaksi berhasil dicatat.
-- **Modul E — Pengembalian & Riwayat (`/loans`)**:
-  - Dua tab bersih: **Sedang Dipinjam** (Peminjaman Aktif) dan **Riwayat Selesai**.
-  - **Overdue Tracking**: Membandingkan `estimasi_kembali` dengan tanggal hari ini. Peminjaman yang terlambat diberi badge merah `Terlambat` dan diurutkan otomatis ke baris paling atas.
-  - **1-Click Return Processing**: Modal pengembalian dengan pemilihan kondisi:
-    - `Baik`: Stok otomatis dikembalikan ke inventaris siap pakai.
-    - `Perlu Perbaikan` / `Rusak`: Peminjaman diselesaikan tanpa mengembalikan ke stok siap pakai (ditandai untuk servis lab).
-  - **Export CSV**: Mengunduh seluruh riwayat peminjaman yang difilter ke dalam file spreadsheet `.csv`.
-- **Modul F — Kelola Staff (`/users` — Khusus Admin)**:
-  - Tabel staf menampilkan Nama, Username, Role, Status Akun (`AKTIF` / `NONAKTIF`), dan Tanggal Terdaftar.
-  - Modal Tambah dan Edit Staff.
-  - Switch toggle instan status akun (akun nonaktif dicegah masuk ke sistem).
+* **Modul A — Otentikasi & Login (`/login`)**:
+  * Tampilan pastel modern bertekstur Muted Ivory dan Warm Gray.
+  * **Fitur Show/Hide Password**: Tombol ikon mata interaktif untuk mengintip kata sandi.
+  * **1-Click Quick Fill**: Tombol pintas pengisian kredensial Admin dan Staff dalam sekali klik.
+* **Modul B — Overview Dashboard (`/dashboard`)**:
+  * 4 Statistik Utama: *Total Jenis Barang, Total Stok Siap Pakai, Sedang Dipinjam, Total Transaksi*.
+  * Multi-bar grafik distribusi stok antar kategori (Komputer, Periferal, Multimedia, Display, Jaringan).
+  * **Banner "Perlu Perhatian"**: Otomatis mendeteksi barang berkondisi kritis (< 3 unit) dan peminjaman terlambat.
+  * Log aktivitas peminjaman dan rekam jejak audit sistem terbaru.
+* **Modul C — Manajemen Inventaris (`/inventory`)**:
+  * Pencarian instan (kode barang, nama perangkat, lokasi penyimpanan) dan tab filter kategori.
+  * Kontrol CRUD Admin: Tambah barang baru, edit spesifikasi & stok, dan hapus barang.
+  * **Proteksi Hapus**: Sistem otomatis memblokir penghapusan barang jika masih ada peminjaman aktif.
+  * **Printable QR Code Tag**: Klik baris inventaris untuk membuka *Slide-Over Drawer* detail spesifikasi dan QR Code siap cetak label.
+* **Modul D — Transaksi Peminjaman (`/loans`)**:
+  * Pencatatan peminjaman dengan live validasi ketersediaan stok fisik.
+  * Tombol kuantitas instan `+1`, `+2`, dan `Max`.
+  * Animasi mikro interaksi konfeti saat transaksi berhasil dicatat.
+* **Modul E — Pengembalian & Laporan Riwayat (`/loans`)**:
+  * Tab *Sedang Dipinjam* (Aktif) dan *Riwayat Selesai*.
+  * **Overdue Tracking**: Peminjaman yang melewati tanggal estimasi otomatis ditandai badge merah *Terlambat* dan dinaikkan ke urutan teratas.
+  * **Proses Pengembalian Multi-Kondisi**:
+    * `Baik`: Stok fisik otomatis dikembalikan ke inventaris siap pakai.
+    * `Perlu Perbaikan` / `Rusak`: Peminjaman diselesaikan tanpa mengembalikan ke stok siap pakai (ditandai untuk servis lab).
+  * **Export Laporan CSV**: Mengunduh seluruh rekap riwayat peminjaman ke format spreadsheet `.csv`.
+* **Modul F — Kelola Staff & Akses (`/users` — Khusus Admin)**:
+  * Manajemen operator lab: nama lengkap, avatar, username, role, tanggal terdaftar, dan status.
+  * Modal Tambah & Ubah Staff.
+  * Switch toggle instan status akun (`AKTIF` / `NONAKTIF`).
+  * **Hapus Akun Staff**: Dilengkapi modal konfirmasi danger berpalet lembut dan **Multi-layer Safety Guards** (proteksi akun sendiri dan akun root admin).
 
 ---
 
@@ -96,64 +126,59 @@ Aplikasi dilengkapi sistem **Dual Data Engine**:
                +--------------------+        +--------------------+
 ```
 
-- **Aesthetic System (Aturan 60-30-10)**:
-  - **60% Canvas Netral**: `#F8FAFC` slate canvas dengan kartu putih `#FFFFFF` dan border `#E2E8F0`.
-  - **30% Tipografi Kontras Tinggi**: `#0F172A` untuk judul dan `#475569` untuk teks sekunder.
-  - **10% Aksen Indigo & Semantik**: `#4F46E5` Indigo, dengan Emerald untuk status normal/tersedia, Amber untuk peringatan/menipis, dan Rose untuk bahaya/terlambat/rusak.
+* **Frontend Framework**: Next.js 14.2 (App Router)
+* **Language**: TypeScript 5.7
+* **Styling**: Tailwind CSS 3.4 (Custom Master Palette)
+* **Database & BaaS**: Supabase PostgreSQL + Triggers & Row Level Security
+* **Icons & Micro-interactions**: Lucide React, Canvas Confetti, QRCode Generator
+* **Deployment**: Netlify Continuous Deployment (via GitHub `main`)
 
 ---
 
-## 👥 Matriks Peran Pengguna (RBAC)
+## 👥 Matriks Kontrol Akses Peran (RBAC)
 
-| Fitur / Halaman | ADMINISTRATOR | STAFF | Keterangan |
+| Modul / Tindakan | ADMINISTRATOR | STAFF | Keterangan Proteksi |
 | :--- | :---: | :---: | :--- |
-| **Login & Logout** | ✅ | ✅ | Session tersimpan rapi |
-| **Lihat Dashboard & Statistik** | ✅ | ✅ | Real-time analitik stok |
-| **Katalog Inventaris (Read)** | ✅ | ✅ | Cari & filter kategori barang |
-| **Print QR Code Label** | ✅ | ✅ | Cetak label identitas barang |
-| **Catat Peminjaman** | ✅ | ✅ | Otomatis potong stok |
-| **Proses Pengembalian** | ✅ | ✅ | Inspeksi kondisi Baik/Rusak |
-| **Export Laporan CSV** | ✅ | ✅ | Unduh file transaksi `.csv` |
+| **Login & Logout** | ✅ | ✅ | Session tersimpan aman di cookie/local state |
+| **Lihat Dashboard & Statistik** | ✅ | ✅ | Real-time metrik peminjaman & stok lab |
+| **Katalog Inventaris (Read)** | ✅ | ✅ | Akses pencarian & filter kategori barang |
+| **Cetak Tag QR Code** | ✅ | ✅ | Cetak label identitas inventaris |
+| **Catat Peminjaman** | ✅ | ✅ | Otomatis potong stok fisik barang |
+| **Proses Pengembalian** | ✅ | ✅ | Inspeksi kondisi fisik (Baik/Rusak/Perbaikan) |
+| **Export Data CSV** | ✅ | ✅ | Unduh file transaksi `.csv` |
 | **Tambah / Edit Barang** | ✅ | ❌ | Disembunyikan & diblokir untuk Staff |
-| **Hapus Barang** | ✅ | ❌ | Diblokir jika barang sedang dipinjam |
-| **Kelola Akun Staff (`/users`)** | ✅ | ❌ | Route Guard redirect + Toast alert |
-| **Toggle Status Akun Staff** | ✅ | ❌ | Mengaktifkan / menonaktifkan login staf |
-
-### 🔑 Akun Demo Bawaan
-
-| Peran | Username | Password | Deskripsi |
-| :--- | :--- | :--- | :--- |
-| **Admin** | `admin` | `admin123` | Administrator Utama Laboratorium Komputasi |
-| **Staff** | `staff` | `staff123` | Yeni (Staf Operasional Lab) |
-| **Staff 2** | `staff` | `staff123` | Natalia (Staf Operasional Lab) |
-
-*(Gunakan tombol **1-Click Quick Fill** pada halaman `/login` untuk pengisian instan).*
+| **Hapus Barang** | ✅ | ❌ | Diblokir jika masih ada transaksi aktif |
+| **Akses Menu Staff (`/users`)** | ✅ | ❌ | Route Guard redirect + Toast alert penolakan |
+| **Tambah & Edit Akun Staff** | ✅ | ❌ | Hanya Administrator |
+| **Toggle Status Akun Staff** | ✅ | ❌ | Nonaktifkan akses login staf |
+| **Hapus Akun Staff** | ✅ | ❌ | Diproteksi: tidak bisa hapus diri sendiri & root admin |
 
 ---
 
-## 📦 Data Awal (Seed Data)
+## 🔑 Kredensial Demo & Data Bawaan
 
-Sebanyak 8 data perangkat laboratorium ter-registrasi:
+| Peran | Username | Password | Deskripsi Akun |
+| :--- | :--- | :--- | :--- |
+| **Administrator** | `admin` | `admin123` | Administrator Utama Laboratorium Komputasi |
+| **Staff Operasional** | `staff` | `staff123` | Budi Santoso (Staf Operasional Lab) |
 
-| Kode Barang | Nama Perangkat | Kategori | Stok Awal | Lokasi Rak | Spesifikasi Singkat |
-| :--- | :--- | :--- | :---: | :--- | :--- |
-| **BR001** | Laptop Lenovo | Komputer | 5 | Lemari L1 | Core i5-11th, RAM 16GB, SSD 512GB, 14" FHD |
-| **BR002** | Mouse Logitech | Periferal | 10 | Laci P1 | Logitech B100 Optical USB Mouse 800 DPI |
-| **BR003** | Keyboard Mechanical | Periferal | 8 | Laci P2 | TKL Outemu Blue Switch, LED Backlit |
-| **BR004** | Proyektor Epson | Multimedia | 3 | Lemari M1 | Epson EB-X400 3300 Lumens XGA 3LCD |
-| **BR005** | Monitor LG | Display | 6 | Rak D1 | LG 24MP400 24" IPS 75Hz Full HD |
-| **BR006** | Kabel LAN Cat6 (10m) | Jaringan | 15 | Box J1 | UTP Cat6 Gigabit Ethernet Patch Cord RJ45 |
-| **BR007** | Router Mikrotik RB941 | Jaringan | 4 | Rak R1 | hAP-Lite RB941-2nD 4-Port Fast Ethernet |
-| **BR008** | Webcam Logitech C920 | Periferal | 6 | Laci W1 | Full HD 1080p 30fps Dual Stereo Mic |
+*(Tersedia tombol pintas **Demo Admin** & **Demo Staff** di halaman login untuk pengisian instan).*
+
+### 8 Data Inventaris Awal (Seed Data)
+1. **BR001** — Laptop Lenovo (Komputer, Stok: 5, Lemari L1)
+2. **BR002** — Mouse Logitech (Periferal, Stok: 10, Laci P1)
+3. **BR003** — Keyboard Mechanical (Periferal, Stok: 8, Laci P2)
+4. **BR004** — Proyektor Epson (Multimedia, Stok: 3, Lemari M1)
+5. **BR005** — Monitor LG (Display, Stok: 6, Rak D1)
+6. **BR006** — Kabel LAN Cat6 10m (Jaringan, Stok: 15, Box J1)
+7. **BR007** — Router Mikrotik RB941 (Jaringan, Stok: 4, Rak R1)
+8. **BR008** — Webcam Logitech C920 (Periferal, Stok: 6, Laci W1)
 
 ---
 
 ## 🗄️ Skema Database & Triggers
 
-File SQL lengkap berada di:
-[`database/schema.sql`](file:///D:/Semester%205/Project%20Coding/database/schema.sql)
-
-### Diagram Relasi Entitas (ERD)
+File skema DDL PostgreSQL lengkap tersedia di: [`database/schema.sql`](file:///D:/Semester%205/Project%20Coding/database/schema.sql)
 
 ```mermaid
 erDiagram
@@ -197,7 +222,7 @@ erDiagram
         string kondisi_kembali
         text catatan
         text catatan_kembali
-        string staff_username FK
+        string staff_username
         timestamptz created_at
     }
 
@@ -211,167 +236,146 @@ erDiagram
     }
 ```
 
-### Logika Trigger PostgreSQL
-1. **`trg_loans_insert_stock` (Trigger Pemotongan Stok Otomatis)**:
-   - Dijalankan `BEFORE INSERT ON loans`.
-   - Memeriksa ketersediaan stok fisik `items.stok`.
-   - Jika `stok < requested`, trigger membatalkan transaksi dengan pesan `Stok barang tidak mencukupi!`.
-   - Mengurangi stok fisik `items.stok = items.stok - NEW.jumlah`.
-2. **`trg_loans_return_stock` (Trigger Pengembalian Stok)**:
-   - Dijalankan `AFTER UPDATE ON loans`.
-   - Terpicu saat status berubah dari `'DIPINJAM'` ke `'SELESAI'`.
-   - Jika kondisi kembali `'Baik'`: Menambahkan kembali `items.stok = items.stok + NEW.jumlah`.
-   - Jika kondisi kembali `'Perlu Perbaikan'` atau `'Rusak'`: Stok siap pakai tidak ditambahkan, dan catatan kerusakan disimpan untuk pemeliharaan.
-3. **`trg_items_prevent_delete_active` (Trigger Proteksi Hapus)**:
-   - Dijalankan `BEFORE DELETE ON items`.
-   - Menghitung apakah terdapat peminjaman dengan status `'DIPINJAM'` untuk barang tersebut.
-   - Jika ditemukan, penghapusan ditolak dengan pesan kesalahan.
+### Logika Triggers Otomatis
+1. **`trg_loans_insert_stock` (Auto Cut Stock)**: Terpicu saat peminjaman baru dicatat. Mengurangi `items.stok` dan menolak transaksi jika stok fisik tidak mencukupi.
+2. **`trg_loans_return_stock` (Auto Restore Stock)**: Terpicu saat peminjaman diselesaikan. Jika kondisi `Baik`, stok dikembalikan ke stok aktif. Jika `Rusak`/`Perlu Perbaikan`, stok tidak dikembalikan ke stok aktif dan dicatat untuk pemeliharaan.
+3. **`trg_items_prevent_delete_active` (Delete Protection)**: Membatalkan penghapusan barang jika masih terdapat transaksi aktif.
 
 ---
 
-## 💻 Panduan Instalasi & Menjalankan Lokal
+## 💻 Panduan Menjalankan di Lokal
 
-Pastikan Anda telah menginstal **Node.js** (versi 18 ke atas) di komputer Anda.
-
-### 1. Buka Terminal / PowerShell di Direktori Proyek
+### 1. Masuk ke Direktori Proyek
 ```powershell
 cd "D:\Semester 5\Project Coding"
 ```
 
-### 2. Jalankan Server Pengembangan
-Gunakan perintah berikut:
+### 2. Jalankan Server Dev
 ```powershell
 npm.cmd run dev
 ```
 
-> **Catatan Windows PowerShell**: Jika muncul pesan keamanan `PSSecurityException: File npm.ps1 cannot be loaded because running scripts is disabled`, gunakan **`npm.cmd`** sebagai pengganti `npm`.
+> **Catatan Windows**: Jika muncul pesan PowerShell `PSSecurityException: File npm.ps1 cannot be loaded`, gunakan **`npm.cmd`** sebagai pengganti `npm`.
 
-### 3. Buka di Browser
-Buka browser favorit Anda dan akses:
-👉 **[http://localhost:3000](http://localhost:3000)**
+### 3. Akses Melalui Browser
+Buka browser dan buka: **[http://localhost:3000](http://localhost:3000)**
 
 ---
 
-## ☁️ Panduan Konfigurasi Supabase
+## ☁️ Panduan Konfigurasi Supabase Cloud
 
 Jika ingin menghubungkan aplikasi dengan database Supabase di cloud:
 
-1. Buat akun dan project baru di [Supabase Dashboard](https://supabase.com).
-2. Di sidebar kiri, buka menu **SQL Editor**.
-3. Buka file [`database/schema.sql`](file:///D:/Semester%205/Project%20Coding/database/schema.sql) dari proyek ini, salin seluruh kodenya, paste ke SQL Editor, lalu klik tombol **Run**.
-4. Buka menu **Project Settings > API**, salin:
+1. Buat project baru di [Supabase Dashboard](https://supabase.com).
+2. Di menu **SQL Editor**, buka file [`database/schema.sql`](file:///D:/Semester%205/Project%20Coding/database/schema.sql), salin kodenya, lalu klik **Run**.
+3. Buka menu **Project Settings > API**, salin:
    - **Project URL**
    - **anon / public key**
-5. Buka file [`.env.local`](file:///D:/Semester%205/Project%20Coding/.env.local) di folder proyek Anda dan tempel kredensial tersebut:
+4. Isi file [`.env.local`](file:///D:/Semester%205/Project%20Coding/.env.local):
    ```env
    NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
    NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
    ```
-6. Jalankan kembali `npm.cmd run dev`. Indikator status di pojok kanan atas aplikasi akan otomatis berubah menjadi badge hijau **"Supabase Connected"**.
+5. Restart aplikasi (`npm.cmd run dev`). Badge indikator di navbar akan menampilkan **"Supabase Connected"**.
 
 ---
 
-## 🚀 Panduan Deployment ke Vercel
+## 🚀 Panduan Deployment ke Netlify & Vercel
 
-Aplikasi ini telah diverifikasi dan siap dideploy langsung ke **Vercel**:
+### A. Deployment Otomatis via Netlify (Rekomendasi)
+Aplikasi ini terhubung langsung ke repositori GitHub:
+👉 **`https://github.com/MeNata-Script/coding-challange_SIMLAB.git`**
 
-1. **Inisialisasi Git & Push ke GitHub**:
-   ```powershell
-   git init
-   git add .
-   git commit -m "feat: complete lab inventory and borrowing management system"
-   git branch -M main
-   git remote add origin https://github.com/username-anda/simlab-inventory.git
-   git push -u origin main
-   ```
-2. **Import ke Vercel**:
-   - Buka [Vercel Dashboard](https://vercel.com/dashboard) dan klik **Add New Project**.
-   - Pilih repository GitHub Anda dan klik **Import**.
-3. **Konfigurasi Environment Variables di Vercel**:
-   - Pada bagian **Environment Variables**, tambahkan:
-     - `NEXT_PUBLIC_SUPABASE_URL`: URL project Supabase Anda.
-     - `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Anon key Supabase Anda.
-4. **Deploy**:
-   - Klik tombol **Deploy**.
-   - Vercel akan menjalankan `npm run build` dan mempublikasikan aplikasi Anda dalam 1-2 menit dengan sertifikat SSL gratis!
+1. Masuk ke [Netlify Dashboard](https://app.netlify.com/).
+2. Hubungkan repository `coding-challange_SIMLAB`.
+3. Build Settings:
+   - **Build command**: `npm run build`
+   - **Publish directory**: `.next`
+4. Set Environment Variables di Netlify:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+5. Setiap kali Anda melakukan `git push origin main`, Netlify akan otomatis melakukan continuous deployment dalam 1-2 menit!
+
+### B. Deployment via Vercel
+1. Import repository `coding-challange_SIMLAB` di [Vercel Dashboard](https://vercel.com/dashboard).
+2. Masukkan Environment Variables yang sama.
+3. Klik **Deploy**.
 
 ---
 
-## 📂 Struktur Folder Proyek
+## 📂 Struktur Direktori Proyek
 
 ```text
 D:\Semester 5\Project Coding\
 ├── app/
-│   ├── dashboard/             # Modul B: Analitik & Ringkasan Lab
+│   ├── dashboard/             # Modul B: Analitik Metrik & Log Aktivitas
 │   │   └── page.tsx
-│   ├── inventory/             # Modul C: Katalog, Filter, Modal CRUD, QR Tag
+│   ├── inventory/             # Modul C: Katalog, Filter Kategori, QR Tag, Modal CRUD
 │   │   └── page.tsx
-│   ├── loans/                 # Modul D & E: Peminjaman & Pengembalian, CSV
+│   ├── loans/                 # Modul D & E: Peminjaman & Pengembalian, Export CSV
 │   │   └── page.tsx
-│   ├── login/                 # Modul A: Otentikasi & 1-Click Demo Pills
+│   ├── login/                 # Modul A: Login Pastel, Password Eye Toggle, 1-Click Demo
 │   │   └── page.tsx
-│   ├── users/                 # Modul F: Kelola Staff & Hak Akses (Admin Only)
+│   ├── users/                 # Modul F: Kelola Staff, Status Toggle & Hapus Staff (Admin Only)
 │   │   └── page.tsx
-│   ├── globals.css            # Desain warna 60-30-10 & scrollbar kustom
+│   ├── globals.css            # Custom CSS Variables, Inter Font, Muted Scrollbar
 │   ├── layout.tsx             # Root Layout (AuthProvider + ToastProvider)
-│   └── page.tsx               # Redirector pintar
+│   └── page.tsx               # Redirector Cerdas
 ├── components/
 │   ├── inventory/
-│   │   ├── DeleteConfirmModal.tsx  # Modal konfirmasi hapus dengan proteksi loan
-│   │   ├── ItemFormModal.tsx       # Modal tambah & ubah barang
-│   │   └── SlideOverItemDetail.tsx # Drawer detail spesifikasi & Cetak QR Tag
+│   │   ├── DeleteConfirmModal.tsx    # Modal konfirmasi hapus barang berpalet soft
+│   │   ├── ItemFormModal.tsx         # Modal input & edit data barang
+│   │   └── SlideOverItemDetail.tsx   # Drawer detail spesifikasi & Cetak QR Tag
 │   ├── layout/
-│   │   ├── AppLayout.tsx           # Layout guard pembungkus halaman
-│   │   ├── MobileNav.tsx           # Navigasi bawah lengket untuk perangkat mobile
-│   │   ├── Navbar.tsx              # Topbar dengan status cloud & profil
-│   │   └── Sidebar.tsx             # Sidebar persisten desktop (>= 1024px)
+│   │   ├── AppLayout.tsx             # Layout pembungkus halaman (Warm Gray)
+│   │   ├── MobileNav.tsx             # Navigasi bawah sticky (Touch Target >= 44px)
+│   │   ├── Navbar.tsx                # Topbar Soft Neutral dengan status cloud & profil
+│   │   └── Sidebar.tsx               # Sidebar navigasi Soft Sage desktop
 │   ├── loans/
-│   │   ├── NewLoanModal.tsx        # Modal catat pinjam & kalkulasi stok
-│   │   └── ReturnModal.tsx         # Modal proses kembali dengan kondisi fisik
+│   │   ├── NewLoanModal.tsx          # Modal pencatatan pinjam & kalkulasi stok
+│   │   └── ReturnModal.tsx           # Modal proses pengembalian multi-kondisi
 │   └── users/
-│       └── StaffFormModal.tsx      # Modal tambah & edit akun staf
+│       ├── DeleteStaffConfirmModal.tsx # Modal konfirmasi hapus akun staff
+│       └── StaffFormModal.tsx        # Modal tambah & ubah akun staff
 ├── context/
-│   ├── AuthContext.tsx        # Session manajemen & RBAC guard
-│   └── ToastContext.tsx       # Sistem notifikasi toast non-intrusif
+│   ├── AuthContext.tsx        # Manajemen sesi otentikasi & RBAC guard
+│   └── ToastContext.tsx       # Sistem notifikasi Toast non-intrusif
 ├── database/
-│   └── schema.sql             # Skema DDL PostgreSQL, RLS, Triggers, & Seeds
+│   └── schema.sql             # Skema DDL PostgreSQL, RLS, Triggers & Seeds
 ├── lib/
 │   ├── db.ts                  # Lapisan abstraksi data (Supabase + Local fallback)
-│   ├── initialData.ts         # Data awal 8 item dan 2 akun demo
+│   ├── initialData.ts         # Data awal 8 item, 2 akun demo, dan audit logs
 │   ├── supabase.ts            # Client initializer Supabase
-│   └── utils.ts               # Formatter tanggal, CSV exporter, classnames
+│   └── utils.ts               # Formatter tanggal, CSV exporter, classnames helper
 ├── types/
-│   └── index.ts               # Definisi antarmuka TypeScript lengkap
-├── .env.example               # Contoh template variabel lingkungan
-├── .env.local                 # File konfigurasi lokal
-├── .gitignore                 # Konfigurasi file yang diabaikan git
-├── next.config.mjs            # Konfigurasi Next.js
-├── package.json               # Daftar dependensi & scripts
-├── postcss.config.mjs         # Konfigurasi PostCSS
-├── README.md                  # Dokumentasi komprehensif proyek
-├── tailwind.config.ts         # Konfigurasi palette tema Tailwind CSS
-└── tsconfig.json              # Konfigurasi kompilasi TypeScript
+│   └── index.ts               # Definisi tipe antarmuka TypeScript lengkap
+├── .env.example               # Template environment variables
+├── .env.local                 # Konfigurasi environment lokal
+├── netlify.toml               # Konfigurasi build pipeline Netlify
+├── package.json               # Daftar dependencies & scripts build
+├── tailwind.config.ts         # Definisi Master Color Palette & Border Radiuses
+└── tsconfig.json              # Konfigurasi TypeScript
 ```
 
 ---
 
-## ❓ Troubleshooting
+## ❓ Troubleshooting & Solusi
 
 ### 1. Muncul error `PSSecurityException` saat menjalankan `npm` di PowerShell
-- **Penyebab**: Kebijakan eksekusi skrip PowerShell di Windows memblokir file `npm.ps1`.
-- **Solusi**: Jalankan perintah menggunakan **`npm.cmd`**:
+* **Penyebab**: Kebijakan eksekusi skrip Windows PowerShell membatasi file `.ps1`.
+* **Solusi**: Gunakan `npm.cmd` di terminal:
   ```powershell
   npm.cmd run dev
   npm.cmd run build
   ```
 
-### 2. Bagaimana cara mereset data demo kembali ke awal jika terlanjur mengubah banyak data?
-- Buka Developer Tools di browser Anda (`F12`), masuk ke tab **Application > Local Storage**, lalu klik **Clear site data**.
-- Muat ulang (*refresh*) halaman web, dan data akan otomatis kembali ke kondisi *fresh seed*.
+### 2. Bagaimana cara mereset data demo kembali ke awal jika telah mengubah banyak data?
+* Buka Developer Tools di browser (`F12`), pilih tab **Application > Local Storage**, lalu klik **Clear site data**.
+* Muat ulang halaman (*refresh*), data akan otomatis ter-reset ke *fresh seed* awal.
 
-### 3. Apakah aplikasi error jika saya belum memiliki akun Supabase?
-- **Sama sekali tidak!** Berkat **Hybrid Fallback Engine**, aplikasi otomatis menggunakan LocalStorage Engine dengan seed data lengkap. Seluruh fitur (tambah barang, ubah status staff, catat pinjam, cetak QR, dan pengembalian) tetap berfungsi 100% lancar.
+### 3. Apakah aplikasi tetap berjalan tanpa akun Supabase?
+* **Ya, 100% berjalan normal!** Berkat **Dual Storage Engine**, aplikasi otomatis menggunakan LocalStorage fallback jika Supabase belum dikonfigurasi. Seluruh aksi (tambah barang, catat pinjam, ubah status staff, hapus staff, dan cetak QR) tetap tersimpan di browser Anda.
 
 ---
 *Dikembangkan untuk Tugas Praktikum & Evaluasi Proyek Coding Semester 5.*  
-*Siap dipresentasikan dan dideploy ke Vercel!* 🚀
+*Repository: [coding-challange_SIMLAB](https://github.com/MeNata-Script/coding-challange_SIMLAB.git)* 🔬
