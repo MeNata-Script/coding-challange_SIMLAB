@@ -2,14 +2,17 @@
 ### *Sistem Manajemen Inventaris & Peminjaman Laboratorium Terintegrasi*
 **Modern Professional, Soft Neutral & Fully Responsive**
 
+[![Live Demo](https://img.shields.io/badge/Live_Demo-coding--challenge--simlab--yeninatalia.netlify.app-00C7B7?style=for-the-badge&logo=netlify)](https://coding-challenge-simlab-yeninatalia.netlify.app)
 [![Next.js 14](https://img.shields.io/badge/Next.js-14.2-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.7-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.4-34495e?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ecf8e?style=for-the-badge&logo=supabase)](https://supabase.com/)
-[![Netlify Status](https://img.shields.io/badge/Netlify-Deployed-00C7B7?style=for-the-badge&logo=netlify)](https://netlify.com/)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-coding--challange__SIMLAB-181717?style=for-the-badge&logo=github)](https://github.com/MeNata-Script/coding-challange_SIMLAB.git)
 
-SIMLAB adalah aplikasi web pengelolaan laboratorium berskala Enterprise/SaaS modern yang dirancang untuk mempermudah inventarisasi perangkat laboratorium, alur peminjaman dan pengembalian barang, pelacakan keterlambatan (*overdue*), pencetakan tag QR-Code dinamis, inspeksi kondisi fisik barang, serta manajemen akun staf laboratorium berbasis **Role-Based Access Control (RBAC)**.
+> 🌐 **URL Produksi Resmi**: [https://coding-challenge-simlab-yeninatalia.netlify.app](https://coding-challenge-simlab-yeninatalia.netlify.app)  
+> 👤 **Administrator Utama**: **Yeni Natalia** (*Kepala Laboratorium Komputasi*)
+
+SIMLAB adalah aplikasi web pengelolaan laboratorium berskala Enterprise/SaaS modern yang dirancang untuk mempermudah inventarisasi perangkat laboratorium, alur peminjaman dan pengembalian barang, pelacakan keterlambatan (*overdue*), pencetakan tag QR-Code dinamis, inspeksi kondisi fisik barang, penerapan **SOP Laboratorium Ketat**, serta manajemen akun staf laboratorium berbasis **Role-Based Access Control (RBAC)**.
 
 Dibangun dengan estetika **Soft Neutral + Muted Navy**, dirancang khusus agar sangat nyaman dipandang berlama-lama (*eye-friendly* dan anti-silau) tanpa menggunakan background putih polos dominan.
 
@@ -69,8 +72,9 @@ Sistem antarmuka SIMLAB menerapkan standar desain **SaaS Grade - Modern Professi
   * **Fitur Show/Hide Password**: Tombol ikon mata interaktif untuk mengintip kata sandi.
   * **1-Click Quick Fill**: Tombol pintas pengisian kredensial Admin dan Staff dalam sekali klik.
 * **Modul B — Overview Dashboard (`/dashboard`)**:
-  * 4 Statistik Utama: *Total Jenis Barang, Total Stok Siap Pakai, Sedang Dipinjam, Total Transaksi*.
+  * **4 Kartu Statistik Interaktif (Clickable)**: Klik pada kartu *Total Inventaris, Stok Tersedia, Sedang Dipinjam, Total Transaksi* untuk membuka modal rincian interaktif lengkap dengan filter, pencarian, dan tautan aksi langsung.
   * Multi-bar grafik distribusi stok antar kategori (Komputer, Periferal, Multimedia, Display, Jaringan).
+  * **Banner & Modal SOP Laboratorium**: Penjelasan ringkas tata tertib peminjaman langsung di dashboard.
   * **Banner "Perlu Perhatian"**: Otomatis mendeteksi barang berkondisi kritis (< 3 unit) dan peminjaman terlambat.
   * Log aktivitas peminjaman dan rekam jejak audit sistem terbaru.
 * **Modul C — Manajemen Inventaris (`/inventory`)**:
@@ -78,22 +82,28 @@ Sistem antarmuka SIMLAB menerapkan standar desain **SaaS Grade - Modern Professi
   * Kontrol CRUD Admin: Tambah barang baru, edit spesifikasi & stok, dan hapus barang.
   * **Proteksi Hapus**: Sistem otomatis memblokir penghapusan barang jika masih ada peminjaman aktif.
   * **Printable QR Code Tag**: Klik baris inventaris untuk membuka *Slide-Over Drawer* detail spesifikasi dan QR Code siap cetak label.
-* **Modul D — Transaksi Peminjaman (`/loans`)**:
+* **Modul D — Transaksi Peminjaman Sesuai SOP (`/loans`)**:
+  * **Integrasi SOP Ketat Laboratorium**:
+    * Peminjam **wajib membawa kartu identitas fisik** (KTM / KTP / Kartu Pegawai / NIP).
+    * Formulir mewajibkan pengisian **Alamat Domisili Lengkap** dan **Kontak Aktif / WhatsApp** (tidak boleh kosong / `NOT NULL`).
   * Pencatatan peminjaman dengan live validasi ketersediaan stok fisik.
   * Tombol kuantitas instan `+1`, `+2`, dan `Max`.
   * Animasi mikro interaksi konfeti saat transaksi berhasil dicatat.
-* **Modul E — Pengembalian & Laporan Riwayat (`/loans`)**:
+* **Modul E — Pengembalian, Inspeksi Fisik & Laporan Riwayat (`/loans`)**:
   * Tab *Sedang Dipinjam* (Aktif) dan *Riwayat Selesai*.
   * **Overdue Tracking**: Peminjaman yang melewati tanggal estimasi otomatis ditandai badge merah *Terlambat* dan dinaikkan ke urutan teratas.
-  * **Proses Pengembalian Multi-Kondisi**:
+  * **Proses Pengembalian Multi-Kondisi Sesuai SOP**:
     * `Baik`: Stok fisik otomatis dikembalikan ke inventaris siap pakai.
-    * `Perlu Perbaikan` / `Rusak`: Peminjaman diselesaikan tanpa mengembalikan ke stok siap pakai (ditandai untuk servis lab).
-  * **Export Laporan CSV**: Mengunduh seluruh rekap riwayat peminjaman ke format spreadsheet `.csv`.
+    * `Perlu Perbaikan` / `Rusak`: Peminjaman diselesaikan tanpa mengembalikan ke stok siap pakai (ditandai untuk servis lab) + tombol langsung **Hubungi via WhatsApp** peminjam untuk tindak lanjut klaim/ganti rugi SOP.
+  * **Export Laporan CSV**: Mengunduh seluruh rekap riwayat peminjaman (termasuk kontak dan alamat) ke format spreadsheet `.csv`.
 * **Modul F — Kelola Staff & Akses (`/users` — Khusus Admin)**:
   * Manajemen operator lab: nama lengkap, avatar, username, role, tanggal terdaftar, dan status.
   * Modal Tambah & Ubah Staff.
   * Switch toggle instan status akun (`AKTIF` / `NONAKTIF`).
   * **Hapus Akun Staff**: Dilengkapi modal konfirmasi danger berpalet lembut dan **Multi-layer Safety Guards** (proteksi akun sendiri dan akun root admin).
+* **Modul Tambahan — Profil Pengguna & Pusat SOP Terpadu**:
+  * **Modal Profil Kepala Lab / Staff**: Akses detail profil pengguna, avatar inisial, info jabatan, kontak, tombol logout aman, dan opsi *Reset Cache Lokal*.
+  * **SOP Laboratorium Modal**: Akses cepat 5 pedoman resmi SOP lab dari tombol topbar Navbar, kartu navigasi Sidebar, banner Dashboard, dan halaman Loans.
 
 ---
 
@@ -157,10 +167,10 @@ Sistem antarmuka SIMLAB menerapkan standar desain **SaaS Grade - Modern Professi
 
 ## 🔑 Kredensial Demo & Data Bawaan
 
-| Peran | Username | Password | Deskripsi Akun |
-| :--- | :--- | :--- | :--- |
-| **Administrator** | `admin` | `admin123` | Administrator Utama Laboratorium Komputasi |
-| **Staff Operasional** | `staff` | `staff123` | Budi Santoso (Staf Operasional Lab) |
+| Peran | Username | Password | Nama & Jabatan | Kontak |
+| :--- | :--- | :--- | :--- | :--- |
+| **Administrator** | `admin` | `admin123` | **Yeni Natalia** (*Kepala Laboratorium*) | `yeni.natalia@simlab.ac.id` / `081234567890` |
+| **Staff Operasional** | `staff` | `staff123` | **Budi Santoso** (*Teknisi Lab*) | `budi.santoso@simlab.ac.id` / `085712345678` |
 
 *(Tersedia tombol pintas **Demo Admin** & **Demo Staff** di halaman login untuk pengisian instan).*
 
@@ -325,6 +335,8 @@ D:\Semester 5\Project Coding\
 │   ├── layout.tsx             # Root Layout (AuthProvider + ToastProvider)
 │   └── page.tsx               # Redirector Cerdas
 ├── components/
+│   ├── dashboard/
+│   │   └── StatDetailModal.tsx       # Modal interaktif 4 kartu statistik dashboard
 │   ├── inventory/
 │   │   ├── DeleteConfirmModal.tsx    # Modal konfirmasi hapus barang berpalet soft
 │   │   ├── ItemFormModal.tsx         # Modal input & edit data barang
@@ -335,8 +347,12 @@ D:\Semester 5\Project Coding\
 │   │   ├── Navbar.tsx                # Topbar Soft Neutral dengan status cloud & profil
 │   │   └── Sidebar.tsx               # Sidebar navigasi Soft Sage desktop
 │   ├── loans/
-│   │   ├── NewLoanModal.tsx          # Modal pencatatan pinjam & kalkulasi stok
-│   │   └── ReturnModal.tsx           # Modal proses pengembalian multi-kondisi
+│   │   ├── NewLoanModal.tsx          # Modal pencatatan pinjam, SOP wajib & stok
+│   │   └── ReturnModal.tsx           # Modal pengembalian, inspeksi & kontak WA
+│   ├── profile/
+│   │   └── UserProfileModal.tsx      # Modal profil detail Kepala Lab/Staff & Reset Data
+│   ├── sop/
+│   │   └── SOPModal.tsx              # Modal interaktif 5 poin SOP Resmi Laboratorium
 │   └── users/
 │       ├── DeleteStaffConfirmModal.tsx # Modal konfirmasi hapus akun staff
 │       └── StaffFormModal.tsx        # Modal tambah & ubah akun staff
