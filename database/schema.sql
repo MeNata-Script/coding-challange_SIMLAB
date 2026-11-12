@@ -31,6 +31,9 @@ CREATE TABLE users (
     role VARCHAR(20) NOT NULL CHECK (role IN ('ADMIN', 'STAFF')),
     status VARCHAR(20) NOT NULL DEFAULT 'AKTIF' CHECK (status IN ('AKTIF', 'NONAKTIF')),
     avatar_url TEXT,
+    email VARCHAR(100),
+    phone VARCHAR(30),
+    jabatan VARCHAR(100),
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
@@ -56,6 +59,10 @@ CREATE TABLE loans (
     item_id UUID NOT NULL REFERENCES items(id) ON DELETE RESTRICT,
     nama_peminjam VARCHAR(100) NOT NULL,
     nim_identitas VARCHAR(50) NOT NULL,
+    kontak_peminjam VARCHAR(50) NOT NULL,
+    alamat_peminjam TEXT NOT NULL,
+    prodi_instansi VARCHAR(100),
+    email_peminjam VARCHAR(100),
     jumlah INTEGER NOT NULL CHECK (jumlah > 0),
     tanggal_pinjam DATE NOT NULL DEFAULT CURRENT_DATE,
     estimasi_kembali DATE NOT NULL,
@@ -205,10 +212,10 @@ CREATE POLICY "Public write audit_logs" ON audit_logs FOR INSERT WITH CHECK (tru
 -- 6. MANDATORY INITIAL SEED DATA
 -- =========================================================================
 
--- Seed Users: Admin & Staff
-INSERT INTO users (username, password_hash, full_name, role, status) VALUES
-('admin', 'admin123', 'Administrator Utama Lab', 'ADMIN', 'AKTIF'),
-('staff', 'staff123', 'Budi Santoso (Staff Lab)', 'STAFF', 'AKTIF')
+-- Seed Users: Admin & Staff (Default Admin: Yeni Natalia)
+INSERT INTO users (username, password_hash, full_name, role, status, email, phone, jabatan) VALUES
+('admin', 'admin123', 'Yeni Natalia', 'ADMIN', 'AKTIF', 'yeni.natalia@simlab.ac.id', '081234567890', 'Kepala Laboratorium Komputasi'),
+('staff', 'staff123', 'Budi Santoso', 'STAFF', 'AKTIF', 'budi.santoso@simlab.ac.id', '085712345678', 'Teknisi Operasional Lab')
 ON CONFLICT (username) DO NOTHING;
 
 -- Seed Mandatory Items

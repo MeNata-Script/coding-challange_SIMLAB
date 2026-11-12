@@ -20,8 +20,26 @@ function isBrowser(): boolean {
   return typeof window !== 'undefined';
 }
 
+const SIMLAB_DATA_VERSION = 'v2_20261112_yeni_natalia_sop';
+
+function checkAndSyncVersion(): void {
+  if (!isBrowser()) return;
+  try {
+    const savedVersion = localStorage.getItem('simlab_version');
+    if (savedVersion !== SIMLAB_DATA_VERSION) {
+      // Auto sync users & loans to ensure fresh default Admin Yeni Natalia & new SOP fields
+      localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(INITIAL_USERS));
+      localStorage.setItem('simlab_version', SIMLAB_DATA_VERSION);
+      memoryUsers = [...INITIAL_USERS];
+    }
+  } catch (e) {
+    console.warn('Version check error:', e);
+  }
+}
+
 function getStored<T>(key: string, defaultData: T[]): T[] {
   if (!isBrowser()) return defaultData;
+  checkAndSyncVersion();
   try {
     const item = localStorage.getItem(key);
     if (!item) {
@@ -666,8 +684,10 @@ export function resetMockDataToDefault(): void {
   localStorage.setItem(STORAGE_KEYS.ITEMS, JSON.stringify(INITIAL_ITEMS));
   localStorage.setItem(STORAGE_KEYS.LOANS, JSON.stringify(INITIAL_LOANS));
   localStorage.setItem(STORAGE_KEYS.AUDIT, JSON.stringify(INITIAL_AUDIT_LOGS));
+  localStorage.setItem('simlab_version', SIMLAB_DATA_VERSION);
   memoryUsers = [...INITIAL_USERS];
   memoryItems = [...INITIAL_ITEMS];
   memoryLoans = [...INITIAL_LOANS];
   memoryAudit = [...INITIAL_AUDIT_LOGS];
+  window.dispatchEvent(new Event('simlab_data_changed'));
 }

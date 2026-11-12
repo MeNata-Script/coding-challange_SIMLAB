@@ -15,8 +15,10 @@ import {
   Lock,
   LogOut,
   Key,
+  RotateCcw,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
+import { resetMockDataToDefault } from '@/lib/db';
 
 interface UserProfileModalProps {
   isOpen: boolean;
@@ -210,6 +212,26 @@ export default function UserProfileModal({
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Cache & Local Sync Section */}
+          <div className="pt-2 border-t border-[#D9DFDA] flex items-center justify-between text-xs">
+            <div>
+              <p className="font-semibold text-[#344047]">Sinkronisasi Data Lokal</p>
+              <p className="text-[11px] text-[#87918F]">Perbarui data browser ini ke data master default terbaru</p>
+            </div>
+            <button
+              onClick={() => {
+                if (confirm('Sinkronkan ulang memori browser ini ke data default terbaru (Admin Yeni Natalia & SOP)?')) {
+                  resetMockDataToDefault();
+                  window.location.reload();
+                }
+              }}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold text-[#34495E] bg-[#DCE8E2] hover:bg-[#C8DBD3] border border-[#D9DFDA] rounded-[8px] transition-colors cursor-pointer"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Reset Data Lokal</span>
+            </button>
           </div>
         </div>
 
