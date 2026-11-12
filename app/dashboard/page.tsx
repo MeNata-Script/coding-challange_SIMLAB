@@ -535,12 +535,14 @@ export default function DashboardPage() {
       />
 
       {/* Stat Detail Interactive Modal */}
-      <StatDetailModal
-        type={selectedStatType}
-        items={allItems}
-        loans={allLoans}
-        onClose={() => setSelectedStatType(null)}
-      />
+      {selectedStatType && (
+        <StatDetailModal
+          type={selectedStatType}
+          items={allItems}
+          loans={allLoans}
+          onClose={() => setSelectedStatType(null)}
+        />
+      )}
 
       {/* SOP Modal */}
       <SOPModal isOpen={isSOPOpen} onClose={() => setIsSOPOpen(false)} />
