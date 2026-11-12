@@ -53,7 +53,7 @@ export default function Sidebar() {
 
   return (
     <>
-      <aside className="w-64 bg-[#E2E9E3] border-r border-[#D9DFDA] flex flex-col h-screen sticky top-0 shrink-0">
+      <aside className="hidden lg:flex w-64 bg-[#E2E9E3] border-r border-[#D9DFDA] flex-col h-screen sticky top-0 shrink-0">
         {/* Logo Section */}
         <div className="h-16 flex items-center gap-3 px-6 border-b border-[#D9DFDA]/80 bg-[#E2E9E3]">
           <div className="w-9 h-9 rounded-[10px] bg-[#34495E] flex items-center justify-center text-[#F4F5F1] shadow-xs">

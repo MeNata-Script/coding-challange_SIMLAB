@@ -100,6 +100,28 @@ body {
   background-color: #C8DBD3;
 }
 
+/* Sembunyikan Floating Watermark Netlify Badge agar tidak menutupi tombol & navigasi di HP */
+#netlify-badge,
+.netlify-badge,
+[data-netlify-badge],
+a[href*="netlify.com"][style*="fixed"],
+div[style*="fixed"] a[href*="netlify.com"],
+div[style*="position: fixed"] a[href*="netlify"],
+div[style*="position:fixed"] a[href*="netlify"],
+iframe[id*="netlify"],
+div[class*="netlify-badge"],
+a[href*="netlify.com"][class*="badge"] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  width: 0 !important;
+  position: absolute !important;
+  bottom: -9999px !important;
+  z-index: -9999 !important;
+}
+
 @media print {
   body * {
     visibility: hidden;

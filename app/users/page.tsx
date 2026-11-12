@@ -18,6 +18,7 @@ import {
   User as UserIcon,
   Phone,
   Mail,
+  Briefcase,
 } from 'lucide-react';
 import StaffFormModal from '@/components/users/StaffFormModal';
 import DeleteStaffConfirmModal from '@/components/users/DeleteStaffConfirmModal';
@@ -157,7 +158,7 @@ export default function UsersManagementPage() {
         {/* Desktop Table View */}
         <div className="hidden lg:block bg-[#F4F5F1] rounded-[14px] border border-[#D9DFDA] shadow-xs overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+            <table className="w-full text-left border-collapse min-w-[780px]">
               <thead>
                 <tr className="bg-[#E2E9E3] border-b border-[#D9DFDA] text-[11px] font-bold uppercase tracking-wider text-[#69777A]">
                   <th className="py-3.5 px-5">Pengguna & Jabatan</th>
@@ -194,7 +195,7 @@ export default function UsersManagementPage() {
                         <td className="py-3.5 px-5">
                           <button
                             onClick={() => handleOpenProfile(u)}
-                            className="flex items-center gap-3 text-left hover:opacity-80 transition-opacity"
+                            className="flex items-center gap-3 text-left hover:opacity-85 transition-opacity group cursor-pointer"
                             title="Klik untuk melihat profil lengkap"
                           >
                             <img
@@ -203,18 +204,18 @@ export default function UsersManagementPage() {
                                 `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.username}`
                               }
                               alt={u.full_name}
-                              className="w-9 h-9 rounded-full bg-[#E2E9E3] border border-[#D9DFDA]"
+                              className="w-9 h-9 rounded-full bg-[#E2E9E3] border border-[#D9DFDA] shrink-0 object-cover"
                             />
-                            <div>
-                              <p className="font-semibold text-[#2E3B40] flex items-center gap-1.5 hover:underline">
-                                <span>{u.full_name}</span>
+                            <div className="min-w-0">
+                              <p className="font-semibold text-[#2E3B40] flex items-center gap-1.5 group-hover:text-[#34495E] transition-colors">
+                                <span className="truncate">{u.full_name}</span>
                                 {isSelf && (
-                                  <span className="text-[10px] bg-[#DCE8E2] text-[#34495E] px-1.5 py-0.2 rounded font-normal">
+                                  <span className="text-[10px] bg-[#DCE8E2] text-[#34495E] px-1.5 py-0.2 rounded font-normal shrink-0">
                                     Anda
                                   </span>
                                 )}
                               </p>
-                              <p className="text-[11px] text-[#69777A]">
+                              <p className="text-[11px] text-[#69777A] truncate">
                                 {u.jabatan || (u.role === 'ADMIN' ? 'Kepala Lab Komputasi' : 'Teknisi Lab')}
                               </p>
                             </div>
@@ -223,7 +224,7 @@ export default function UsersManagementPage() {
 
                         <td className="py-3.5 px-5">
                           <p className="font-mono text-[#344047] font-semibold">@{u.username}</p>
-                          <p className="text-[11px] text-[#87918F] font-mono">
+                          <p className="text-[11px] text-[#87918F] font-mono truncate max-w-[180px]">
                             {u.phone || u.email || 'Kontak belum disetel'}
                           </p>
                         </td>
@@ -270,14 +271,14 @@ export default function UsersManagementPage() {
                           <div className="flex items-center justify-end gap-1">
                             <button
                               onClick={() => handleOpenProfile(u)}
-                              className="p-1.5 text-[#69777A] hover:text-[#527493] hover:bg-[#E3EAF0] rounded-[8px] transition-colors"
+                              className="p-1.5 text-[#527493] bg-[#E3EAF0] hover:bg-[#D5E1EB] rounded-[8px] transition-colors"
                               title="Lihat Profil Lengkap"
                             >
                               <UserIcon className="w-4 h-4" />
                             </button>
                             <button
                               onClick={() => handleOpenEdit(u)}
-                              className="p-1.5 text-[#69777A] hover:text-[#34495E] hover:bg-[#DCE8E2] rounded-[8px] transition-colors"
+                              className="p-1.5 text-[#34495E] bg-[#DCE8E2] hover:bg-[#C8DBD3] rounded-[8px] transition-colors"
                               title="Edit Akun"
                             >
                               <Edit2 className="w-4 h-4" />
@@ -285,7 +286,7 @@ export default function UsersManagementPage() {
                             {!isSelf && !isRootAdmin && (
                               <button
                                 onClick={() => handleOpenDelete(u)}
-                                className="p-1.5 text-[#69777A] hover:text-[#A95353] hover:bg-[#F2E3E1] rounded-[8px] transition-colors"
+                                className="p-1.5 text-[#A95353] bg-[#F2E3E1] hover:bg-[#EBD5D3] rounded-[8px] transition-colors"
                                 title="Hapus Akun Staff"
                               >
                                 <Trash2 className="w-4 h-4" />
@@ -302,7 +303,7 @@ export default function UsersManagementPage() {
           </div>
         </div>
 
-        {/* Mobile View: Stacked Cards */}
+        {/* Mobile View: Stacked Cards (Optimized & Non-breaking) */}
         <div className="lg:hidden space-y-3">
           {loading ? (
             <div className="p-8 text-center text-[#87918F] bg-[#F4F5F1] rounded-[14px] border border-[#D9DFDA]">
@@ -320,37 +321,35 @@ export default function UsersManagementPage() {
                   key={u.id}
                   className="bg-[#F4F5F1] p-4 rounded-[14px] border border-[#D9DFDA] shadow-xs space-y-3"
                 >
-                  <div className="flex items-start justify-between">
-                    <button
-                      onClick={() => handleOpenProfile(u)}
-                      className="flex items-center gap-2.5 text-left"
-                    >
+                  {/* Card Header: Avatar, Name, & Actions */}
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex items-center gap-3 min-w-0">
                       <img
                         src={
                           u.avatar_url ||
                           `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.username}`
                         }
                         alt={u.full_name}
-                        className="w-10 h-10 rounded-full bg-[#E2E9E3] border border-[#D9DFDA]"
+                        className="w-11 h-11 rounded-full bg-[#E2E9E3] border border-[#D9DFDA] shrink-0 object-cover"
                       />
-                      <div>
-                        <h4 className="font-bold text-[#2E3B40] text-sm hover:underline">{u.full_name}</h4>
+                      <div className="min-w-0">
+                        <h4 className="font-bold text-[#2E3B40] text-sm truncate">{u.full_name}</h4>
                         <p className="text-xs font-mono text-[#69777A]">@{u.username}</p>
-                        {u.jabatan && <p className="text-[11px] text-[#87918F]">{u.jabatan}</p>}
                       </div>
-                    </button>
+                    </div>
 
-                    <div className="flex items-center gap-1">
+                    {/* Action Buttons */}
+                    <div className="flex items-center gap-1 shrink-0">
                       <button
                         onClick={() => handleOpenProfile(u)}
-                        className="p-2 text-[#69777A] hover:text-[#527493] hover:bg-[#E3EAF0] rounded-[8px]"
+                        className="p-1.5 text-[#527493] bg-[#E3EAF0] hover:bg-[#D5E1EB] rounded-[8px] transition-colors"
                         title="Lihat Profil"
                       >
                         <UserIcon className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => handleOpenEdit(u)}
-                        className="p-2 text-[#69777A] hover:text-[#34495E] hover:bg-[#DCE8E2] rounded-[8px]"
+                        className="p-1.5 text-[#34495E] bg-[#DCE8E2] hover:bg-[#C8DBD3] rounded-[8px] transition-colors"
                         title="Edit Akun"
                       >
                         <Edit2 className="w-4 h-4" />
@@ -358,7 +357,7 @@ export default function UsersManagementPage() {
                       {!isSelf && !isRootAdmin && (
                         <button
                           onClick={() => handleOpenDelete(u)}
-                          className="p-2 text-[#69777A] hover:text-[#A95353] hover:bg-[#F2E3E1] rounded-[8px]"
+                          className="p-1.5 text-[#A95353] bg-[#F2E3E1] hover:bg-[#EBD5D3] rounded-[8px] transition-colors"
                           title="Hapus Akun Staff"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -367,19 +366,48 @@ export default function UsersManagementPage() {
                     </div>
                   </div>
 
+                  {/* Info Strip */}
+                  <div className="p-2.5 rounded-[10px] bg-[#ECEFEA] border border-[#D9DFDA] text-xs space-y-1">
+                    <div className="flex items-center justify-between text-[#69777A]">
+                      <span>Jabatan:</span>
+                      <span className="font-semibold text-[#2E3B40] text-right truncate ml-2">
+                        {u.jabatan || (u.role === 'ADMIN' ? 'Kepala Lab Komputasi' : 'Teknisi Lab')}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between text-[#69777A]">
+                      <span>Kontak:</span>
+                      <span className="font-mono text-[#344047] text-right truncate ml-2">
+                        {u.phone || u.email || 'Belum disetel'}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Card Footer: Role & Status Toggle */}
                   <div className="flex items-center justify-between pt-2 border-t border-[#DDE2DC] text-xs">
-                    <span className="font-medium text-[#69777A]">{u.role}</span>
+                    <div>
+                      {u.role === 'ADMIN' ? (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#DCE8E2] text-[#34495E] border border-[#D9DFDA]">
+                          <ShieldCheck className="w-3 h-3" />
+                          ADMIN
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#ECEFEA] text-[#69777A] border border-[#D9DFDA]">
+                          <UserCheck className="w-3 h-3" />
+                          STAFF
+                        </span>
+                      )}
+                    </div>
 
                     <button
                       onClick={() => handleToggleStatus(u)}
                       disabled={isSelf}
-                      className={`px-3 py-1.5 rounded-full text-[11px] font-semibold border ${
+                      className={`px-3 py-1 rounded-full text-[11px] font-bold border transition-colors ${
                         isActive
                           ? 'bg-[#E1EDE4] text-[#548C75] border-[#548C75]/20'
                           : 'bg-[#F2E3E1] text-[#A95353] border-[#A95353]/20'
-                      }`}
+                      } ${isSelf ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
                     >
-                      {u.status} (Ubah)
+                      {u.status} (Klik Ubah)
                     </button>
                   </div>
                 </div>

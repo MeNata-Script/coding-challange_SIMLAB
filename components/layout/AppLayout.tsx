@@ -59,7 +59,7 @@ export default function AppLayout({
       <Sidebar />
 
       {/* Main Content Area */}
-      <div className="flex-1 lg:pl-64 flex flex-col min-h-screen pb-20 lg:pb-8">
+      <div className="flex-1 flex flex-col min-h-screen pb-28 lg:pb-8">
         <Navbar title={title} subtitle={subtitle} />
 
         <main className="flex-1 px-4 sm:px-8 py-6 max-w-7xl w-full mx-auto">
