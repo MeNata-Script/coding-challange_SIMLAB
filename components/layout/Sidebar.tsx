@@ -15,13 +15,16 @@ import {
   UserCheck,
   Sparkles,
   Info,
+  ShieldAlert,
 } from 'lucide-react';
 import UserProfileModal from '@/components/profile/UserProfileModal';
+import SOPModal from '@/components/sop/SOPModal';
 
 export default function Sidebar() {
   const pathname = usePathname();
   const { user, isAdmin, logout } = useAuth();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isSOPOpen, setIsSOPOpen] = useState(false);
 
   const navigation = [
     {
@@ -103,15 +106,27 @@ export default function Sidebar() {
             );
           })}
 
-          {/* Informational Card */}
-          <div className="mt-8 mx-1 p-3.5 bg-[#F4F5F1] rounded-[12px] border border-[#D9DFDA]">
-            <div className="flex items-center gap-2 text-[#34495E] font-semibold text-[12px] mb-1">
-              <Info className="w-3.5 h-3.5 text-[#648F87]" />
-              <span>SOP Laboratorium</span>
+          {/* Informational Card - SOP Laboratorium */}
+          <div className="mt-6 mx-1 p-3.5 bg-[#F4F5F1] rounded-[12px] border border-[#D9DFDA] shadow-xs">
+            <div className="flex items-center justify-between mb-1.5">
+              <div className="flex items-center gap-1.5 text-[#34495E] font-bold text-[12px]">
+                <ShieldAlert className="w-3.5 h-3.5 text-[#548C75]" />
+                <span>SOP Laboratorium</span>
+              </div>
+              <span className="text-[10px] font-semibold text-[#548C75] bg-[#E1EDE4] px-1.5 py-0.2 rounded border border-[#548C75]/20">
+                Wajib
+              </span>
             </div>
-            <p className="text-[12px] text-[#69777A] leading-relaxed">
-              Wajib mencatat nomor kontak/WhatsApp peminjam yang aktif untuk konfirmasi sirkulasi alat.
+            <p className="text-[11px] text-[#69777A] leading-relaxed">
+              Wajib membawa kartu identitas serta mencatat alamat dan kontak aktif untuk pertanggungjawaban sirkulasi alat laboratorium.
             </p>
+            <button
+              onClick={() => setIsSOPOpen(true)}
+              className="mt-2 text-[11px] font-semibold text-[#34495E] hover:text-[#293B4D] hover:underline flex items-center gap-1 cursor-pointer transition-colors"
+            >
+              <span>Pelajari SOP Lengkap</span>
+              <span>→</span>
+            </button>
           </div>
         </div>
 
@@ -168,6 +183,9 @@ export default function Sidebar() {
         onClose={() => setIsProfileOpen(false)}
         isSelf={true}
       />
+
+      {/* SOP Modal */}
+      <SOPModal isOpen={isSOPOpen} onClose={() => setIsSOPOpen(false)} />
     </>
   );
 }

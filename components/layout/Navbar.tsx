@@ -11,8 +11,10 @@ import {
   UserCheck,
   LogOut,
   User as UserIcon,
+  ShieldAlert,
 } from 'lucide-react';
 import UserProfileModal from '@/components/profile/UserProfileModal';
+import SOPModal from '@/components/sop/SOPModal';
 
 interface NavbarProps {
   title?: string;
@@ -22,6 +24,7 @@ interface NavbarProps {
 export default function Navbar({ title, subtitle }: NavbarProps) {
   const { user, isAdmin, logout } = useAuth();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isSOPOpen, setIsSOPOpen] = useState(false);
 
   return (
     <>
@@ -33,7 +36,17 @@ export default function Navbar({ title, subtitle }: NavbarProps) {
         </div>
 
         {/* Right Controls */}
-        <div className="flex items-center gap-2.5 sm:gap-4">
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* SOP Lab Quick Button */}
+          <button
+            onClick={() => setIsSOPOpen(true)}
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#E1EDE4] hover:bg-[#D5E6D9] text-[#548C75] border border-[#548C75]/25 transition-colors cursor-pointer shadow-2xs"
+            title="Lihat SOP Peminjaman Laboratorium"
+          >
+            <ShieldAlert className="w-3.5 h-3.5" />
+            <span className="hidden xs:inline">SOP Lab</span>
+          </button>
+
           {/* Backend Status Indicator */}
           <div className="flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-medium bg-[#E9ECE7] border border-[#D9DFDA] text-[#344047]">
             <span
@@ -91,6 +104,9 @@ export default function Navbar({ title, subtitle }: NavbarProps) {
         onClose={() => setIsProfileOpen(false)}
         isSelf={true}
       />
+
+      {/* SOP Modal */}
+      <SOPModal isOpen={isSOPOpen} onClose={() => setIsSOPOpen(false)} />
     </>
   );
 }

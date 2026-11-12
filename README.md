@@ -214,6 +214,9 @@ erDiagram
         uuid item_id FK
         string nama_peminjam
         string nim_identitas
+        string kontak_peminjam
+        string alamat_peminjam
+        string prodi_instansi
         int jumlah
         date tanggal_pinjam
         date estimasi_kembali

@@ -17,9 +17,11 @@ import {
   MessageCircle,
   Phone,
   MapPin,
+  ShieldAlert,
 } from 'lucide-react';
 import NewLoanModal from '@/components/loans/NewLoanModal';
 import ReturnModal from '@/components/loans/ReturnModal';
+import SOPModal from '@/components/sop/SOPModal';
 
 export default function LoansPage() {
   const { user } = useAuth();
@@ -33,6 +35,7 @@ export default function LoansPage() {
   const [isNewLoanOpen, setIsNewLoanOpen] = useState(false);
   const [returnLoan, setReturnLoan] = useState<Loan | null>(null);
   const [isReturnOpen, setIsReturnOpen] = useState(false);
+  const [isSOPOpen, setIsSOPOpen] = useState(false);
 
   const loadData = useCallback(async () => {
     try {
@@ -130,6 +133,35 @@ export default function LoansPage() {
       subtitle="Manajemen alur sirkulasi peminjaman perangkat laboratorium"
     >
       <div className="space-y-5">
+        {/* SOP Laboratorium Banner */}
+        <div className="bg-[#E2E9E3] border border-[#D9DFDA] rounded-[14px] p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+          <div className="flex items-start gap-3">
+            <div className="p-2.5 bg-[#DCE8E2] text-[#34495E] rounded-[10px] shrink-0 mt-0.5 sm:mt-0">
+              <ShieldAlert className="w-5 h-5 text-[#548C75]" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="text-[14px] font-bold text-[#2E3B40]">
+                  SOP Peminjaman Laboratorium
+                </h3>
+                <span className="text-[10px] font-semibold bg-[#E1EDE4] text-[#548C75] px-2 py-0.5 rounded-full border border-[#548C75]/20">
+                  Wajib Dipatuhi
+                </span>
+              </div>
+              <p className="text-[12px] text-[#69777A] mt-1 leading-relaxed">
+                Wajib membawa kartu identitas fisik (KTM/KTP) serta mencatat alamat domisili dan kontak aktif untuk pertanggungjawaban sirkulasi alat laboratorium.
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => setIsSOPOpen(true)}
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold text-[#34495E] bg-[#F4F5F1] hover:bg-[#ECEFEA] border border-[#D9DFDA] rounded-[8px] transition-colors shrink-0 self-start sm:self-center cursor-pointer shadow-xs"
+          >
+            <span>Pelajari SOP</span>
+            <span>→</span>
+          </button>
+        </div>
+
         {/* Controls: Search, Tabs, Export, New Loan */}
         <div className="bg-[#F4F5F1] p-5 rounded-[14px] border border-[#D9DFDA] shadow-soft space-y-4">
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
@@ -505,6 +537,9 @@ export default function LoansPage() {
           loadData();
         }}
       />
+
+      {/* SOP Modal */}
+      <SOPModal isOpen={isSOPOpen} onClose={() => setIsSOPOpen(false)} />
     </AppLayout>
   );
 }

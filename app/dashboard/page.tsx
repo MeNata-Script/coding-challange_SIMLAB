@@ -25,9 +25,11 @@ import {
   User,
   Activity,
   Check,
+  ShieldAlert,
 } from 'lucide-react';
 import NewLoanModal from '@/components/loans/NewLoanModal';
 import StatDetailModal, { StatModalType } from '@/components/dashboard/StatDetailModal';
+import SOPModal from '@/components/sop/SOPModal';
 
 export default function DashboardPage() {
   const { user, isAdmin } = useAuth();
@@ -40,6 +42,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [isLoanModalOpen, setIsLoanModalOpen] = useState(false);
   const [selectedStatType, setSelectedStatType] = useState<StatModalType>(null);
+  const [isSOPOpen, setIsSOPOpen] = useState(false);
 
   const loadData = useCallback(async () => {
     try {
@@ -111,6 +114,35 @@ export default function DashboardPage() {
               <span>Catat Pinjam</span>
             </button>
           </div>
+        </div>
+
+        {/* SOP Laboratorium Announcement Card */}
+        <div className="p-4 rounded-[14px] bg-[#E2E9E3] border border-[#D9DFDA] shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-start gap-3">
+            <div className="p-2.5 bg-[#DCE8E2] text-[#34495E] rounded-[10px] shrink-0 mt-0.5 sm:mt-0">
+              <ShieldAlert className="w-5 h-5 text-[#548C75]" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <h4 className="text-[14px] font-bold text-[#2E3B40]">
+                  SOP Sirkulasi & Peminjaman Laboratorium
+                </h4>
+                <span className="text-[10px] font-semibold bg-[#E1EDE4] text-[#548C75] px-2 py-0.5 rounded-full border border-[#548C75]/20">
+                  Wajib Dipatuhi
+                </span>
+              </div>
+              <p className="text-[12px] text-[#69777A] mt-0.5 leading-relaxed">
+                Wajib membawa kartu identitas serta mencatat alamat dan kontak aktif untuk pertanggungjawaban sirkulasi alat laboratorium.
+              </p>
+            </div>
+          </div>
+          <button
+            onClick={() => setIsSOPOpen(true)}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-[#34495E] bg-[#F4F5F1] hover:bg-[#ECEFEA] border border-[#D9DFDA] rounded-[8px] transition-colors shrink-0 self-start sm:self-center cursor-pointer shadow-xs"
+          >
+            <span>Pelajari SOP</span>
+            <span>→</span>
+          </button>
         </div>
 
         {/* Banner Peringatan "Perlu Perhatian" */}
@@ -509,6 +541,9 @@ export default function DashboardPage() {
         loans={allLoans}
         onClose={() => setSelectedStatType(null)}
       />
+
+      {/* SOP Modal */}
+      <SOPModal isOpen={isSOPOpen} onClose={() => setIsSOPOpen(false)} />
     </AppLayout>
   );
 }
