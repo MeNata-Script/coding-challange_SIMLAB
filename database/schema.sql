@@ -266,6 +266,6 @@ END $$;
 
 -- Seed Sample Audit Logs
 INSERT INTO audit_logs (action, actor_username, target_type, details) VALUES
-('INIT_SYSTEM', 'admin', 'SYSTEM', '{"message": "Sistem inventaris laboratorium diinisialisasi"}'),
-('TAMBAH_BARANG', 'admin', 'ITEMS', '{"kode_barang": "BR001", "nama_barang": "Laptop Lenovo", "jumlah": 5}'),
-('PINJAM_BARANG', 'staff', 'LOANS', '{"kode_peminjaman": "LOAN-202611-001", "peminjam": "Ahmad Fauzi", "barang": "Laptop Lenovo"}');
+('INIT_SYSTEM', 'admin', 'SYSTEM', jsonb_build_object('message', 'Sistem inventaris laboratorium diinisialisasi')),
+('TAMBAH_BARANG', 'admin', 'ITEMS', jsonb_build_object('kode_barang', 'BR001', 'nama_barang', 'Laptop Lenovo', 'jumlah', 5)),
+('PINJAM_BARANG', 'staff', 'LOANS', jsonb_build_object('kode_peminjaman', 'LOAN-202611-001', 'peminjam', 'Ahmad Fauzi', 'barang', 'Laptop Lenovo'));
