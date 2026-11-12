@@ -170,7 +170,7 @@ Sistem antarmuka SIMLAB menerapkan standar desain **SaaS Grade - Modern Professi
 | Peran | Username | Password | Nama & Jabatan | Kontak |
 | :--- | :--- | :--- | :--- | :--- |
 | **Administrator** | `admin` | `admin123` | **Yeni Natalia** (*Kepala Laboratorium*) | `yeni.natalia@simlab.ac.id` / `081234567890` |
-| **Staff Operasional** | `staff` | `staff123` | **Budi Santoso** (*Teknisi Lab*) | `budi.santoso@simlab.ac.id` / `085712345678` |
+| **Staff Operasional** | `staff` | `staff123` | **Nata** (*Teknisi Lab*) | `natalia@simlab.ac.id` / `085712345678` |
 
 *(Tersedia tombol pintas **Demo Admin** & **Demo Staff** di halaman login untuk pengisian instan).*
 
