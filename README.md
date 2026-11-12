@@ -124,7 +124,8 @@ Aplikasi dilengkapi sistem **Dual Data Engine**:
 | Peran | Username | Password | Deskripsi |
 | :--- | :--- | :--- | :--- |
 | **Admin** | `admin` | `admin123` | Administrator Utama Laboratorium Komputasi |
-| **Staff** | `staff` | `staff123` | Budi Santoso (Staf Operasional Lab) |
+| **Staff** | `staff` | `staff123` | Yeni (Staf Operasional Lab) |
+| **Staff 2** | `staff` | `staff123` | Natalia (Staf Operasional Lab) |
 
 *(Gunakan tombol **1-Click Quick Fill** pada halaman `/login` untuk pengisian instan).*
 
