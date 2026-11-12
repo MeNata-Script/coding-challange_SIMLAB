@@ -11,11 +11,6 @@ import {
   MapPin,
   Layers,
   Cpu,
-  Clock,
-  CheckCircle2,
-  AlertTriangle,
-  XCircle,
-  ShieldAlert,
 } from 'lucide-react';
 
 interface SlideOverItemDetailProps {
@@ -36,7 +31,6 @@ export default function SlideOverItemDetail({
 
   useEffect(() => {
     if (item) {
-      // Generate standard lab QR payload
       const payload = JSON.stringify({
         id: item.id,
         kode: item.kode_barang,
@@ -49,8 +43,8 @@ export default function SlideOverItemDetail({
         width: 260,
         margin: 2,
         color: {
-          dark: '#0F172A',
-          light: '#FFFFFF',
+          dark: '#2E3B40',
+          light: '#F4F5F1',
         },
       })
         .then((url) => setQrDataUrl(url))
@@ -75,14 +69,14 @@ export default function SlideOverItemDetail({
         <head>
           <title>Label Inventaris - ${item.kode_barang}</title>
           <style>
-            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 24px; text-align: center; }
-            .card { border: 2px dashed #0f172a; border-radius: 12px; padding: 18px; max-width: 320px; margin: 0 auto; }
-            .title { font-size: 16px; font-weight: bold; margin-bottom: 2px; }
-            .subtitle { font-size: 11px; color: #64748b; margin-bottom: 12px; }
-            .qr-img { width: 180px; height: 180px; margin: 0 auto 10px; display: block; }
-            .code-badge { font-family: monospace; font-size: 15px; font-weight: bold; background: #e2e8f0; padding: 4px 10px; border-radius: 6px; display: inline-block; }
-            .item-name { font-size: 13px; font-weight: 600; margin-top: 6px; }
-            .footer { font-size: 9px; color: #94a3b8; margin-top: 12px; }
+            body { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 24px; text-align: center; background: #fafafa; }
+            .card { border: 2px dashed #34495e; border-radius: 12px; padding: 18px; max-width: 320px; margin: 0 auto; background: #ffffff; }
+            .title { font-size: 16px; font-weight: 700; color: #2e3b40; margin-bottom: 2px; }
+            .subtitle { font-size: 11px; color: #69777a; margin-bottom: 12px; }
+            .qr-img { width: 170px; height: 170px; margin: 0 auto 10px; display: block; }
+            .code-badge { font-family: monospace; font-size: 15px; font-weight: 700; background: #dce8e2; color: #34495e; padding: 4px 10px; border-radius: 6px; display: inline-block; }
+            .item-name { font-size: 14px; font-weight: 600; color: #2e3b40; margin-top: 8px; }
+            .footer { font-size: 10px; color: #87918f; margin-top: 12px; border-top: 1px solid #e2e9e3; padding-top: 8px; }
           </style>
         </head>
         <body>
@@ -94,7 +88,7 @@ export default function SlideOverItemDetail({
               <span class="code-badge">${item.kode_barang}</span>
             </div>
             <div class="item-name">${item.nama_barang}</div>
-            <div style="font-size: 11px; color: #475569; margin-top: 4px;">Lokasi: ${item.lokasi_penyimpanan}</div>
+            <div style="font-size: 12px; color: #69777a; margin-top: 4px;">Lokasi: ${item.lokasi_penyimpanan}</div>
             <div class="footer">Dicetak pada ${new Date().toLocaleDateString('id-ID')} | Lab Management</div>
           </div>
           <script>
@@ -113,23 +107,23 @@ export default function SlideOverItemDetail({
     <div className="fixed inset-0 z-50 overflow-hidden">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-slate-900/40 backdrop-blur-xs transition-opacity"
+        className="absolute inset-0 bg-[#2E3B40]/40 backdrop-blur-xs transition-opacity"
         onClick={onClose}
       />
 
       <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
-        <div className="w-screen max-w-md bg-white shadow-2xl flex flex-col">
+        <div className="w-screen max-w-md bg-[#F4F5F1] shadow-modal border-l border-[#D9DFDA] flex flex-col">
           {/* Header */}
-          <div className="px-6 py-5 border-b border-slate-200 flex items-center justify-between bg-slate-50/70">
+          <div className="px-6 py-4 border-b border-[#D9DFDA] flex items-center justify-between bg-[#E2E9E3]">
             <div>
-              <span className="text-[11px] font-mono font-semibold uppercase px-2 py-0.5 rounded bg-indigo-100 text-indigo-800">
+              <span className="text-[11px] font-mono font-semibold uppercase px-2 py-0.5 rounded-[4px] bg-[#DCE8E2] text-[#34495E] border border-[#D9DFDA]">
                 {item.kode_barang}
               </span>
-              <h2 className="text-lg font-bold text-slate-900 mt-1">{item.nama_barang}</h2>
+              <h2 className="text-[17px] font-semibold text-[#2E3B40] mt-1">{item.nama_barang}</h2>
             </div>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200/50 transition-colors"
+              className="p-1.5 rounded-[8px] text-[#87918F] hover:text-[#2E3B40] hover:bg-[#ECEFEA] transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -137,41 +131,41 @@ export default function SlideOverItemDetail({
 
           {/* Drawer Body */}
           <div className="flex-1 overflow-y-auto p-6 space-y-6">
-            {/* Printable QR Tag Section (Value-Add) */}
+            {/* Printable QR Tag Section */}
             <div
               id="qr-printable-area"
               ref={printRef}
-              className="p-5 rounded-2xl border-2 border-dashed border-indigo-200 bg-gradient-to-b from-indigo-50/40 to-white flex flex-col items-center text-center shadow-xs"
+              className="p-5 rounded-[14px] border border-dashed border-[#D9DFDA] bg-[#ECEFEA] flex flex-col items-center text-center"
             >
-              <div className="flex items-center gap-1.5 text-xs font-semibold text-indigo-700 mb-2">
-                <QrCode className="w-4 h-4" />
+              <div className="flex items-center gap-1.5 text-[12px] font-semibold text-[#34495E] mb-2.5">
+                <QrCode className="w-4 h-4 text-[#648F87]" />
                 <span>QR Tag Identitas Barang</span>
               </div>
 
               {qrDataUrl ? (
-                <div className="p-2 bg-white rounded-xl shadow-xs border border-slate-200">
+                <div className="p-2.5 bg-[#F4F5F1] rounded-[10px] border border-[#D9DFDA]">
                   <img
                     src={qrDataUrl}
                     alt={`QR Code ${item.kode_barang}`}
-                    className="w-44 h-44 object-contain"
+                    className="w-40 h-40 object-contain"
                   />
                 </div>
               ) : (
-                <div className="w-44 h-44 bg-slate-100 rounded-xl animate-pulse flex items-center justify-center">
-                  <QrCode className="w-8 h-8 text-slate-400" />
+                <div className="w-40 h-40 bg-[#E9ECE7] rounded-[10px] animate-pulse flex items-center justify-center">
+                  <QrCode className="w-8 h-8 text-[#87918F]" />
                 </div>
               )}
 
               <div className="mt-3">
-                <span className="font-mono text-xs font-bold text-slate-900 px-2.5 py-1 bg-slate-100 rounded-md border border-slate-200">
+                <span className="font-mono text-[12px] font-bold text-[#34495E] px-2.5 py-1 bg-[#DCE8E2] rounded-[6px] border border-[#D9DFDA]">
                   {item.kode_barang}
                 </span>
-                <p className="text-xs text-slate-600 font-medium mt-1.5">{item.nama_barang}</p>
+                <p className="text-[13px] text-[#2E3B40] font-medium mt-1.5">{item.nama_barang}</p>
               </div>
 
               <button
                 onClick={handlePrint}
-                className="mt-4 inline-flex items-center gap-2 px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm hover:shadow transition-all"
+                className="mt-4 inline-flex items-center gap-2 px-4 py-2 text-[13px] font-medium text-[#F4F5F1] bg-[#34495E] hover:bg-[#293B4D] rounded-[10px] transition-colors shadow-sm"
               >
                 <Printer className="w-4 h-4" />
                 <span>Cetak Label QR</span>
@@ -180,62 +174,62 @@ export default function SlideOverItemDetail({
 
             {/* Quick Specs & Stats */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                <span className="text-[11px] text-slate-500 font-medium">Stok Tersedia</span>
+              <div className="p-3.5 rounded-[12px] bg-[#ECEFEA] border border-[#D9DFDA]">
+                <span className="text-[12px] text-[#87918F] font-medium">Stok Tersedia</span>
                 <div className="flex items-baseline gap-1.5 mt-1">
                   <span
-                    className={`text-2xl font-bold ${
+                    className={`text-[24px] font-bold ${
                       item.stok === 0
-                        ? 'text-rose-600'
+                        ? 'text-[#A95353]'
                         : item.stok <= 2
-                        ? 'text-amber-600'
-                        : 'text-emerald-600'
+                        ? 'text-[#9A7137]'
+                        : 'text-[#548C75]'
                     }`}
                   >
                     {item.stok}
                   </span>
-                  <span className="text-xs text-slate-500 font-medium">unit</span>
+                  <span className="text-[12px] text-[#87918F]">unit</span>
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80">
-                <span className="text-[11px] text-slate-500 font-medium">Sedang Dipinjam</span>
+              <div className="p-3.5 rounded-[12px] bg-[#ECEFEA] border border-[#D9DFDA]">
+                <span className="text-[12px] text-[#87918F] font-medium">Sedang Dipinjam</span>
                 <div className="flex items-baseline gap-1.5 mt-1">
-                  <span className="text-2xl font-bold text-slate-800">
+                  <span className="text-[24px] font-bold text-[#2E3B40]">
                     {activeLoans.reduce((acc, curr) => acc + curr.jumlah, 0)}
                   </span>
-                  <span className="text-xs text-slate-500 font-medium">unit</span>
+                  <span className="text-[12px] text-[#87918F]">unit</span>
                 </div>
               </div>
             </div>
 
             {/* Information List */}
-            <div className="space-y-3">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+            <div className="space-y-2.5">
+              <h3 className="text-[12px] font-semibold uppercase tracking-wider text-[#87918F]">
                 Spesifikasi & Lokasi
               </h3>
 
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs">
-                <Layers className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+              <div className="flex items-start gap-3 p-3 rounded-[10px] bg-[#ECEFEA] border border-[#D9DFDA] text-[13px]">
+                <Layers className="w-4 h-4 text-[#648F87] mt-0.5 shrink-0" />
                 <div>
-                  <p className="font-semibold text-slate-700">Kategori</p>
-                  <p className="text-slate-600 mt-0.5">{item.kategori}</p>
+                  <p className="font-medium text-[#2E3B40]">Kategori</p>
+                  <p className="text-[#69777A] mt-0.5">{item.kategori}</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs">
-                <MapPin className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+              <div className="flex items-start gap-3 p-3 rounded-[10px] bg-[#ECEFEA] border border-[#D9DFDA] text-[13px]">
+                <MapPin className="w-4 h-4 text-[#648F87] mt-0.5 shrink-0" />
                 <div>
-                  <p className="font-semibold text-slate-700">Lokasi Rak/Penyimpanan</p>
-                  <p className="text-slate-600 mt-0.5">{item.lokasi_penyimpanan}</p>
+                  <p className="font-medium text-[#2E3B40]">Lokasi Rak/Penyimpanan</p>
+                  <p className="text-[#69777A] mt-0.5">{item.lokasi_penyimpanan}</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100 text-xs">
-                <Cpu className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+              <div className="flex items-start gap-3 p-3 rounded-[10px] bg-[#ECEFEA] border border-[#D9DFDA] text-[13px]">
+                <Cpu className="w-4 h-4 text-[#648F87] mt-0.5 shrink-0" />
                 <div>
-                  <p className="font-semibold text-slate-700">Spesifikasi Detail</p>
-                  <p className="text-slate-600 mt-0.5 leading-relaxed">
+                  <p className="font-medium text-[#2E3B40]">Spesifikasi Detail</p>
+                  <p className="text-[#69777A] mt-0.5 leading-relaxed">
                     {item.spesifikasi || 'Tidak ada spesifikasi khusus.'}
                   </p>
                 </div>
@@ -243,13 +237,13 @@ export default function SlideOverItemDetail({
             </div>
 
             {/* Active Loans for this item */}
-            <div className="space-y-3">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+            <div className="space-y-2.5">
+              <h3 className="text-[12px] font-semibold uppercase tracking-wider text-[#87918F]">
                 Peminjam Aktif Saat Ini ({activeLoans.length})
               </h3>
 
               {activeLoans.length === 0 ? (
-                <div className="p-4 rounded-xl border border-slate-200 text-center text-xs text-slate-500 bg-slate-50/50">
+                <div className="p-4 rounded-[10px] border border-[#D9DFDA] text-center text-[12px] text-[#87918F] bg-[#ECEFEA]">
                   Tidak ada peminjaman aktif untuk barang ini.
                 </div>
               ) : (
@@ -257,19 +251,19 @@ export default function SlideOverItemDetail({
                   {activeLoans.map((l) => (
                     <div
                       key={l.id}
-                      className="p-3 rounded-xl border border-slate-200 bg-white text-xs flex items-center justify-between"
+                      className="p-3 rounded-[10px] border border-[#D9DFDA] bg-[#ECEFEA] text-[13px] flex items-center justify-between"
                     >
                       <div>
-                        <p className="font-semibold text-slate-800">{l.nama_peminjam}</p>
-                        <p className="text-[11px] text-slate-500 font-mono">{l.nim_identitas}</p>
-                        <p className="text-[11px] text-slate-400 mt-0.5">
+                        <p className="font-semibold text-[#2E3B40]">{l.nama_peminjam}</p>
+                        <p className="text-[11px] text-[#69777A] font-mono">{l.nim_identitas}</p>
+                        <p className="text-[11px] text-[#87918F] mt-0.5">
                           Tenggat: {formatDate(l.estimasi_kembali)}
                         </p>
                       </div>
                       <div className="text-right">
-                        <span className="font-bold text-indigo-600">{l.jumlah} unit</span>
+                        <span className="font-bold text-[#34495E]">{l.jumlah} unit</span>
                         {l.is_overdue && (
-                          <span className="block text-[10px] text-rose-600 font-semibold mt-1">
+                          <span className="block text-[10px] text-[#A95353] font-semibold mt-1">
                             Terlambat
                           </span>
                         )}
@@ -282,12 +276,12 @@ export default function SlideOverItemDetail({
           </div>
 
           {/* Footer */}
-          <div className="p-4 border-t border-slate-200 bg-slate-50 flex justify-end">
+          <div className="p-4 border-t border-[#D9DFDA] bg-[#E2E9E3] flex justify-end">
             <button
               onClick={onClose}
-              className="px-4 py-2 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-100 rounded-lg border border-slate-300 transition-colors"
+              className="px-4 py-2 text-[13px] font-medium text-[#34495E] bg-[#DCE8E2] hover:bg-[#C8DBD3] rounded-[8px] border border-[#D9DFDA] transition-colors"
             >
-              Tutup Drawer
+              Tutup
             </button>
           </div>
         </div>

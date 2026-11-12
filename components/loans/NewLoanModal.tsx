@@ -9,11 +9,6 @@ import { useToast } from '@/context/ToastContext';
 import {
   X,
   PlusCircle,
-  Calendar,
-  User,
-  CreditCard,
-  Package,
-  Layers,
   AlertCircle,
   CheckCircle2,
 } from 'lucide-react';
@@ -51,7 +46,6 @@ export default function NewLoanModal({
     const today = new Date();
     const todayStr = today.toISOString().split('T')[0];
 
-    // Default return 3 days from now
     const returnDate = new Date();
     returnDate.setDate(returnDate.getDate() + 3);
     const returnStr = returnDate.toISOString().split('T')[0];
@@ -140,19 +134,16 @@ export default function NewLoanModal({
         user?.username || 'staff'
       );
 
-      // Trigger Confetti micro-interaction
       try {
         confetti({
-          particleCount: 80,
+          particleCount: 50,
           spread: 60,
-          origin: { y: 0.65 },
+          origin: { y: 0.7 },
         });
-      } catch {
-        // Safe fallback
-      }
+      } catch {}
 
       success(
-        'Peminjaman Berhasil Dicatat',
+        'Peminjaman Berhasil',
         `${jumlah} unit ${currentItem?.nama_barang} dipinjam oleh ${namaPeminjam}.`
       );
       onSuccess();
@@ -166,22 +157,22 @@ export default function NewLoanModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs animate-in fade-in">
-      <div className="bg-white rounded-2xl shadow-elevated border border-slate-200 w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#2E3B40]/40 backdrop-blur-xs animate-in fade-in">
+      <div className="bg-[#F4F5F1] rounded-[14px] shadow-modal border border-[#D9DFDA] w-full max-w-lg overflow-hidden flex flex-col max-h-[90vh]">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
-          <div className="flex items-center gap-2">
-            <div className="p-2 bg-indigo-100 text-indigo-700 rounded-lg">
+        <div className="px-6 py-4 border-b border-[#D9DFDA] flex items-center justify-between bg-[#E2E9E3]">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 bg-[#DCE8E2] text-[#34495E] rounded-[8px]">
               <PlusCircle className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-bold text-slate-900 text-base">Catat Peminjaman Barang</h3>
-              <p className="text-xs text-slate-500">Formulir operasional peminjaman laboratorium</p>
+              <h3 className="font-semibold text-[#2E3B40] text-[16px]">Catat Peminjaman Barang</h3>
+              <p className="text-[12px] text-[#69777A]">Formulir transaksi sirkulasi laboratorium</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200 transition-colors"
+            className="p-1 rounded-[6px] text-[#87918F] hover:text-[#2E3B40] hover:bg-[#ECEFEA] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -190,7 +181,7 @@ export default function NewLoanModal({
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4 overflow-y-auto flex-1">
           {formError && (
-            <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl flex items-center gap-2 text-rose-700 text-xs">
+            <div className="p-3 bg-[#F2E3E1] border border-[#D9DFDA] rounded-[10px] flex items-center gap-2 text-[#A95353] text-[13px]">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{formError}</span>
             </div>
@@ -198,49 +189,47 @@ export default function NewLoanModal({
 
           {/* Item Selector */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
-              Pilih Barang Laboratorium <span className="text-rose-500">*</span>
+            <label className="block text-[13px] font-medium text-[#2E3B40] mb-1">
+              Pilih Barang Laboratorium <span className="text-[#A95353]">*</span>
             </label>
-            <div className="relative">
-              <select
-                value={selectedItemId}
-                onChange={(e) => {
-                  setSelectedItemId(e.target.value);
-                  setJumlah(1);
-                }}
-                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white"
-                required
-              >
-                {items.map((item) => (
-                  <option key={item.id} value={item.id} disabled={item.stok === 0}>
-                    [{item.kode_barang}] {item.nama_barang} — (Sisa Stok: {item.stok} unit)
-                    {item.stok === 0 ? ' [HABIS]' : ''}
-                  </option>
-                ))}
-              </select>
-            </div>
+            <select
+              value={selectedItemId}
+              onChange={(e) => {
+                setSelectedItemId(e.target.value);
+                setJumlah(1);
+              }}
+              className="w-full px-3 py-2 text-[14px] bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] focus:bg-[#F4F5F1] outline-none text-[#344047]"
+              required
+            >
+              {items.map((item) => (
+                <option key={item.id} value={item.id} disabled={item.stok === 0}>
+                  [{item.kode_barang}] {item.nama_barang} — (Sisa: {item.stok} unit)
+                  {item.stok === 0 ? ' [HABIS]' : ''}
+                </option>
+              ))}
+            </select>
 
             {/* Selected item stock preview */}
             {currentItem && (
-              <div className="mt-2 p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
-                <div>
-                  <span className="text-slate-500">Kategori: </span>
-                  <span className="font-semibold text-slate-700">{currentItem.kategori}</span>
-                  <span className="text-slate-400 mx-1.5">•</span>
-                  <span className="text-slate-500">Lokasi: </span>
-                  <span className="text-slate-700">{currentItem.lokasi_penyimpanan}</span>
+              <div className="mt-2 p-2.5 rounded-[8px] bg-[#ECEFEA] border border-[#D9DFDA] flex items-center justify-between text-[12px]">
+                <div className="text-[#69777A]">
+                  <span>Kategori: </span>
+                  <span className="font-semibold text-[#2E3B40]">{currentItem.kategori}</span>
+                  <span className="mx-1.5">•</span>
+                  <span>Lokasi: </span>
+                  <span className="text-[#344047]">{currentItem.lokasi_penyimpanan}</span>
                 </div>
                 <div>
                   <span
-                    className={`font-bold px-2 py-0.5 rounded text-[11px] ${
+                    className={`font-semibold px-2 py-0.5 rounded-[4px] text-[11px] border border-[#D9DFDA] ${
                       currentItem.stok === 0
-                        ? 'bg-rose-100 text-rose-800'
+                        ? 'bg-[#F2E3E1] text-[#A95353]'
                         : currentItem.stok <= 2
-                        ? 'bg-amber-100 text-amber-800'
-                        : 'bg-emerald-100 text-emerald-800'
+                        ? 'bg-[#F2EBDD] text-[#9A7137]'
+                        : 'bg-[#E1EDE4] text-[#548C75]'
                     }`}
                   >
-                    Stok: {currentItem.stok}
+                    Stok: {currentItem.stok} unit
                   </span>
                 </div>
               </div>
@@ -250,31 +239,29 @@ export default function NewLoanModal({
           {/* Borrower Name & NIM */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Nama Peminjam <span className="text-rose-500">*</span>
+              <label className="block text-[13px] font-medium text-[#2E3B40] mb-1">
+                Nama Peminjam <span className="text-[#A95353]">*</span>
               </label>
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Contoh: Ahmad Fauzi"
-                  value={namaPeminjam}
-                  onChange={(e) => setNamaPeminjam(e.target.value)}
-                  className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-                  required
-                />
-              </div>
+              <input
+                type="text"
+                placeholder="Contoh: Ahmad Fauzi"
+                value={namaPeminjam}
+                onChange={(e) => setNamaPeminjam(e.target.value)}
+                className="w-full px-3 py-2 text-[14px] bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] focus:bg-[#F4F5F1] outline-none text-[#344047]"
+                required
+              />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                NIM / No. Identitas <span className="text-rose-500">*</span>
+              <label className="block text-[13px] font-medium text-[#2E3B40] mb-1">
+                NIM / No. Identitas <span className="text-[#A95353]">*</span>
               </label>
               <input
                 type="text"
                 placeholder="Contoh: 21051204012"
                 value={nimIdentitas}
                 onChange={(e) => setNimIdentitas(e.target.value)}
-                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 font-mono"
+                className="w-full px-3 py-2 text-[14px] bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] focus:bg-[#F4F5F1] outline-none font-mono text-[#344047]"
                 required
               />
             </div>
@@ -282,8 +269,8 @@ export default function NewLoanModal({
 
           {/* Loan Quantity & Helper Buttons */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
-              Jumlah Pinjam (Maks: {maxStock}) <span className="text-rose-500">*</span>
+            <label className="block text-[13px] font-medium text-[#2E3B40] mb-1">
+              Jumlah Pinjam (Maks: {maxStock}) <span className="text-[#A95353]">*</span>
             </label>
             <div className="flex items-center gap-2">
               <input
@@ -292,7 +279,7 @@ export default function NewLoanModal({
                 max={maxStock || 1}
                 value={jumlah}
                 onChange={(e) => setJumlah(parseInt(e.target.value) || 1)}
-                className="w-28 px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 font-bold"
+                className="w-28 px-3 py-2 text-[14px] bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] focus:bg-[#F4F5F1] outline-none font-semibold text-[#2E3B40]"
                 required
               />
 
@@ -302,7 +289,7 @@ export default function NewLoanModal({
                   type="button"
                   onClick={() => handleQuickAdd(1)}
                   disabled={jumlah >= maxStock}
-                  className="px-2.5 py-1.5 text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors disabled:opacity-40"
+                  className="px-2.5 py-1.5 text-[12px] font-medium bg-[#DCE8E2] hover:bg-[#C8DBD3] text-[#34495E] border border-[#D9DFDA] rounded-[8px] transition-colors disabled:opacity-40"
                 >
                   +1
                 </button>
@@ -310,7 +297,7 @@ export default function NewLoanModal({
                   type="button"
                   onClick={() => handleQuickAdd(2)}
                   disabled={jumlah + 2 > maxStock}
-                  className="px-2.5 py-1.5 text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors disabled:opacity-40"
+                  className="px-2.5 py-1.5 text-[12px] font-medium bg-[#DCE8E2] hover:bg-[#C8DBD3] text-[#34495E] border border-[#D9DFDA] rounded-[8px] transition-colors disabled:opacity-40"
                 >
                   +2
                 </button>
@@ -318,7 +305,7 @@ export default function NewLoanModal({
                   type="button"
                   onClick={handleSetMax}
                   disabled={maxStock === 0 || jumlah === maxStock}
-                  className="px-2.5 py-1.5 text-xs font-semibold bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg transition-colors border border-indigo-200 disabled:opacity-40"
+                  className="px-2.5 py-1.5 text-[12px] font-semibold bg-[#DCE8E2] hover:bg-[#C8DBD3] text-[#34495E] border border-[#D9DFDA] rounded-[8px] transition-colors disabled:opacity-40"
                 >
                   Max ({maxStock})
                 </button>
@@ -329,28 +316,28 @@ export default function NewLoanModal({
           {/* Dates */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Tanggal Pinjam <span className="text-rose-500">*</span>
+              <label className="block text-[13px] font-medium text-[#2E3B40] mb-1">
+                Tanggal Pinjam <span className="text-[#A95353]">*</span>
               </label>
               <input
                 type="date"
                 value={tanggalPinjam}
                 onChange={(e) => setTanggalPinjam(e.target.value)}
-                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white"
+                className="w-full px-3 py-2 text-[14px] bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] focus:bg-[#F4F5F1] outline-none text-[#344047]"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Estimasi Pengembalian <span className="text-rose-500">*</span>
+              <label className="block text-[13px] font-medium text-[#2E3B40] mb-1">
+                Estimasi Pengembalian <span className="text-[#A95353]">*</span>
               </label>
               <input
                 type="date"
                 min={tanggalPinjam}
                 value={estimasiKembali}
                 onChange={(e) => setEstimasiKembali(e.target.value)}
-                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white"
+                className="w-full px-3 py-2 text-[14px] bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] focus:bg-[#F4F5F1] outline-none text-[#344047]"
                 required
               />
             </div>
@@ -358,7 +345,7 @@ export default function NewLoanModal({
 
           {/* Catatan */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
+            <label className="block text-[13px] font-medium text-[#2E3B40] mb-1">
               Keperluan / Catatan
             </label>
             <textarea
@@ -366,26 +353,26 @@ export default function NewLoanModal({
               placeholder="Contoh: Praktikum Pemrograman Jaringan di Lab Komputasi"
               value={catatan}
               onChange={(e) => setCatatan(e.target.value)}
-              className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 resize-none"
+              className="w-full px-3 py-2 text-[14px] bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] focus:bg-[#F4F5F1] outline-none resize-none text-[#344047]"
             />
           </div>
 
           {/* Footer Actions */}
-          <div className="pt-3 border-t border-slate-200 flex items-center justify-end gap-2">
+          <div className="pt-3 border-t border-[#DDE2DC] flex items-center justify-end gap-2">
             <button
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 rounded-xl transition-colors"
+              className="px-4 py-2 text-[14px] font-medium text-[#34495E] bg-[#DCE8E2] hover:bg-[#C8DBD3] rounded-[10px] transition-colors"
             >
               Batal
             </button>
             <button
               type="submit"
               disabled={loading || maxStock === 0}
-              className="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm transition-all disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-5 py-2 text-[14px] font-medium text-[#F4F5F1] bg-[#34495E] hover:bg-[#293B4D] rounded-[10px] transition-colors disabled:opacity-50"
             >
-              <CheckCircle2 className="w-3.5 h-3.5" />
+              <CheckCircle2 className="w-4 h-4" />
               <span>{loading ? 'Menyimpan...' : 'Konfirmasi Peminjaman'}</span>
             </button>
           </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/context/ToastContext';
 import Sidebar from './Sidebar';
@@ -24,7 +24,6 @@ export default function AppLayout({
 }: AppLayoutProps) {
   const { user, isAdmin, isLoading } = useAuth();
   const router = useRouter();
-  const pathname = usePathname();
   const { warning } = useToast();
   const [isNewLoanOpen, setIsNewLoanOpen] = useState(false);
 
@@ -41,10 +40,10 @@ export default function AppLayout({
 
   if (isLoading || !user) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-[#EAECE9] flex items-center justify-center p-4">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm font-medium text-slate-600 animate-pulse">Memuat SIMLAB...</p>
+          <div className="w-9 h-9 border-3 border-[#34495E] border-t-transparent rounded-full animate-spin" />
+          <p className="text-[13px] font-medium text-[#69777A] animate-pulse">Memuat SIMLAB...</p>
         </div>
       </div>
     );
@@ -55,7 +54,7 @@ export default function AppLayout({
   }
 
   return (
-    <div className="min-h-screen bg-canvas text-slate-900 flex flex-col lg:flex-row antialiased">
+    <div className="min-h-screen bg-[#EAECE9] text-[#344047] flex flex-col lg:flex-row antialiased">
       {/* Desktop Sidebar */}
       <Sidebar />
 
@@ -76,7 +75,6 @@ export default function AppLayout({
         isOpen={isNewLoanOpen}
         onClose={() => setIsNewLoanOpen(false)}
         onSuccess={() => {
-          // If already on loans or inventory, window event triggers refresh
           window.dispatchEvent(new Event('simlab_data_changed'));
         }}
       />

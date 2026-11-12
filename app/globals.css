@@ -1,54 +1,103 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #EEF2F6;
-  --foreground: #1E293B;
+  --bg-main: #EAECE9;
+  --bg-secondary: #E2E9E3;
+  --surface-card: #F4F5F1;
+  --surface-elevated: #ECEFEA;
+  --bg-input: #E9ECE7;
+  --primary-navy: #34495E;
+  --primary-navy-hover: #293B4D;
+  --secondary-teal: #648F87;
+  --accent-pale-teal: #DCE8E2;
+  --text-heading: #2E3B40;
+  --text-main: #344047;
+  --text-secondary: #69777A;
+  --text-muted: #87918F;
+  --border-soft: #D9DFDA;
+  --divider: #DDE2DC;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: var(--text-main);
+  background-color: var(--bg-main);
+  font-family: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
   min-height: 100vh;
-  letter-spacing: -0.01em;
+  line-height: 1.55;
+  letter-spacing: -0.011em;
 }
 
-/* Custom subtle modern scrollbar */
+/* Custom Eye-Friendly Muted Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #EAECE9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: #CBD4CD;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+  background: #B0BDB3;
 }
 
-/* Glassmorphism utility */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.7);
+/* Base Component Classes */
+.simlab-card {
+  background-color: #F4F5F1;
+  border: 1px solid #D9DFDA;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px -2px rgba(46, 59, 64, 0.04);
 }
 
-.glass-panel-subtle {
-  background: rgba(255, 255, 255, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(226, 232, 240, 0.6);
+.simlab-input {
+  background-color: #E9ECE7;
+  border: 1px solid #D9DFDA;
+  border-radius: 10px;
+  color: #344047;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.simlab-input:focus {
+  outline: none;
+  border-color: #34495E;
+  background-color: #F4F5F1;
+  box-shadow: 0 0 0 2px rgba(52, 73, 94, 0.15);
+}
+
+.simlab-btn-primary {
+  background-color: #34495E;
+  color: #F4F5F1;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.simlab-btn-primary:hover {
+  background-color: #293B4D;
+}
+
+.simlab-btn-secondary {
+  background-color: #DCE8E2;
+  color: #34495E;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.simlab-btn-secondary:hover {
+  background-color: #C8DBD3;
 }
 
 @media print {

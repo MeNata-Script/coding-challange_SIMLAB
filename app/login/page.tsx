@@ -15,7 +15,6 @@ import {
   AlertCircle,
   Eye,
   EyeOff,
-  CheckCircle2,
 } from 'lucide-react';
 import { isSupabaseConfigured } from '@/lib/supabase';
 
@@ -75,83 +74,76 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#E2E8F0] via-[#E8EDF5] to-[#DFE7F3] flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden select-none">
-      {/* Eye-Soothing Soft Pastel Ambient Glows */}
-      <div className="absolute top-10 left-1/4 -translate-x-1/2 w-[450px] h-[450px] bg-indigo-200/35 rounded-full blur-[100px] pointer-events-none -z-10" />
-      <div className="absolute bottom-10 right-1/4 translate-x-1/3 w-[450px] h-[450px] bg-purple-200/30 rounded-full blur-[100px] pointer-events-none -z-10" />
-      <div className="absolute top-1/2 right-12 w-[350px] h-[350px] bg-sky-200/30 rounded-full blur-[90px] pointer-events-none -z-10" />
-      <div className="absolute bottom-20 left-10 w-[300px] h-[300px] bg-amber-100/30 rounded-full blur-[80px] pointer-events-none -z-10" />
-
-      {/* Header Branding */}
-      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center px-4">
-        {/* Soft Lavender Icon Container */}
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-[22px] bg-gradient-to-tr from-indigo-500 via-indigo-600 to-violet-500 text-white shadow-lg shadow-indigo-300/40 mb-3.5 transform transition-transform hover:scale-105 duration-300">
-          <FlaskConical className="w-8 h-8" />
+    <div className="min-h-screen bg-[#EAECE9] flex flex-col justify-center py-10 px-4 sm:px-6 lg:px-8 relative select-none">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
+        {/* Institutional Icon */}
+        <div className="inline-flex items-center justify-center w-14 h-14 rounded-[12px] bg-[#34495E] text-[#F4F5F1] shadow-soft mb-3.5">
+          <FlaskConical className="w-7 h-7" />
         </div>
 
-        <h2 className="text-3xl font-extrabold text-slate-800 tracking-tight flex items-center justify-center gap-2">
+        <h1 className="text-[26px] sm:text-[28px] font-bold text-[#2E3B40] tracking-tight flex items-center justify-center gap-2">
           <span>SIMLAB</span>
-          <span className="text-xs font-bold font-mono px-2.5 py-0.5 rounded-full bg-indigo-100/90 text-indigo-700 border border-indigo-200/60 shadow-xs">
+          <span className="text-[11px] font-semibold font-mono px-2 py-0.5 rounded-[6px] bg-[#DCE8E2] text-[#34495E] border border-[#D9DFDA]">
             v1.0
           </span>
-        </h2>
-        <p className="mt-1.5 text-xs sm:text-sm text-slate-600 font-medium">
+        </h1>
+        <p className="mt-1 text-[13px] sm:text-[14px] text-[#69777A]">
           Sistem Manajemen Inventaris & Peminjaman Laboratorium
         </p>
 
-        {/* Backend Status indicator */}
-        <div className="inline-flex items-center gap-2 mt-3 px-3.5 py-1 rounded-full text-[11px] font-semibold bg-white/70 backdrop-blur-md border border-slate-300/60 shadow-xs text-slate-700">
+        {/* Status Cloud Indicator */}
+        <div className="inline-flex items-center gap-2 mt-3 px-3 py-1 rounded-full text-[11px] font-medium bg-[#ECEFEA] border border-[#D9DFDA] text-[#344047]">
           <span
             className={`w-2 h-2 rounded-full ${
-              isSupabaseConfigured ? 'bg-emerald-500 animate-pulse' : 'bg-indigo-400'
+              isSupabaseConfigured ? 'bg-[#548C75] animate-pulse' : 'bg-[#648F87]'
             }`}
           />
           <span>{isSupabaseConfigured ? 'Supabase PostgreSQL Aktif' : 'Engine Siap Pakai (Standby)'}</span>
         </div>
       </div>
 
-      {/* Main Glassmorphism Login Card (Comfortable Non-White Ambient) */}
-      <div className="mt-7 sm:mx-auto sm:w-full sm:max-w-[420px] px-4">
-        <div className="bg-white/80 backdrop-blur-2xl py-8 px-6 sm:px-9 shadow-[0_25px_60px_-15px_rgba(30,41,59,0.08)] rounded-[32px] border border-white/70 relative transition-all">
+      {/* Main Elevated Card: Muted Ivory (#F4F5F1) */}
+      <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-[420px]">
+        <div className="bg-[#F4F5F1] py-8 px-6 sm:px-8 rounded-[14px] border border-[#D9DFDA] shadow-soft relative">
           
-          {/* Quick Fill Demo Pills (Pastel Aesthetic) */}
-          <div className="mb-6 p-4 bg-slate-100/60 border border-slate-200/70 rounded-2xl">
+          {/* Quick Fill Demo Section */}
+          <div className="mb-5 p-3.5 bg-[#E2E9E3]/70 border border-[#D9DFDA] rounded-[10px]">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-indigo-500" />
-                1-Click Akun Demo Cepat
+              <span className="text-[12px] font-semibold text-[#2E3B40] flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5 text-[#648F87]" />
+                Akun Demo Cepat
               </span>
-              <span className="text-[10px] text-slate-400 font-medium">Pengujian</span>
+              <span className="text-[11px] text-[#87918F]">Pengujian</span>
             </div>
 
             <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
                 onClick={() => handleQuickFill('admin')}
-                className="flex items-center justify-center gap-1.5 py-2 px-3 text-xs font-semibold rounded-xl bg-violet-100/70 hover:bg-violet-200/70 text-violet-800 border border-violet-200/80 transition-all shadow-xs active:scale-95"
+                className="flex items-center justify-center gap-1.5 py-2 px-3 text-[13px] font-medium rounded-[8px] bg-[#DCE8E2] hover:bg-[#C8DBD3] text-[#34495E] border border-[#D9DFDA] transition-colors"
               >
-                <ShieldCheck className="w-3.5 h-3.5 text-violet-600" />
+                <ShieldCheck className="w-3.5 h-3.5 text-[#34495E]" />
                 <span>Demo Admin</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => handleQuickFill('staff')}
-                className="flex items-center justify-center gap-1.5 py-2 px-3 text-xs font-semibold rounded-xl bg-emerald-100/70 hover:bg-emerald-200/70 text-emerald-800 border border-emerald-200/80 transition-all shadow-xs active:scale-95"
+                className="flex items-center justify-center gap-1.5 py-2 px-3 text-[13px] font-medium rounded-[8px] bg-[#DCE8E2] hover:bg-[#C8DBD3] text-[#34495E] border border-[#D9DFDA] transition-colors"
               >
-                <UserCheck className="w-3.5 h-3.5 text-emerald-600" />
+                <UserCheck className="w-3.5 h-3.5 text-[#34495E]" />
                 <span>Demo Staff</span>
               </button>
             </div>
-            <p className="text-[10px] text-slate-500 mt-2 text-center">
-              Admin: <code className="font-mono text-violet-700 font-semibold">admin/admin123</code> • Staff:{' '}
-              <code className="font-mono text-emerald-700 font-semibold">staff/staff123</code>
+            <p className="text-[11px] text-[#69777A] mt-2 text-center">
+              Admin: <code className="font-mono text-[#34495E] font-medium">admin/admin123</code> • Staff:{' '}
+              <code className="font-mono text-[#34495E] font-medium">staff/staff123</code>
             </p>
           </div>
 
           {/* Error Notice */}
           {errorMessage && (
-            <div className="mb-5 p-3.5 bg-rose-50/90 border border-rose-200/80 rounded-2xl flex items-start gap-2.5 text-rose-700 text-xs animate-in fade-in">
+            <div className="mb-4 p-3 bg-[#F2E3E1] border border-[#D9DFDA] rounded-[10px] flex items-start gap-2.5 text-[#A95353] text-[13px]">
               <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
               <div className="flex-1 font-medium">{errorMessage}</div>
             </div>
@@ -161,11 +153,11 @@ export default function LoginPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Username Input */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">
+              <label className="block text-[13px] font-medium text-[#2E3B40] mb-1.5">
                 Username Pengguna
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#87918F]">
                   <User className="w-4 h-4" />
                 </div>
                 <input
@@ -173,7 +165,7 @@ export default function LoginPage() {
                   placeholder="admin atau staff"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="w-full pl-10 pr-3.5 py-2.5 text-xs sm:text-sm bg-slate-100/80 hover:bg-white focus:bg-white border border-slate-200/90 rounded-2xl focus:ring-2 focus:ring-indigo-400/50 focus:border-indigo-400 transition-all outline-none text-slate-800 font-medium"
+                  className="w-full pl-10 pr-3.5 py-2.5 text-[14px] bg-[#E9ECE7] hover:bg-[#ECEFEA] focus:bg-[#F4F5F1] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] transition-colors outline-none text-[#344047]"
                   required
                 />
               </div>
@@ -181,11 +173,11 @@ export default function LoginPage() {
 
             {/* Password Input with Eye (Show/Hide) Toggle */}
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">
+              <label className="block text-[13px] font-medium text-[#2E3B40] mb-1.5">
                 Kata Sandi
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#87918F]">
                   <Lock className="w-4 h-4" />
                 </div>
                 <input
@@ -193,31 +185,30 @@ export default function LoginPage() {
                   placeholder="••••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-11 py-2.5 text-xs sm:text-sm bg-slate-100/80 hover:bg-white focus:bg-white border border-slate-200/90 rounded-2xl focus:ring-2 focus:ring-indigo-400/50 focus:border-indigo-400 transition-all outline-none font-sans text-slate-800 font-medium"
+                  className="w-full pl-10 pr-11 py-2.5 text-[14px] bg-[#E9ECE7] hover:bg-[#ECEFEA] focus:bg-[#F4F5F1] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] transition-colors outline-none text-[#344047]"
                   required
                 />
-                {/* Eye Toggle Button */}
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-indigo-600 transition-colors focus:outline-none"
+                  className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-[#87918F] hover:text-[#34495E] transition-colors focus:outline-none min-h-[44px] min-w-[44px] justify-center"
                   title={showPassword ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi'}
                 >
                   {showPassword ? (
-                    <EyeOff className="w-4 h-4 text-indigo-600 transition-transform hover:scale-110" />
+                    <EyeOff className="w-4 h-4 text-[#34495E]" />
                   ) : (
-                    <Eye className="w-4 h-4 text-slate-400 transition-transform hover:scale-110" />
+                    <Eye className="w-4 h-4" />
                   )}
                 </button>
               </div>
             </div>
 
-            {/* Submit Button */}
+            {/* Submit Button: Navy Slate (#34495E) */}
             <div className="pt-2">
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-2xl text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-indigo-600 via-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 active:scale-[0.99] shadow-md shadow-indigo-300/50 transition-all disabled:opacity-50"
+                className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-[10px] text-[14px] font-medium text-[#F4F5F1] bg-[#34495E] hover:bg-[#293B4D] active:bg-[#1F2D3A] transition-colors disabled:opacity-50 min-h-[44px]"
               >
                 <span>{loading ? 'Memverifikasi...' : 'Masuk ke Sistem'}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -226,9 +217,9 @@ export default function LoginPage() {
           </form>
 
           {/* Footer Card */}
-          <div className="mt-6 pt-5 border-t border-slate-200/60 text-center">
-            <p className="text-[11px] text-slate-400 font-medium">
-              Dilindungi Role-Based Access Control (RBAC) • SIMLAB 2026
+          <div className="mt-5 pt-4 border-t border-[#DDE2DC] text-center">
+            <p className="text-[12px] text-[#87918F]">
+              Role-Based Access Control • SIMLAB 2026
             </p>
           </div>
         </div>

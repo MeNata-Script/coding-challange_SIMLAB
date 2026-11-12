@@ -12,14 +12,7 @@ import {
   QrCode,
   Edit2,
   Trash2,
-  Layers,
   MapPin,
-  Filter,
-  CheckCircle2,
-  AlertTriangle,
-  XCircle,
-  Eye,
-  ArrowUpDown,
 } from 'lucide-react';
 import SlideOverItemDetail from '@/components/inventory/SlideOverItemDetail';
 import ItemFormModal from '@/components/inventory/ItemFormModal';
@@ -114,29 +107,29 @@ export default function InventoryPage() {
 
   return (
     <AppLayout
-      title="Inventaris Barang"
-      subtitle="Katalog dan manajemen perangkat fisik laboratorium komputasi"
+      title="Inventaris Laboratorium"
+      subtitle="Katalog dan pengelolaan ketersediaan perangkat fisik laboratorium"
     >
       <div className="space-y-5">
-        {/* Top Control Bar: Search, Category Tabs, Add Button */}
-        <div className="bg-white p-5 rounded-3xl border border-slate-200/80 shadow-xs space-y-4">
+        {/* Top Control Bar */}
+        <div className="bg-[#F4F5F1] p-5 rounded-[14px] border border-[#D9DFDA] shadow-soft space-y-4">
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             {/* Search Input */}
             <div className="relative flex-1 max-w-md">
-              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#87918F]">
                 <Search className="w-4 h-4" />
               </div>
               <input
                 type="text"
-                placeholder="Cari kode (BR001), nama barang, atau lokasi..."
+                placeholder="Cari kode (BR001), nama barang, atau lokasi rak..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 text-xs bg-slate-50/70 hover:bg-white focus:bg-white border border-slate-200/90 rounded-2xl focus:ring-2 focus:ring-indigo-400/50 focus:border-indigo-400 transition-all outline-none"
+                className="w-full pl-10 pr-4 py-2 text-[14px] bg-[#E9ECE7] hover:bg-[#ECEFEA] focus:bg-[#F4F5F1] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] transition-colors outline-none text-[#344047]"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-xs text-slate-400 hover:text-slate-600"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-[12px] text-[#87918F] hover:text-[#344047]"
                 >
                   Clear
                 </button>
@@ -147,7 +140,7 @@ export default function InventoryPage() {
             {isAdmin && (
               <button
                 onClick={handleOpenAdd}
-                className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-semibold text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 rounded-2xl shadow-md shadow-indigo-200/60 transition-all shrink-0 active:scale-95"
+                className="inline-flex items-center justify-center gap-1.5 px-4 py-2 text-[14px] font-medium text-[#F4F5F1] bg-[#34495E] hover:bg-[#293B4D] rounded-[10px] transition-colors shrink-0 shadow-sm"
               >
                 <Plus className="w-4 h-4" />
                 <span>Tambah Barang</span>
@@ -156,7 +149,7 @@ export default function InventoryPage() {
           </div>
 
           {/* Category Tabs */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 border-t border-slate-100 pt-3 scrollbar-none">
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 border-t border-[#DDE2DC] pt-3 scrollbar-none">
             {CATEGORY_TABS.map((tab) => {
               const isSelected = selectedCategory === tab;
               const count =
@@ -168,18 +161,18 @@ export default function InventoryPage() {
                 <button
                   key={tab}
                   onClick={() => setSelectedCategory(tab)}
-                  className={`px-3.5 py-1.5 rounded-2xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-2 ${
+                  className={`px-3 py-1.5 rounded-[8px] text-[13px] font-medium whitespace-nowrap transition-colors flex items-center gap-1.5 ${
                     isSelected
-                      ? 'bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-xs'
-                      : 'bg-slate-50 hover:bg-slate-100/80 text-slate-600 border border-slate-200/60'
+                      ? 'bg-[#34495E] text-[#F4F5F1]'
+                      : 'bg-[#E2E9E3] hover:bg-[#ECEFEA] text-[#344047] border border-[#D9DFDA]'
                   }`}
                 >
                   <span>{tab}</span>
                   <span
-                    className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+                    className={`text-[11px] px-1.5 py-0.2 rounded-full ${
                       isSelected
-                        ? 'bg-white/20 text-white'
-                        : 'bg-slate-200/70 text-slate-600'
+                        ? 'bg-[#293B4D] text-[#DCE8E2]'
+                        : 'bg-[#CBD4CD] text-[#2E3B40]'
                     }`}
                   >
                     {count}
@@ -190,34 +183,34 @@ export default function InventoryPage() {
           </div>
         </div>
 
-        {/* Data Table for Desktop (>= 1024px) */}
-        <div className="hidden lg:block bg-white rounded-3xl border border-slate-200/80 shadow-xs overflow-hidden">
+        {/* Desktop Data Table */}
+        <div className="hidden lg:block bg-[#F4F5F1] rounded-[14px] border border-[#D9DFDA] shadow-soft overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-50/70 border-b border-slate-200/80 text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                  <th className="py-4 px-6">Kode</th>
-                  <th className="py-4 px-6">Nama Barang</th>
-                  <th className="py-4 px-6">Kategori</th>
-                  <th className="py-4 px-6 text-center">Status Stok</th>
-                  <th className="py-4 px-6">Lokasi Rak</th>
-                  <th className="py-4 px-6 text-right">Aksi</th>
+                <tr className="bg-[#E2E9E3] border-b border-[#D9DFDA] text-[12px] font-semibold text-[#2E3B40]">
+                  <th className="py-3.5 px-5">Kode Barang</th>
+                  <th className="py-3.5 px-5">Nama Barang</th>
+                  <th className="py-3.5 px-5">Kategori</th>
+                  <th className="py-3.5 px-5 text-center">Status Stok</th>
+                  <th className="py-3.5 px-5">Lokasi Rak</th>
+                  <th className="py-3.5 px-5 text-right">Aksi</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 text-xs">
+              <tbody className="divide-y divide-[#DDE2DC] text-[14px]">
                 {loading ? (
                   <tr>
-                    <td colSpan={6} className="py-12 text-center text-slate-400">
-                      <div className="inline-block w-6 h-6 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin mb-2" />
-                      <p>Memuat data inventaris...</p>
+                    <td colSpan={6} className="py-12 text-center text-[#87918F]">
+                      <div className="inline-block w-6 h-6 border-2 border-[#34495E] border-t-transparent rounded-full animate-spin mb-2" />
+                      <p className="text-[13px]">Memuat data inventaris...</p>
                     </td>
                   </tr>
                 ) : filteredItems.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="py-12 text-center text-slate-500">
-                      <Package className="w-8 h-8 text-slate-300 mx-auto mb-2" />
-                      <p className="font-semibold text-slate-700">Tidak ada barang yang cocok</p>
-                      <p className="text-[11px] text-slate-400 mt-0.5">
+                    <td colSpan={6} className="py-12 text-center text-[#69777A]">
+                      <Package className="w-8 h-8 text-[#87918F] mx-auto mb-2" />
+                      <p className="font-semibold text-[#2E3B40] text-[14px]">Tidak ada barang yang cocok</p>
+                      <p className="text-[12px] text-[#87918F] mt-0.5">
                         Coba ubah kata kunci pencarian atau ganti filter kategori.
                       </p>
                     </td>
@@ -228,50 +221,50 @@ export default function InventoryPage() {
                       item.stok === 0
                         ? {
                             label: 'Habis (0)',
-                            color: 'bg-rose-50 text-rose-700 border-rose-200/70',
+                            style: 'bg-[#F2E3E1] text-[#A95353] border-[#D9DFDA]',
                           }
                         : item.stok <= 2
                         ? {
                             label: `Menipis (${item.stok})`,
-                            color: 'bg-amber-50 text-amber-700 border-amber-200/70',
+                            style: 'bg-[#F2EBDD] text-[#9A7137] border-[#D9DFDA]',
                           }
                         : {
                             label: `Tersedia (${item.stok})`,
-                            color: 'bg-emerald-50 text-emerald-700 border-emerald-200/70',
+                            style: 'bg-[#E1EDE4] text-[#548C75] border-[#D9DFDA]',
                           };
 
                     return (
                       <tr
                         key={item.id}
                         onClick={() => handleOpenDetail(item)}
-                        className="hover:bg-indigo-50/40 cursor-pointer transition-colors group"
+                        className="hover:bg-[#ECEFEA] cursor-pointer transition-colors group"
                       >
-                        <td className="py-3.5 px-5 font-mono font-bold text-indigo-700">
+                        <td className="py-3.5 px-5 font-mono font-semibold text-[#34495E] text-[13px]">
                           {item.kode_barang}
                         </td>
                         <td className="py-3.5 px-5">
-                          <p className="font-semibold text-slate-900 group-hover:text-indigo-600 transition-colors">
+                          <p className="font-medium text-[#2E3B40] group-hover:text-[#34495E] transition-colors">
                             {item.nama_barang}
                           </p>
-                          <p className="text-[11px] text-slate-400 truncate max-w-xs mt-0.5">
-                            {item.spesifikasi || 'Spesifikasi standar'}
+                          <p className="text-[12px] text-[#69777A] truncate max-w-xs mt-0.5">
+                            {item.spesifikasi || 'Spesifikasi standar lab'}
                           </p>
                         </td>
                         <td className="py-3.5 px-5">
-                          <span className="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">
+                          <span className="px-2.5 py-1 rounded-[6px] text-[12px] font-medium bg-[#ECEFEA] text-[#344047] border border-[#D9DFDA]">
                             {item.kategori}
                           </span>
                         </td>
                         <td className="py-3.5 px-5 text-center">
                           <span
-                            className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold border ${statusBadge.color}`}
+                            className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[12px] font-semibold border ${statusBadge.style}`}
                           >
                             {statusBadge.label}
                           </span>
                         </td>
-                        <td className="py-3.5 px-5 text-slate-600">
+                        <td className="py-3.5 px-5 text-[#69777A] text-[13px]">
                           <span className="flex items-center gap-1.5">
-                            <MapPin className="w-3.5 h-3.5 text-slate-400" />
+                            <MapPin className="w-3.5 h-3.5 text-[#87918F]" />
                             {item.lokasi_penyimpanan}
                           </span>
                         </td>
@@ -283,7 +276,7 @@ export default function InventoryPage() {
                                 handleOpenDetail(item);
                               }}
                               title="Lihat Detail & Label QR"
-                              className="p-1.5 text-indigo-600 hover:text-indigo-800 hover:bg-indigo-50 rounded-lg transition-colors"
+                              className="p-1.5 text-[#34495E] hover:bg-[#DCE8E2] rounded-[6px] transition-colors"
                             >
                               <QrCode className="w-4 h-4" />
                             </button>
@@ -293,14 +286,14 @@ export default function InventoryPage() {
                                 <button
                                   onClick={(e) => handleOpenEdit(item, e)}
                                   title="Edit Barang"
-                                  className="p-1.5 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
+                                  className="p-1.5 text-[#69777A] hover:text-[#2E3B40] hover:bg-[#DCE8E2] rounded-[6px] transition-colors"
                                 >
                                   <Edit2 className="w-4 h-4" />
                                 </button>
                                 <button
                                   onClick={(e) => handleOpenDelete(item, e)}
                                   title="Hapus Barang"
-                                  className="p-1.5 text-rose-500 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors"
+                                  className="p-1.5 text-[#A95353] hover:text-[#8E4444] hover:bg-[#F2E3E1] rounded-[6px] transition-colors"
                                 >
                                   <Trash2 className="w-4 h-4" />
                                 </button>
@@ -317,82 +310,82 @@ export default function InventoryPage() {
           </div>
         </div>
 
-        {/* Stacked Touch-Friendly Cards for Mobile (< 1024px) */}
+        {/* Stacked Cards for Mobile (< 1024px) */}
         <div className="lg:hidden space-y-3">
           {loading ? (
-            <div className="p-8 text-center text-slate-400 bg-white rounded-2xl border border-slate-200">
-              <div className="inline-block w-6 h-6 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin mb-2" />
-              <p className="text-xs">Memuat inventaris...</p>
+            <div className="p-8 text-center text-[#87918F] bg-[#F4F5F1] rounded-[14px] border border-[#D9DFDA]">
+              <div className="inline-block w-6 h-6 border-2 border-[#34495E] border-t-transparent rounded-full animate-spin mb-2" />
+              <p className="text-[13px]">Memuat inventaris...</p>
             </div>
           ) : filteredItems.length === 0 ? (
-            <div className="p-8 text-center text-slate-500 bg-white rounded-2xl border border-slate-200">
-              <Package className="w-8 h-8 text-slate-300 mx-auto mb-2" />
-              <p className="font-semibold text-xs text-slate-700">Tidak ada barang yang cocok</p>
+            <div className="p-8 text-center text-[#69777A] bg-[#F4F5F1] rounded-[14px] border border-[#D9DFDA]">
+              <Package className="w-8 h-8 text-[#87918F] mx-auto mb-2" />
+              <p className="font-semibold text-[13px] text-[#2E3B40]">Tidak ada barang yang cocok</p>
             </div>
           ) : (
             filteredItems.map((item) => {
               const statusBadge =
                 item.stok === 0
-                  ? { label: 'Habis', color: 'bg-rose-100 text-rose-800 border-rose-200' }
+                  ? { label: 'Habis', style: 'bg-[#F2E3E1] text-[#A95353]' }
                   : item.stok <= 2
-                  ? { label: 'Menipis', color: 'bg-amber-100 text-amber-800 border-amber-200' }
-                  : { label: 'Tersedia', color: 'bg-emerald-100 text-emerald-800 border-emerald-200' };
+                  ? { label: 'Menipis', style: 'bg-[#F2EBDD] text-[#9A7137]' }
+                  : { label: 'Tersedia', style: 'bg-[#E1EDE4] text-[#548C75]' };
 
               return (
                 <div
                   key={item.id}
                   onClick={() => handleOpenDetail(item)}
-                  className="bg-white p-4 rounded-2xl border border-slate-200 shadow-card active:scale-[0.99] transition-all cursor-pointer"
+                  className="bg-[#F4F5F1] p-4 rounded-[14px] border border-[#D9DFDA] shadow-soft cursor-pointer active:bg-[#ECEFEA] transition-colors"
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <span className="font-mono text-[11px] font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100">
+                      <span className="font-mono text-[11px] font-semibold text-[#34495E] bg-[#DCE8E2] px-2 py-0.5 rounded-[4px] border border-[#D9DFDA]">
                         {item.kode_barang}
                       </span>
-                      <h4 className="font-bold text-slate-900 text-sm mt-1.5">
+                      <h4 className="font-semibold text-[#2E3B40] text-[15px] mt-1.5">
                         {item.nama_barang}
                       </h4>
                     </div>
                     <span
-                      className={`px-2 py-0.5 rounded-full text-[10px] font-bold border ${statusBadge.color}`}
+                      className={`px-2.5 py-0.5 rounded-full text-[11px] font-semibold border border-[#D9DFDA] ${statusBadge.style}`}
                     >
                       {statusBadge.label} ({item.stok})
                     </span>
                   </div>
 
-                  <p className="text-xs text-slate-500 mt-1 line-clamp-1">
-                    {item.spesifikasi || 'Spesifikasi standar'}
+                  <p className="text-[13px] text-[#69777A] mt-1 line-clamp-1">
+                    {item.spesifikasi || 'Spesifikasi standar lab'}
                   </p>
 
-                  <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                    <span className="flex items-center gap-1 text-[11px]">
-                      <MapPin className="w-3.5 h-3.5 text-slate-400" />
+                  <div className="mt-3 pt-3 border-t border-[#DDE2DC] flex items-center justify-between text-[12px] text-[#69777A]">
+                    <span className="flex items-center gap-1">
+                      <MapPin className="w-3.5 h-3.5 text-[#87918F]" />
                       {item.lokasi_penyimpanan}
                     </span>
 
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1.5">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
                           handleOpenDetail(item);
                         }}
-                        className="px-2 py-1 text-[11px] font-semibold text-indigo-700 bg-indigo-50 rounded-lg"
+                        className="px-2.5 py-1 text-[12px] font-medium text-[#34495E] bg-[#DCE8E2] rounded-[6px] min-h-[36px]"
                       >
-                        QR Tag
+                        Detail & QR
                       </button>
                       {isAdmin && (
                         <>
                           <button
                             onClick={(e) => handleOpenEdit(item, e)}
-                            className="p-1 text-slate-600 hover:bg-slate-100 rounded-lg"
+                            className="p-1.5 text-[#69777A] hover:bg-[#ECEFEA] rounded-[6px] min-h-[36px] min-w-[36px] flex items-center justify-center"
                           >
-                            <Edit2 className="w-3.5 h-3.5" />
+                            <Edit2 className="w-4 h-4" />
                           </button>
                           <button
                             onClick={(e) => handleOpenDelete(item, e)}
-                            className="p-1 text-rose-600 hover:bg-rose-50 rounded-lg"
+                            className="p-1.5 text-[#A95353] hover:bg-[#F2E3E1] rounded-[6px] min-h-[36px] min-w-[36px] flex items-center justify-center"
                           >
-                            <Trash2 className="w-3.5 h-3.5" />
+                            <Trash2 className="w-4 h-4" />
                           </button>
                         </>
                       )}

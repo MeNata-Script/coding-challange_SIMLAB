@@ -97,26 +97,26 @@ export default function StaffFormModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs animate-in fade-in">
-      <div className="bg-white rounded-2xl shadow-elevated border border-slate-200 w-full max-w-md overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-in fade-in">
+      <div className="bg-[#F4F5F1] rounded-[14px] shadow-lg border border-[#D9DFDA] w-full max-w-md overflow-hidden">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
-          <div className="flex items-center gap-2">
-            <div className="p-2 bg-indigo-100 text-indigo-700 rounded-lg">
+        <div className="px-6 py-4 border-b border-[#D9DFDA] flex items-center justify-between bg-[#E2E9E3]">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-[10px] bg-[#DCE8E2] text-[#34495E] flex items-center justify-center">
               <UserPlus className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-bold text-slate-900 text-base">
+              <h3 className="font-bold text-[#2E3B40] text-base">
                 {isEditing ? 'Ubah Akun Staff' : 'Tambah Staff Baru'}
               </h3>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-[#69777A]">
                 {isEditing ? 'Perbarui akses dan informasi akun' : 'Buat akun staf operasional baru'}
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200 transition-colors"
+            className="p-1.5 rounded-[10px] text-[#69777A] hover:text-[#2E3B40] hover:bg-[#DCE8E2] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -125,54 +125,54 @@ export default function StaffFormModal({
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {formError && (
-            <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl flex items-center gap-2 text-rose-700 text-xs">
+            <div className="p-3 bg-[#F2E3E1] border border-[#A95353]/30 rounded-[10px] flex items-center gap-2 text-[#A95353] text-xs">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{formError}</span>
             </div>
           )}
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
-              Nama Lengkap <span className="text-rose-500">*</span>
+            <label className="block text-[13px] font-medium text-[#344047] mb-1">
+              Nama Lengkap <span className="text-[#A95353]">*</span>
             </label>
             <input
               type="text"
               placeholder="Contoh: Rian Hidayat, S.Kom."
               value={formData.full_name}
               onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
-              className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full px-3 py-2 text-xs bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] text-[#344047] placeholder:text-[#87918F] focus:border-[#34495E] focus:outline-none focus:ring-1 focus:ring-[#34495E]"
               required
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
-              Username <span className="text-rose-500">*</span>
+            <label className="block text-[13px] font-medium text-[#344047] mb-1">
+              Username <span className="text-[#A95353]">*</span>
             </label>
             <input
               type="text"
               placeholder="Contoh: rian_lab"
               value={formData.username}
               onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-              className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 font-mono"
+              className="w-full px-3 py-2 text-xs bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] text-[#344047] placeholder:text-[#87918F] focus:border-[#34495E] focus:outline-none focus:ring-1 focus:ring-[#34495E] font-mono"
               required
             />
-            <p className="text-[11px] text-slate-400 mt-1">
-              Password default untuk akun baru adalah <code className="bg-slate-100 px-1 py-0.5 rounded text-slate-700">staff123</code>
+            <p className="text-[11px] text-[#87918F] mt-1">
+              Password default untuk akun baru adalah <code className="bg-[#E2E9E3] px-1 py-0.5 rounded text-[#344047]">staff123</code>
             </p>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Hak Akses (Role) <span className="text-rose-500">*</span>
+              <label className="block text-[13px] font-medium text-[#344047] mb-1">
+                Hak Akses (Role) <span className="text-[#A95353]">*</span>
               </label>
               <select
                 value={formData.role}
                 onChange={(e) =>
                   setFormData({ ...formData, role: e.target.value as UserRole })
                 }
-                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white"
+                className="w-full px-3 py-2 text-xs bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] text-[#344047] focus:border-[#34495E] focus:outline-none focus:ring-1 focus:ring-[#34495E]"
               >
                 <option value="STAFF">STAFF (Operasional)</option>
                 <option value="ADMIN">ADMIN (Full Control)</option>
@@ -180,15 +180,15 @@ export default function StaffFormModal({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Status Akun <span className="text-rose-500">*</span>
+              <label className="block text-[13px] font-medium text-[#344047] mb-1">
+                Status Akun <span className="text-[#A95353]">*</span>
               </label>
               <select
                 value={formData.status}
                 onChange={(e) =>
                   setFormData({ ...formData, status: e.target.value as UserStatus })
                 }
-                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white"
+                className="w-full px-3 py-2 text-xs bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] text-[#344047] focus:border-[#34495E] focus:outline-none focus:ring-1 focus:ring-[#34495E]"
               >
                 <option value="AKTIF">AKTIF</option>
                 <option value="NONAKTIF">NONAKTIF</option>
@@ -197,19 +197,19 @@ export default function StaffFormModal({
           </div>
 
           {/* Footer Actions */}
-          <div className="pt-3 border-t border-slate-200 flex items-center justify-end gap-2">
+          <div className="pt-3 border-t border-[#D9DFDA] flex items-center justify-end gap-2">
             <button
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 rounded-xl transition-colors"
+              className="px-4 py-2 text-xs font-medium text-[#34495E] bg-[#DCE8E2] hover:bg-[#CEDDD5] rounded-[10px] transition-colors"
             >
               Batal
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm transition-all disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-medium text-[#F4F5F1] bg-[#34495E] hover:bg-[#293B4D] rounded-[10px] shadow-sm transition-all disabled:opacity-50"
             >
               <Save className="w-3.5 h-3.5" />
               <span>{loading ? 'Menyimpan...' : isEditing ? 'Simpan Perubahan' : 'Buat Akun'}</span>

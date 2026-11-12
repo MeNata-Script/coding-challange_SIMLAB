@@ -4,7 +4,7 @@ import { AuthProvider } from '@/context/AuthContext';
 import { ToastProvider } from '@/context/ToastContext';
 
 export const metadata: Metadata = {
-  title: 'SIMLAB - Laboratory Inventory & Borrowing Management System',
+  title: 'SIMLAB - Sistem Manajemen Inventaris & Peminjaman Laboratorium',
   description:
     'Sistem Manajemen Inventaris dan Peminjaman Laboratorium Terintegrasi berbasis Next.js dan Supabase PostgreSQL.',
 };
@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id">
-      <body className="antialiased selection:bg-indigo-500 selection:text-white">
+      <body className="antialiased selection:bg-[#34495E] selection:text-[#F4F5F1] bg-[#EAECE9] text-[#344047]">
         <AuthProvider>
           <ToastProvider>
             {children}

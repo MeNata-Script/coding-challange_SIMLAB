@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import AppLayout from '@/components/layout/AppLayout';
-import { User, UserRole, UserStatus } from '@/types';
+import { User } from '@/types';
 import { fetchUsers, toggleUserStatus } from '@/lib/db';
 import { formatDate } from '@/lib/utils';
 import { useAuth } from '@/context/AuthContext';
@@ -13,12 +13,7 @@ import {
   ShieldCheck,
   UserCheck,
   Edit2,
-  CheckCircle2,
-  XCircle,
-  ToggleLeft,
-  ToggleRight,
   Search,
-  Key,
 } from 'lucide-react';
 import StaffFormModal from '@/components/users/StaffFormModal';
 
@@ -95,9 +90,9 @@ export default function UsersManagementPage() {
     >
       <div className="space-y-5">
         {/* Controls: Search & Add Staff */}
-        <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-card flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+        <div className="bg-[#F4F5F1] p-4 sm:p-5 rounded-[14px] border border-[#D9DFDA] shadow-xs flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
           <div className="relative flex-1 max-w-md">
-            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-[#87918F]">
               <Search className="w-4 h-4" />
             </div>
             <input
@@ -105,12 +100,12 @@ export default function UsersManagementPage() {
               placeholder="Cari nama staff, username, atau role..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+              className="w-full pl-10 pr-4 py-2.5 text-xs bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] text-[#344047] placeholder:text-[#87918F] focus:border-[#34495E] focus:outline-none focus:ring-1 focus:ring-[#34495E] transition-all"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery('')}
-                className="absolute inset-y-0 right-0 pr-3 flex items-center text-xs text-slate-400 hover:text-slate-600"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-xs text-[#87918F] hover:text-[#344047]"
               >
                 Clear
               </button>
@@ -119,7 +114,7 @@ export default function UsersManagementPage() {
 
           <button
             onClick={handleOpenAdd}
-            className="inline-flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm hover:shadow transition-all shrink-0"
+            className="inline-flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-medium text-[#F4F5F1] bg-[#34495E] hover:bg-[#293B4D] rounded-[10px] shadow-sm transition-all shrink-0"
           >
             <UserPlus className="w-4 h-4" />
             <span>Tambah Staff Baru</span>
@@ -127,11 +122,11 @@ export default function UsersManagementPage() {
         </div>
 
         {/* Desktop Table View */}
-        <div className="hidden lg:block bg-white rounded-2xl border border-slate-200 shadow-card overflow-hidden">
+        <div className="hidden lg:block bg-[#F4F5F1] rounded-[14px] border border-[#D9DFDA] shadow-xs overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="bg-slate-50/80 border-b border-slate-200 text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                <tr className="bg-[#E2E9E3] border-b border-[#D9DFDA] text-[11px] font-bold uppercase tracking-wider text-[#69777A]">
                   <th className="py-3.5 px-5">Pengguna</th>
                   <th className="py-3.5 px-5">Username</th>
                   <th className="py-3.5 px-5">Hak Akses (Role)</th>
@@ -140,19 +135,19 @@ export default function UsersManagementPage() {
                   <th className="py-3.5 px-5 text-right">Aksi</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 text-xs">
+              <tbody className="divide-y divide-[#DDE2DC] text-xs">
                 {loading ? (
                   <tr>
-                    <td colSpan={6} className="py-12 text-center text-slate-400">
-                      <div className="inline-block w-6 h-6 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin mb-2" />
+                    <td colSpan={6} className="py-12 text-center text-[#87918F]">
+                      <div className="inline-block w-6 h-6 border-2 border-[#34495E] border-t-transparent rounded-full animate-spin mb-2" />
                       <p>Memuat daftar staff...</p>
                     </td>
                   </tr>
                 ) : filteredUsers.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="py-12 text-center text-slate-500">
-                      <Users className="w-8 h-8 text-slate-300 mx-auto mb-2" />
-                      <p className="font-semibold text-slate-700">Tidak ada akun staff ditemukan</p>
+                    <td colSpan={6} className="py-12 text-center text-[#69777A]">
+                      <Users className="w-8 h-8 text-[#87918F] mx-auto mb-2" />
+                      <p className="font-semibold text-[#2E3B40]">Tidak ada akun staff ditemukan</p>
                     </td>
                   </tr>
                 ) : (
@@ -161,7 +156,7 @@ export default function UsersManagementPage() {
                     const isActive = u.status === 'AKTIF';
 
                     return (
-                      <tr key={u.id} className="hover:bg-slate-50/60 transition-colors">
+                      <tr key={u.id} className="hover:bg-[#ECEFEA] transition-colors">
                         <td className="py-3.5 px-5">
                           <div className="flex items-center gap-3">
                             <img
@@ -170,41 +165,41 @@ export default function UsersManagementPage() {
                                 `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.username}`
                               }
                               alt={u.full_name}
-                              className="w-9 h-9 rounded-full bg-slate-100 border border-slate-200"
+                              className="w-9 h-9 rounded-full bg-[#E2E9E3] border border-[#D9DFDA]"
                             />
                             <div>
-                              <p className="font-semibold text-slate-900 flex items-center gap-1.5">
+                              <p className="font-semibold text-[#2E3B40] flex items-center gap-1.5">
                                 <span>{u.full_name}</span>
                                 {isSelf && (
-                                  <span className="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.2 rounded font-normal">
+                                  <span className="text-[10px] bg-[#DCE8E2] text-[#34495E] px-1.5 py-0.2 rounded font-normal">
                                     Anda
                                   </span>
                                 )}
                               </p>
-                              <p className="text-[11px] text-slate-400">ID: {u.id}</p>
+                              <p className="text-[11px] text-[#87918F]">ID: {u.id}</p>
                             </div>
                           </div>
                         </td>
 
-                        <td className="py-3.5 px-5 font-mono text-slate-700 font-semibold">
+                        <td className="py-3.5 px-5 font-mono text-[#344047] font-semibold">
                           @{u.username}
                         </td>
 
                         <td className="py-3.5 px-5">
                           {u.role === 'ADMIN' ? (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indigo-100 text-indigo-800 border border-indigo-200">
+                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#DCE8E2] text-[#34495E] border border-[#D9DFDA]">
                               <ShieldCheck className="w-3 h-3" />
                               ADMIN
                             </span>
                           ) : (
-                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-700 border border-slate-200">
+                            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#ECEFEA] text-[#69777A] border border-[#D9DFDA]">
                               <UserCheck className="w-3 h-3" />
                               STAFF
                             </span>
                           )}
                         </td>
 
-                        <td className="py-3.5 px-5 text-slate-600">
+                        <td className="py-3.5 px-5 text-[#69777A]">
                           {formatDate(u.created_at)}
                         </td>
 
@@ -213,15 +208,15 @@ export default function UsersManagementPage() {
                             onClick={() => handleToggleStatus(u)}
                             disabled={isSelf}
                             title={isSelf ? 'Tidak dapat mengubah akun sendiri' : 'Klik untuk mengubah status'}
-                            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold transition-all ${
+                            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold transition-all border ${
                               isActive
-                                ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200/80 border border-emerald-200'
-                                : 'bg-rose-100 text-rose-800 hover:bg-rose-200/80 border border-rose-200'
+                                ? 'bg-[#E1EDE4] text-[#548C75] border-[#548C75]/20 hover:bg-[#D5E6D9]'
+                                : 'bg-[#F2E3E1] text-[#A95353] border-[#A95353]/20 hover:bg-[#EAD4D1]'
                             } ${isSelf ? 'opacity-60 cursor-not-allowed' : 'cursor-pointer'}`}
                           >
                             <span
                               className={`w-2 h-2 rounded-full ${
-                                isActive ? 'bg-emerald-600' : 'bg-rose-600'
+                                isActive ? 'bg-[#548C75]' : 'bg-[#A95353]'
                               }`}
                             />
                             <span>{u.status}</span>
@@ -231,7 +226,7 @@ export default function UsersManagementPage() {
                         <td className="py-3.5 px-5 text-right whitespace-nowrap">
                           <button
                             onClick={() => handleOpenEdit(u)}
-                            className="p-1.5 text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+                            className="p-1.5 text-[#69777A] hover:text-[#34495E] hover:bg-[#DCE8E2] rounded-[8px] transition-colors"
                             title="Edit Akun"
                           >
                             <Edit2 className="w-4 h-4" />
@@ -249,8 +244,8 @@ export default function UsersManagementPage() {
         {/* Mobile View: Stacked Cards */}
         <div className="lg:hidden space-y-3">
           {loading ? (
-            <div className="p-8 text-center text-slate-400 bg-white rounded-2xl border border-slate-200">
-              <div className="inline-block w-6 h-6 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin mb-2" />
+            <div className="p-8 text-center text-[#87918F] bg-[#F4F5F1] rounded-[14px] border border-[#D9DFDA]">
+              <div className="inline-block w-6 h-6 border-2 border-[#34495E] border-t-transparent rounded-full animate-spin mb-2" />
               <p className="text-xs">Memuat staff...</p>
             </div>
           ) : (
@@ -261,7 +256,7 @@ export default function UsersManagementPage() {
               return (
                 <div
                   key={u.id}
-                  className="bg-white p-4 rounded-2xl border border-slate-200 shadow-card space-y-3"
+                  className="bg-[#F4F5F1] p-4 rounded-[14px] border border-[#D9DFDA] shadow-xs space-y-3"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-2.5">
@@ -271,32 +266,32 @@ export default function UsersManagementPage() {
                           `https://api.dicebear.com/7.x/avataaars/svg?seed=${u.username}`
                         }
                         alt={u.full_name}
-                        className="w-10 h-10 rounded-full bg-slate-100 border border-slate-200"
+                        className="w-10 h-10 rounded-full bg-[#E2E9E3] border border-[#D9DFDA]"
                       />
                       <div>
-                        <h4 className="font-bold text-slate-900 text-sm">{u.full_name}</h4>
-                        <p className="text-xs font-mono text-slate-500">@{u.username}</p>
+                        <h4 className="font-bold text-[#2E3B40] text-sm">{u.full_name}</h4>
+                        <p className="text-xs font-mono text-[#69777A]">@{u.username}</p>
                       </div>
                     </div>
 
                     <button
                       onClick={() => handleOpenEdit(u)}
-                      className="p-1.5 text-slate-400 hover:text-slate-600"
+                      className="p-2 text-[#69777A] hover:text-[#34495E] hover:bg-[#DCE8E2] rounded-[8px]"
                     >
                       <Edit2 className="w-4 h-4" />
                     </button>
                   </div>
 
-                  <div className="flex items-center justify-between pt-2 border-t border-slate-100 text-xs">
-                    <span className="font-semibold text-slate-500">{u.role}</span>
+                  <div className="flex items-center justify-between pt-2 border-t border-[#DDE2DC] text-xs">
+                    <span className="font-medium text-[#69777A]">{u.role}</span>
 
                     <button
                       onClick={() => handleToggleStatus(u)}
                       disabled={isSelf}
-                      className={`px-3 py-1 rounded-full text-[11px] font-bold ${
+                      className={`px-3 py-1.5 rounded-full text-[11px] font-semibold border ${
                         isActive
-                          ? 'bg-emerald-100 text-emerald-800'
-                          : 'bg-rose-100 text-rose-800'
+                          ? 'bg-[#E1EDE4] text-[#548C75] border-[#548C75]/20'
+                          : 'bg-[#F2E3E1] text-[#A95353] border-[#A95353]/20'
                       }`}
                     >
                       {u.status} (Ubah)

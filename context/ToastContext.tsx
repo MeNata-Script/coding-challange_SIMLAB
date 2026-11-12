@@ -52,36 +52,36 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
         {toasts.map((t) => {
           const config = {
             success: {
-              border: 'border-emerald-200 bg-emerald-50 text-emerald-900',
-              icon: <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />,
+              style: 'border-[#548C75]/30 bg-[#E1EDE4] text-[#2E3B40]',
+              icon: <CheckCircle2 className="w-5 h-5 text-[#548C75] shrink-0" />,
             },
             error: {
-              border: 'border-rose-200 bg-rose-50 text-rose-900',
-              icon: <AlertCircle className="w-5 h-5 text-rose-600 shrink-0" />,
+              style: 'border-[#A95353]/30 bg-[#F2E3E1] text-[#2E3B40]',
+              icon: <AlertCircle className="w-5 h-5 text-[#A95353] shrink-0" />,
             },
             warning: {
-              border: 'border-amber-200 bg-amber-50 text-amber-900',
-              icon: <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0" />,
+              style: 'border-[#9A7137]/30 bg-[#F2EBDD] text-[#2E3B40]',
+              icon: <AlertTriangle className="w-5 h-5 text-[#9A7137] shrink-0" />,
             },
             info: {
-              border: 'border-indigo-200 bg-indigo-50 text-indigo-900',
-              icon: <Info className="w-5 h-5 text-indigo-600 shrink-0" />,
+              style: 'border-[#527493]/30 bg-[#E3EAF0] text-[#2E3B40]',
+              icon: <Info className="w-5 h-5 text-[#527493] shrink-0" />,
             },
           }[t.type];
 
           return (
             <div
               key={t.id}
-              className={`pointer-events-auto flex items-start gap-3 p-4 rounded-xl border shadow-lg transition-all duration-300 animate-in fade-in slide-in-from-bottom-2 ${config.border}`}
+              className={`pointer-events-auto flex items-start gap-3 p-4 rounded-[14px] border shadow-soft transition-all duration-200 animate-in fade-in slide-in-from-bottom-2 ${config.style}`}
             >
               {config.icon}
               <div className="flex-1 text-sm">
-                <p className="font-semibold text-slate-900">{t.title}</p>
-                {t.message && <p className="text-slate-600 text-xs mt-0.5 leading-relaxed">{t.message}</p>}
+                <p className="font-semibold text-[#2E3B40] text-[14px]">{t.title}</p>
+                {t.message && <p className="text-[#69777A] text-[13px] mt-0.5 leading-relaxed">{t.message}</p>}
               </div>
               <button
                 onClick={() => removeToast(t.id)}
-                className="text-slate-400 hover:text-slate-600 transition-colors -mr-1 -mt-1 p-1 rounded-lg"
+                className="text-[#87918F] hover:text-[#2E3B40] transition-colors -mr-1 -mt-1 p-1 rounded-lg"
               >
                 <X className="w-4 h-4" />
               </button>

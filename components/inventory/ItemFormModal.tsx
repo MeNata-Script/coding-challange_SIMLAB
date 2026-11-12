@@ -125,26 +125,26 @@ export default function ItemFormModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs animate-in fade-in">
-      <div className="bg-white rounded-2xl shadow-elevated border border-slate-200 w-full max-w-lg overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#2E3B40]/40 backdrop-blur-xs animate-in fade-in">
+      <div className="bg-[#F4F5F1] rounded-[14px] shadow-modal border border-[#D9DFDA] w-full max-w-lg overflow-hidden">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
-          <div className="flex items-center gap-2">
-            <div className="p-2 bg-indigo-100 text-indigo-700 rounded-lg">
+        <div className="px-6 py-4 border-b border-[#D9DFDA] flex items-center justify-between bg-[#E2E9E3]">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 bg-[#DCE8E2] text-[#34495E] rounded-[8px]">
               <PackagePlus className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-bold text-slate-900 text-base">
-                {isEditing ? 'Ubah Data Barang' : 'Tambah Barang Baru'}
+              <h3 className="font-semibold text-[#2E3B40] text-[16px]">
+                {isEditing ? 'Ubah Data Inventaris' : 'Tambah Barang Baru'}
               </h3>
-              <p className="text-xs text-slate-500">
-                {isEditing ? 'Perbarui informasi inventaris' : 'Masukkan rincian inventaris baru'}
+              <p className="text-[12px] text-[#69777A]">
+                {isEditing ? 'Perbarui informasi spesifikasi dan stok' : 'Masukkan rincian inventaris laboratorium'}
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200 transition-colors"
+            className="p-1 rounded-[6px] text-[#87918F] hover:text-[#2E3B40] hover:bg-[#ECEFEA] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -153,7 +153,7 @@ export default function ItemFormModal({
         {/* Form */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {formError && (
-            <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl flex items-center gap-2 text-rose-700 text-xs">
+            <div className="p-3 bg-[#F2E3E1] border border-[#D9DFDA] rounded-[10px] flex items-center gap-2 text-[#A95353] text-[13px]">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{formError}</span>
             </div>
@@ -161,29 +161,29 @@ export default function ItemFormModal({
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Kode Barang <span className="text-rose-500">*</span>
+              <label className="block text-[13px] font-medium text-[#2E3B40] mb-1">
+                Kode Barang <span className="text-[#A95353]">*</span>
               </label>
               <input
                 type="text"
                 placeholder="Contoh: BR009"
                 value={formData.kode_barang}
                 onChange={(e) => setFormData({ ...formData, kode_barang: e.target.value })}
-                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 uppercase font-mono"
+                className="w-full px-3 py-2 text-[14px] bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] focus:bg-[#F4F5F1] outline-none uppercase font-mono text-[#344047]"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Kategori <span className="text-rose-500">*</span>
+              <label className="block text-[13px] font-medium text-[#2E3B40] mb-1">
+                Kategori <span className="text-[#A95353]">*</span>
               </label>
               <select
                 value={formData.kategori}
                 onChange={(e) =>
                   setFormData({ ...formData, kategori: e.target.value as ItemCategory })
                 }
-                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white"
+                className="w-full px-3 py-2 text-[14px] bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] focus:bg-[#F4F5F1] outline-none text-[#344047]"
               >
                 {CATEGORIES.map((cat) => (
                   <option key={cat} value={cat}>
@@ -195,36 +195,36 @@ export default function ItemFormModal({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
-              Nama Barang <span className="text-rose-500">*</span>
+            <label className="block text-[13px] font-medium text-[#2E3B40] mb-1">
+              Nama Barang <span className="text-[#A95353]">*</span>
             </label>
             <input
               type="text"
               placeholder="Contoh: Monitor Curved Samsung 27 Inch"
               value={formData.nama_barang}
               onChange={(e) => setFormData({ ...formData, nama_barang: e.target.value })}
-              className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full px-3 py-2 text-[14px] bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] focus:bg-[#F4F5F1] outline-none text-[#344047]"
               required
             />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Stok Awal <span className="text-rose-500">*</span>
+              <label className="block text-[13px] font-medium text-[#2E3B40] mb-1">
+                Stok Awal <span className="text-[#A95353]">*</span>
               </label>
               <input
                 type="number"
                 min="0"
                 value={formData.stok}
                 onChange={(e) => setFormData({ ...formData, stok: parseInt(e.target.value) || 0 })}
-                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full px-3 py-2 text-[14px] bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] focus:bg-[#F4F5F1] outline-none text-[#344047]"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 mb-1">Kondisi</label>
+              <label className="block text-[13px] font-medium text-[#2E3B40] mb-1">Kondisi</label>
               <select
                 value={formData.kondisi}
                 onChange={(e) =>
@@ -233,7 +233,7 @@ export default function ItemFormModal({
                     kondisi: e.target.value as 'Baik' | 'Perlu Perbaikan' | 'Rusak',
                   })
                 }
-                className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white"
+                className="w-full px-3 py-2 text-[14px] bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] focus:bg-[#F4F5F1] outline-none text-[#344047]"
               >
                 <option value="Baik">Baik</option>
                 <option value="Perlu Perbaikan">Perlu Perbaikan</option>
@@ -243,7 +243,7 @@ export default function ItemFormModal({
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
+            <label className="block text-[13px] font-medium text-[#2E3B40] mb-1">
               Lokasi Rak / Penyimpanan
             </label>
             <input
@@ -251,39 +251,39 @@ export default function ItemFormModal({
               placeholder="Contoh: Lab Komputer Utama (Rak A2)"
               value={formData.lokasi_penyimpanan}
               onChange={(e) => setFormData({ ...formData, lokasi_penyimpanan: e.target.value })}
-              className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full px-3 py-2 text-[14px] bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] focus:bg-[#F4F5F1] outline-none text-[#344047]"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
+            <label className="block text-[13px] font-medium text-[#2E3B40] mb-1">
               Spesifikasi / Keterangan
             </label>
             <textarea
               rows={2}
-              placeholder="Rincian teknis, aksesoris, kelengkapan kabel, dll."
+              placeholder="Rincian teknis, kelengkapan kabel, aksesoris, dll."
               value={formData.spesifikasi}
               onChange={(e) => setFormData({ ...formData, spesifikasi: e.target.value })}
-              className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 resize-none"
+              className="w-full px-3 py-2 text-[14px] bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] focus:border-[#34495E] focus:bg-[#F4F5F1] outline-none resize-none text-[#344047]"
             />
           </div>
 
           {/* Action Buttons */}
-          <div className="pt-3 border-t border-slate-200 flex items-center justify-end gap-2">
+          <div className="pt-3 border-t border-[#DDE2DC] flex items-center justify-end gap-2">
             <button
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 rounded-xl transition-colors"
+              className="px-4 py-2 text-[14px] font-medium text-[#34495E] bg-[#DCE8E2] hover:bg-[#C8DBD3] rounded-[10px] transition-colors"
             >
               Batal
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm transition-all disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-4 py-2 text-[14px] font-medium text-[#F4F5F1] bg-[#34495E] hover:bg-[#293B4D] rounded-[10px] transition-colors disabled:opacity-50"
             >
-              <Save className="w-3.5 h-3.5" />
+              <Save className="w-4 h-4" />
               <span>{loading ? 'Menyimpan...' : isEditing ? 'Simpan Perubahan' : 'Tambah Barang'}</span>
             </button>
           </div>

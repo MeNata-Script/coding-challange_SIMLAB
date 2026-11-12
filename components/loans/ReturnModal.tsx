@@ -14,7 +14,6 @@ import {
   AlertTriangle,
   XCircle,
   AlertCircle,
-  HelpCircle,
 } from 'lucide-react';
 
 interface ReturnModalProps {
@@ -79,22 +78,22 @@ export default function ReturnModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs animate-in fade-in">
-      <div className="bg-white rounded-2xl shadow-elevated border border-slate-200 w-full max-w-md overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-xs animate-in fade-in">
+      <div className="bg-[#F4F5F1] rounded-[14px] shadow-lg border border-[#D9DFDA] w-full max-w-md overflow-hidden">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
-          <div className="flex items-center gap-2">
-            <div className="p-2 bg-emerald-100 text-emerald-700 rounded-lg">
+        <div className="px-6 py-4 border-b border-[#D9DFDA] flex items-center justify-between bg-[#E2E9E3]">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-[10px] bg-[#DCE8E2] text-[#34495E] flex items-center justify-center">
               <RotateCcw className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-bold text-slate-900 text-base">Proses Pengembalian Barang</h3>
-              <p className="text-xs text-slate-500 font-mono">{loan.kode_peminjaman}</p>
+              <h3 className="font-bold text-[#2E3B40] text-base">Proses Pengembalian Barang</h3>
+              <p className="text-xs text-[#69777A] font-mono">{loan.kode_peminjaman}</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200 transition-colors"
+            className="p-1.5 rounded-[10px] text-[#69777A] hover:text-[#2E3B40] hover:bg-[#DCE8E2] transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -103,29 +102,29 @@ export default function ReturnModal({
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {formError && (
-            <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl flex items-center gap-2 text-rose-700 text-xs">
+            <div className="p-3 bg-[#F2E3E1] border border-[#A95353]/30 rounded-[10px] flex items-center gap-2 text-[#A95353] text-xs">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{formError}</span>
             </div>
           )}
 
           {/* Loan Summary Summary */}
-          <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200/80 text-xs space-y-1.5">
+          <div className="p-3.5 bg-[#ECEFEA] rounded-[10px] border border-[#D9DFDA] text-xs space-y-1.5">
             <div className="flex justify-between">
-              <span className="text-slate-500">Peminjam:</span>
-              <span className="font-semibold text-slate-800">
+              <span className="text-[#69777A]">Peminjam:</span>
+              <span className="font-semibold text-[#344047]">
                 {loan.nama_peminjam} ({loan.nim_identitas})
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-500">Barang:</span>
-              <span className="font-semibold text-slate-800">
+              <span className="text-[#69777A]">Barang:</span>
+              <span className="font-semibold text-[#344047]">
                 {loan.item?.nama_barang || 'Barang Lab'} ({loan.jumlah} unit)
               </span>
             </div>
             <div className="flex justify-between">
-              <span className="text-slate-500">Estimasi Kembali:</span>
-              <span className={`font-semibold ${loan.is_overdue ? 'text-rose-600 font-bold' : 'text-slate-700'}`}>
+              <span className="text-[#69777A]">Estimasi Kembali:</span>
+              <span className={`font-semibold ${loan.is_overdue ? 'text-[#A95353] font-bold' : 'text-[#344047]'}`}>
                 {formatDate(loan.estimasi_kembali)}
                 {loan.is_overdue && ' (TERLAMBAT)'}
               </span>
@@ -134,8 +133,8 @@ export default function ReturnModal({
 
           {/* Condition Selector */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-2">
-              Kondisi Barang Saat Dikembalikan <span className="text-rose-500">*</span>
+            <label className="block text-[13px] font-medium text-[#344047] mb-2">
+              Kondisi Barang Saat Dikembalikan <span className="text-[#A95353]">*</span>
             </label>
 
             <div className="grid grid-cols-3 gap-2">
@@ -143,64 +142,64 @@ export default function ReturnModal({
               <button
                 type="button"
                 onClick={() => setCondition('Baik')}
-                className={`p-3 rounded-xl border flex flex-col items-center gap-1.5 text-center transition-all ${
+                className={`p-3 rounded-[10px] border flex flex-col items-center gap-1.5 text-center transition-all ${
                   condition === 'Baik'
-                    ? 'border-emerald-500 bg-emerald-50/70 text-emerald-900 ring-2 ring-emerald-500/20'
-                    : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
+                    ? 'border-[#548C75] bg-[#E1EDE4] text-[#548C75] ring-1 ring-[#548C75]'
+                    : 'border-[#D9DFDA] bg-[#E9ECE7] hover:bg-[#E2E9E3] text-[#344047]'
                 }`}
               >
                 <CheckCircle2
-                  className={`w-5 h-5 ${condition === 'Baik' ? 'text-emerald-600' : 'text-slate-400'}`}
+                  className={`w-5 h-5 ${condition === 'Baik' ? 'text-[#548C75]' : 'text-[#87918F]'}`}
                 />
                 <span className="text-xs font-bold">Baik</span>
-                <span className="text-[10px] text-slate-500 leading-tight">Masuk stok siap pakai</span>
+                <span className="text-[10px] text-[#69777A] leading-tight">Masuk stok siap pakai</span>
               </button>
 
               {/* Perlu Perbaikan */}
               <button
                 type="button"
                 onClick={() => setCondition('Perlu Perbaikan')}
-                className={`p-3 rounded-xl border flex flex-col items-center gap-1.5 text-center transition-all ${
+                className={`p-3 rounded-[10px] border flex flex-col items-center gap-1.5 text-center transition-all ${
                   condition === 'Perlu Perbaikan'
-                    ? 'border-amber-500 bg-amber-50/70 text-amber-900 ring-2 ring-amber-500/20'
-                    : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
+                    ? 'border-[#9A7137] bg-[#F2EBDD] text-[#9A7137] ring-1 ring-[#9A7137]'
+                    : 'border-[#D9DFDA] bg-[#E9ECE7] hover:bg-[#E2E9E3] text-[#344047]'
                 }`}
               >
                 <AlertTriangle
                   className={`w-5 h-5 ${
-                    condition === 'Perlu Perbaikan' ? 'text-amber-600' : 'text-slate-400'
+                    condition === 'Perlu Perbaikan' ? 'text-[#9A7137]' : 'text-[#87918F]'
                   }`}
                 />
                 <span className="text-xs font-bold">Perbaikan</span>
-                <span className="text-[10px] text-slate-500 leading-tight">Perlu servis lab</span>
+                <span className="text-[10px] text-[#69777A] leading-tight">Perlu servis lab</span>
               </button>
 
               {/* Rusak */}
               <button
                 type="button"
                 onClick={() => setCondition('Rusak')}
-                className={`p-3 rounded-xl border flex flex-col items-center gap-1.5 text-center transition-all ${
+                className={`p-3 rounded-[10px] border flex flex-col items-center gap-1.5 text-center transition-all ${
                   condition === 'Rusak'
-                    ? 'border-rose-500 bg-rose-50/70 text-rose-900 ring-2 ring-rose-500/20'
-                    : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
+                    ? 'border-[#A95353] bg-[#F2E3E1] text-[#A95353] ring-1 ring-[#A95353]'
+                    : 'border-[#D9DFDA] bg-[#E9ECE7] hover:bg-[#E2E9E3] text-[#344047]'
                 }`}
               >
                 <XCircle
-                  className={`w-5 h-5 ${condition === 'Rusak' ? 'text-rose-600' : 'text-slate-400'}`}
+                  className={`w-5 h-5 ${condition === 'Rusak' ? 'text-[#A95353]' : 'text-[#87918F]'}`}
                 />
                 <span className="text-xs font-bold">Rusak</span>
-                <span className="text-[10px] text-slate-500 leading-tight">Karantina barang</span>
+                <span className="text-[10px] text-[#69777A] leading-tight">Karantina barang</span>
               </button>
             </div>
 
             {/* Condition Impact Helper Notice */}
-            <p className="mt-2 text-[11px] text-slate-500">
+            <p className="mt-2 text-[11px]">
               {condition === 'Baik' ? (
-                <span className="text-emerald-700 font-medium">
+                <span className="text-[#548C75] font-medium">
                   ✓ Stok {loan.jumlah} unit akan otomatis dikembalikan ke inventaris aktif.
                 </span>
               ) : (
-                <span className="text-amber-700 font-medium">
+                <span className="text-[#9A7137] font-medium">
                   ⚠ Stok tidak akan dikembalikan ke stok aktif dan dicatat untuk pemeliharaan.
                 </span>
               )}
@@ -209,7 +208,7 @@ export default function ReturnModal({
 
           {/* Return Note */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 mb-1">
+            <label className="block text-[13px] font-medium text-[#344047] mb-1">
               Catatan Pengembalian
             </label>
             <textarea
@@ -221,24 +220,24 @@ export default function ReturnModal({
               }
               value={returnNote}
               onChange={(e) => setReturnNote(e.target.value)}
-              className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 resize-none"
+              className="w-full px-3 py-2 text-xs bg-[#E9ECE7] border border-[#D9DFDA] rounded-[10px] text-[#344047] placeholder:text-[#87918F] focus:border-[#34495E] focus:outline-none focus:ring-1 focus:ring-[#34495E] resize-none"
             />
           </div>
 
           {/* Footer Actions */}
-          <div className="pt-3 border-t border-slate-200 flex items-center justify-end gap-2">
+          <div className="pt-3 border-t border-[#D9DFDA] flex items-center justify-end gap-2">
             <button
               type="button"
               onClick={onClose}
               disabled={loading}
-              className="px-4 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 rounded-xl transition-colors"
+              className="px-4 py-2 text-xs font-medium text-[#34495E] bg-[#DCE8E2] hover:bg-[#CEDDD5] rounded-[10px] transition-colors"
             >
               Batal
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm transition-all disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 px-5 py-2 text-xs font-medium text-[#F4F5F1] bg-[#34495E] hover:bg-[#293B4D] rounded-[10px] shadow-sm transition-all disabled:opacity-50"
             >
               <CheckCircle2 className="w-3.5 h-3.5" />
               <span>{loading ? 'Memproses...' : 'Selesaikan Pengembalian'}</span>
