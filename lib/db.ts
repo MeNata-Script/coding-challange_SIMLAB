@@ -172,6 +172,42 @@ export async function toggleUserStatus(id: string): Promise<User> {
   return updateUser(id, { status: newStatus });
 }
 
+export async function deleteUser(id: string, currentUserId?: string): Promise<boolean> {
+  const users = await fetchUsers();
+  const targetUser = users.find((u) => u.id === id);
+  if (!targetUser) throw new Error('Pengguna tidak ditemukan.');
+
+  // Guard 1: Cannot delete currently logged in account
+  if (currentUserId && id === currentUserId) {
+    throw new Error('Anda tidak dapat menghapus akun Anda sendiri!');
+  }
+
+  // Guard 2: Cannot delete root admin account
+  if (targetUser.username.toLowerCase() === 'admin') {
+    throw new Error('Akun root admin utama tidak dapat dihapus demi keamanan sistem!');
+  }
+
+  if (isSupabaseConfigured) {
+    try {
+      const { error } = await supabase.from('users').delete().eq('id', id);
+      if (!error) {
+        await logAudit('HAPUS_STAFF', 'admin', 'USERS', id, { username: targetUser.username });
+        return true;
+      }
+    } catch (e) {
+      console.warn('Supabase deleteUser fallback:', e);
+    }
+  }
+
+  const current = getStored<User>(STORAGE_KEYS.USERS, memoryUsers);
+  const updated = current.filter((u) => u.id !== id);
+  setStored(STORAGE_KEYS.USERS, updated);
+  memoryUsers = updated;
+
+  await logAudit('HAPUS_STAFF', 'admin', 'USERS', id, { username: targetUser.username });
+  return true;
+}
+
 // -------------------------------------------------------------------------
 // ITEMS CRUD
 // -------------------------------------------------------------------------

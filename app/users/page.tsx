@@ -13,9 +13,11 @@ import {
   ShieldCheck,
   UserCheck,
   Edit2,
+  Trash2,
   Search,
 } from 'lucide-react';
 import StaffFormModal from '@/components/users/StaffFormModal';
+import DeleteStaffConfirmModal from '@/components/users/DeleteStaffConfirmModal';
 
 export default function UsersManagementPage() {
   const { user: currentUser } = useAuth();
@@ -28,6 +30,9 @@ export default function UsersManagementPage() {
   // Modals
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingUser, setEditingUser] = useState<User | null>(null);
+
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [deletingUser, setDeletingUser] = useState<User | null>(null);
 
   const loadData = useCallback(async () => {
     try {
@@ -62,6 +67,19 @@ export default function UsersManagementPage() {
   const handleOpenEdit = (user: User) => {
     setEditingUser(user);
     setIsFormOpen(true);
+  };
+
+  const handleOpenDelete = (user: User) => {
+    if (user.id === currentUser?.id) {
+      error('Tindakan Ditolak', 'Anda tidak dapat menghapus akun Anda sendiri!');
+      return;
+    }
+    if (user.username.toLowerCase() === 'admin') {
+      error('Tindakan Ditolak', 'Akun root admin utama tidak dapat dihapus!');
+      return;
+    }
+    setDeletingUser(user);
+    setIsDeleteOpen(true);
   };
 
   const handleToggleStatus = async (user: User) => {
@@ -153,6 +171,7 @@ export default function UsersManagementPage() {
                 ) : (
                   filteredUsers.map((u) => {
                     const isSelf = u.id === currentUser?.id;
+                    const isRootAdmin = u.username.toLowerCase() === 'admin';
                     const isActive = u.status === 'AKTIF';
 
                     return (
@@ -224,13 +243,24 @@ export default function UsersManagementPage() {
                         </td>
 
                         <td className="py-3.5 px-5 text-right whitespace-nowrap">
-                          <button
-                            onClick={() => handleOpenEdit(u)}
-                            className="p-1.5 text-[#69777A] hover:text-[#34495E] hover:bg-[#DCE8E2] rounded-[8px] transition-colors"
-                            title="Edit Akun"
-                          >
-                            <Edit2 className="w-4 h-4" />
-                          </button>
+                          <div className="flex items-center justify-end gap-1">
+                            <button
+                              onClick={() => handleOpenEdit(u)}
+                              className="p-1.5 text-[#69777A] hover:text-[#34495E] hover:bg-[#DCE8E2] rounded-[8px] transition-colors"
+                              title="Edit Akun"
+                            >
+                              <Edit2 className="w-4 h-4" />
+                            </button>
+                            {!isSelf && !isRootAdmin && (
+                              <button
+                                onClick={() => handleOpenDelete(u)}
+                                className="p-1.5 text-[#69777A] hover:text-[#A95353] hover:bg-[#F2E3E1] rounded-[8px] transition-colors"
+                                title="Hapus Akun Staff"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            )}
+                          </div>
                         </td>
                       </tr>
                     );
@@ -251,6 +281,7 @@ export default function UsersManagementPage() {
           ) : (
             filteredUsers.map((u) => {
               const isSelf = u.id === currentUser?.id;
+              const isRootAdmin = u.username.toLowerCase() === 'admin';
               const isActive = u.status === 'AKTIF';
 
               return (
@@ -274,12 +305,24 @@ export default function UsersManagementPage() {
                       </div>
                     </div>
 
-                    <button
-                      onClick={() => handleOpenEdit(u)}
-                      className="p-2 text-[#69777A] hover:text-[#34495E] hover:bg-[#DCE8E2] rounded-[8px]"
-                    >
-                      <Edit2 className="w-4 h-4" />
-                    </button>
+                    <div className="flex items-center gap-1">
+                      <button
+                        onClick={() => handleOpenEdit(u)}
+                        className="p-2 text-[#69777A] hover:text-[#34495E] hover:bg-[#DCE8E2] rounded-[8px]"
+                        title="Edit Akun"
+                      >
+                        <Edit2 className="w-4 h-4" />
+                      </button>
+                      {!isSelf && !isRootAdmin && (
+                        <button
+                          onClick={() => handleOpenDelete(u)}
+                          className="p-2 text-[#69777A] hover:text-[#A95353] hover:bg-[#F2E3E1] rounded-[8px]"
+                          title="Hapus Akun Staff"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      )}
+                    </div>
                   </div>
 
                   <div className="flex items-center justify-between pt-2 border-t border-[#DDE2DC] text-xs">
@@ -309,6 +352,16 @@ export default function UsersManagementPage() {
         isOpen={isFormOpen}
         initialUser={editingUser}
         onClose={() => setIsFormOpen(false)}
+        onSuccess={() => {
+          loadData();
+        }}
+      />
+
+      {/* Delete Staff Confirm Modal */}
+      <DeleteStaffConfirmModal
+        isOpen={isDeleteOpen}
+        user={deletingUser}
+        onClose={() => setIsDeleteOpen(false)}
         onSuccess={() => {
           loadData();
         }}
